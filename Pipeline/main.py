@@ -16,9 +16,12 @@ logger = logging.getLogger(__name__)
 
 
 def _build_steps(parameters: dict) -> tuple[List[PipelineModule], dict, dict]:
-    from Pipeline.modules.analysis import EventStudyRunner, EventWriter, PredictionChecker, TickerResolver
     from Pipeline.modules.event_extractor import EventExtractor
+    from Pipeline.modules.event_study_runner import EventStudyRunner
+    from Pipeline.modules.event_writer import EventWriter
     from Pipeline.modules.news_collector import NewsCollector
+    from Pipeline.modules.prediction_checker import PredictionChecker
+    from Pipeline.modules.ticker_resolver import TickerResolver
 
     news = NewsCollector()
     if not news.api_keys:
@@ -118,7 +121,8 @@ async def run_pipeline(parameters: dict) -> tuple[bool, dict]:
 def refresh_event(event_id, *, data_cache=DEFAULT_CACHE):
     """Recalculate the cached event and keep prior studies for unavailable tickers."""
     from Pipeline.event_files import event_lock, write_event
-    from Pipeline.modules.analysis import analyse_companies, check_predictions
+    from Pipeline.modules.event_study_runner import EventStudyRunner
+    from Pipeline.modules.prediction_checker import PredictionChecker
 
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", event_id):
         raise ValueError("Invalid event ID")
@@ -127,10 +131,10 @@ def refresh_event(event_id, *, data_cache=DEFAULT_CACHE):
         document = json.loads(path.read_text(encoding="utf-8"))
         event = EventInfo.from_dict(document["event"])
         previous_impacts = [Impact.from_dict(i) for i in document["impacts"]]
-        impacts, failures = analyse_companies(event, previous_impacts, data_cache, keep_previous=True)
+        impacts, failures = EventStudyRunner.analyse_companies(event, previous_impacts, data_cache, keep_previous=True)
         if len(failures) == len(impacts):
             raise ValueError("No updated market data was available for this event.")
-        check_predictions(impacts)
+        PredictionChecker.check_predictions(impacts)
         return write_event(data_cache, event, impacts)
 
 
