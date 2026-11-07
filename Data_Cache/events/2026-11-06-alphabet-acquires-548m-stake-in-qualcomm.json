@@ -142,6 +142,139 @@
       "prediction_match": null
     },
     {
+      "company_name": "Alphabet Inc.",
+      "ticker": "GOOGL",
+      "relation": "direct",
+      "expected_direction": "unclear",
+      "reason": "Alphabet is the buyer in the stake purchase. The investment alone does not imply a clear direction for its stock.",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 1.29,
+        "raw_return_pct": 0.78,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.2,
+        "car_pct": 0.58,
+        "t_stat": 0.33,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -1.24,
+            "expected_pct": -0.88,
+            "abnormal_pct": -0.36,
+            "cum_actual_pct": 11.52,
+            "cum_expected_pct": 6.35,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": -1.06,
+            "expected_pct": 0.69,
+            "abnormal_pct": -1.75,
+            "cum_actual_pct": 10.46,
+            "cum_expected_pct": 7.04,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": 1.19,
+            "expected_pct": 0.56,
+            "abnormal_pct": 0.63,
+            "cum_actual_pct": 11.65,
+            "cum_expected_pct": 7.6,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": 1.34,
+            "expected_pct": 0.15,
+            "abnormal_pct": 1.2,
+            "cum_actual_pct": 13.0,
+            "cum_expected_pct": 7.75,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": -12.64,
+            "expected_pct": -0.6,
+            "abnormal_pct": -12.04,
+            "cum_actual_pct": 0.36,
+            "cum_expected_pct": 7.15,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -1.4,
+            "expected_pct": -2.55,
+            "abnormal_pct": 1.15,
+            "cum_actual_pct": -1.05,
+            "cum_expected_pct": 4.6,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": -0.3,
+            "expected_pct": -0.87,
+            "abnormal_pct": 0.56,
+            "cum_actual_pct": -1.35,
+            "cum_expected_pct": 3.73,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 0.37,
+            "expected_pct": 0.26,
+            "abnormal_pct": 0.11,
+            "cum_actual_pct": -0.98,
+            "cum_expected_pct": 3.99,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 3.18,
+            "expected_pct": 1.83,
+            "abnormal_pct": 1.35,
+            "cum_actual_pct": 2.2,
+            "cum_expected_pct": 5.82,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -2.2,
+            "expected_pct": -5.82,
+            "abnormal_pct": 3.62,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": 0.78,
+            "expected_pct": 0.2,
+            "abnormal_pct": 0.59,
+            "cum_actual_pct": 0.78,
+            "cum_expected_pct": 0.2,
+            "car_pct": 0.58
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 0.33)."
+      },
+      "prediction_match": null
+    },
+    {
       "company_name": "Samsung",
       "relation": "customer",
       "expected_direction": "unclear",
@@ -542,5 +675,5 @@
     }
   ],
   "status": "early",
-  "generated_at": "2026-11-07T13:23:55Z"
+  "generated_at": "2026-11-07T14:28:59Z"
 }

@@ -9,7 +9,7 @@ const load = (callback, setValue, setError) => callback().then(setValue).catch((
 
 function Tip({ label, children }) { return <span className="term" title={children}> {label}<span aria-hidden="true">ⓘ</span></span> }
 function Footer() { return <footer>Information about past price moves, not investment advice.</footer> }
-function Shell({ children }) { return <><header><Link className="brand" to="/">Market Incident Tracker</Link><nav><NavLink to="/">Alerts</NavLink><NavLink to="/events">All events</NavLink><NavLink to="/tracked">Tracked</NavLink></nav>{USE_MOCK && <span className="mock">Demo data</span>}</header><main>{children}</main><Footer /></> }
+function Shell({ children }) { return <><header><Link className="brand" to="/">Market Aftermath</Link><nav><NavLink to="/">Alerts</NavLink><NavLink to="/events">All events</NavLink><NavLink to="/tracked">Tracked</NavLink></nav>{USE_MOCK && <span className="mock">Demo data</span>}</header><main>{children}</main><Footer /></> }
 
 function Watchlist({ onChange }) {
   const [tickers, setTickers] = useState([]); const [input, setInput] = useState(''); const [error, setError] = useState('')
@@ -26,7 +26,7 @@ async function trackStock(eventId, ticker) {
 
 function EventCard({ event, alert = false }) { const navigate = useNavigate(); return <article className="event-card" role="link" tabIndex={0} onClick={() => navigate(`/events/${event.event_id}`)} onKeyDown={(key) => { if (key.key === 'Enter') navigate(`/events/${event.event_id}`) }}><div className="event-heading"><span className={`pill ${event.event_type}`}>{typeLabel(event.event_type)}</span>{event.status === 'early' && <span className="early">Early, still tracking</span>}<time>{event.event_date}</time></div><h3>{event.headline}</h3>{alert && <div className="matches">{event.matched.map((item) => <span key={item.ticker}>{item.ticker} · {item.relation === 'direct' ? 'direct impact' : `${item.relation} impact`} · <strong className={item.car_pct < 0 ? 'down' : 'up'}>{signed(item.car_pct)}</strong>{item.is_significant && ' · significant'}</span>)}</div>}<p className="impact-line">Largest measured impact: <strong className={event.top_impact?.car_pct < 0 ? 'down' : 'up'}>{event.top_impact ? `${event.top_impact.ticker} ${signed(event.top_impact.car_pct)}` : 'Not available'}</strong></p></article> }
 
-function Alerts() { const [alerts, setAlerts] = useState(null); const [error, setError] = useState(''); const refresh = useCallback(() => load(api.alerts, setAlerts, setError), []); useEffect(() => { refresh() }, [refresh]); return <Shell><div className="hero"><p className="eyebrow">YOUR ALERTS</p><h1>News that may move the stocks you follow</h1><p>Start here: the cards below show only events connected to your watchlist.</p></div><Watchlist onChange={refresh} />{alerts && <WatchlistImpact alerts={alerts} />}<section><div className="section-title"><div><h2>Relevant events</h2><p>Click an event to see what happened and how the price moved.</p></div><button className="secondary" onClick={refresh}>Refresh</button></div>{error && <p className="error">{error}</p>}{alerts === null ? <Loading /> : alerts.length ? <div className="card-list">{alerts.map((event) => <EventCard event={event} alert key={event.event_id} />)}</div> : <Empty text="No current alerts. Add a ticker to your watchlist or check all events." />}</section></Shell> }
+function Alerts({ analysisRevision }) { const [alerts, setAlerts] = useState(null); const [error, setError] = useState(''); const refresh = useCallback(() => load(api.alerts, setAlerts, setError), []); useEffect(() => { refresh() }, [refresh, analysisRevision]); return <Shell><div className="hero"><p className="eyebrow">YOUR ALERTS</p><h1>News that may move the stocks you follow</h1><p>Start here: the cards below show only events connected to your watchlist.</p></div><Watchlist onChange={refresh} />{alerts && <WatchlistImpact alerts={alerts} />}<section><div className="section-title"><div><h2>Relevant events</h2><p>Click an event to see what happened and how the price moved.</p></div><button className="secondary" onClick={refresh}>Refresh</button></div>{error && <p className="error">{error}</p>}{alerts === null ? <Loading /> : alerts.length ? <div className="card-list">{alerts.map((event) => <EventCard event={event} alert key={event.event_id} />)}</div> : <Empty text="No current alerts. Add a ticker to your watchlist or check all events." />}</section></Shell> }
 
 function scanSummary({ event_ids = [], new_count, exit_reason }) {
   if (exit_reason) return `No new events. ${exit_reason}`
@@ -34,7 +34,7 @@ function scanSummary({ event_ids = [], new_count, exit_reason }) {
   return `${new_count} new · ${event_ids.length - new_count} updated`
 }
 
-function Pipeline({ onComplete }) {
+function usePipeline(onComplete) {
   const [state, setState] = useState(null)
   const [error, setError] = useState('')
   const active = useRef(null)
@@ -107,19 +107,23 @@ function Pipeline({ onComplete }) {
       finish(error.message, true)
     }
   }
+  return { state, error, run }
+}
+
+function Pipeline({ state, error, run }) {
   const pct = state?.total ? Math.round((state.completed / state.total) * 100) : 0
   return <div className="pipeline"><button onClick={run} disabled={state?.state === 'running'}>{state?.state === 'running' ? 'Scanning…' : 'Scan latest news'}</button>{state && <div className="progress-wrap"><div className="progress"><span style={{ width: `${pct}%` }} /></div><p>{state.last_message} {state.total ? `(${state.completed}/${state.total})` : ''}</p></div>}{error && <p className="error">{error}</p>}</div> }
 
-function Events() {
+function Events({ analysisRevision, pipeline }) {
   const [events, setEvents] = useState(null)
   const [error, setError] = useState('')
   const refresh = useCallback(() => load(api.events, setEvents, setError), [])
-  useEffect(() => { refresh() }, [refresh])
+  useEffect(() => { refresh() }, [refresh, analysisRevision])
 
   return <Shell>
     <div className="section-title">
       <div><p className="eyebrow">EVENT DATABASE</p><h1>All market events</h1><p>Scan for fresh events or explore the analysis already available.</p></div>
-      <Pipeline onComplete={refresh} />
+      <Pipeline {...pipeline} />
     </div>
     {error && <p className="error" role="alert">{error}</p>}
     {events === null ? !error && <Loading /> : events.length ? (
@@ -130,12 +134,23 @@ function Events() {
   </Shell>
 }
 
-function Detail() { const { event_id } = useParams(); const navigate = useNavigate(); const [detail, setDetail] = useState(null); const [selected, setSelected] = useState(null); const [error, setError] = useState(''); const [refreshing, setRefreshing] = useState(false); const [saved, setSaved] = useState(null)
+function Detail({ analysisRevision }) { const { event_id } = useParams(); const navigate = useNavigate(); const [detail, setDetail] = useState(null); const [selected, setSelected] = useState(null); const [error, setError] = useState(''); const [refreshing, setRefreshing] = useState(false); const [saved, setSaved] = useState(null)
   const [searchParams] = useSearchParams()
   const [tracking, setTracking] = useState(false)
   const [trackError, setTrackError] = useState('')
   useEffect(() => { void load(api.tracked, setSaved, setTrackError) }, [])
-  const get = useCallback(() => load(() => api.event(event_id), setDetail, setError), [event_id]); useEffect(() => { get() }, [get]);
+  useEffect(() => {
+    let active = true
+    api.event(event_id).then((result) => {
+      if (active) {
+        setDetail(result)
+        setError('')
+      }
+    }).catch((error) => {
+      if (active) setError(error.message)
+    })
+    return () => { active = false }
+  }, [event_id, analysisRevision])
   if (error) return <Shell><p className="error">{error}</p><button onClick={() => navigate('/events')}>Back to events</button></Shell>; if (!detail) return <Shell><Loading /></Shell>
   const impacts = [...detail.impacts].sort((a, b) => Number(b.relation === 'direct') - Number(a.relation === 'direct'))
   const isTracked = (ticker) => saved?.some((item) => item.event_id === event_id && item.ticker === ticker)
@@ -208,7 +223,7 @@ function WatchlistImpact({ alerts }) {
 
   return <section className="watchlist-impact" aria-labelledby="watchlist-impact-title">
     <h2 id="watchlist-impact-title">Watchlist impact overview</h2>
-    <p>Cumulative abnormal return (CAR) measures how each stock moved relative to its market-based expectation.</p>
+    <p>See how your stocks performed relative to what the market model expected. Each bar covers the dates shown below, and other news may also have affected the stock.</p>
     {rows.length ? <>
       <div className="impact-axis" aria-hidden="true">
         <span>{signed(-limit)}</span><span>0%</span><span>{signed(limit)}</span>
@@ -216,6 +231,11 @@ function WatchlistImpact({ alerts }) {
       <ul className="impact-rows">{rows.map(({ event, impact }) => {
         const width = Math.abs(impact.car_pct) / limit * 50
         const negative = impact.car_pct < 0
+        const early = impact.days_after == null ? event.status === 'early' : impact.days_after < 5
+        const performance = negative ? 'Performed below the market model’s expectation'
+          : impact.car_pct > 0 ? 'Performed above the market model’s expectation'
+            : 'Performed in line with the market model’s expectation'
+        const significance = impact.is_significant ? 'Statistically significant' : 'Below the significance threshold'
         const detailUrl = `/events/${event.event_id}?${new URLSearchParams({ ticker: impact.ticker })}`
         return <li key={JSON.stringify([event.event_id, impact.ticker])}>
           <Link className="impact-row" to={detailUrl}>
@@ -226,9 +246,12 @@ function WatchlistImpact({ alerts }) {
                 {Number.isInteger(impact.days_after) && (
                   <> · {impact.days_after === 0 ? 'Event trading day' : `Event trading day through day +${impact.days_after}`}</>
                 )}
-                {(impact.days_after == null ? event.status === 'early' : impact.days_after < 5) && (
-                  <> <span className="early">Early</span></>
-                )}
+                {early && <> <span className="early">Early</span></>}
+              </small>
+              <p className="impact-reading">{performance}. {significance}.{early && ' Keep watching as more trading days come in.'}</p>
+              <small>{impact.prices_through
+                ? <>Prices through <time dateTime={impact.prices_through}>{impact.prices_through}</time></>
+                : 'Price cutoff unavailable'}
               </small>
             </div>
             <div className="impact-scale" aria-hidden="true">
@@ -243,4 +266,42 @@ function WatchlistImpact({ alerts }) {
   </section>
 }
 function Loading() { return <div className="loading">Loading…</div> } function Empty({ text }) { return <div className="empty">{text}</div> }
-export default function App() { return <Routes><Route path="/" element={<Alerts />} /><Route path="/events" element={<Events />} /><Route path="/events/:event_id" element={<Detail />} /><Route path="/tracked" element={<Tracked />} /><Route path="*" element={<Alerts />} /></Routes> }
+async function refreshTrackedAnalyses() {
+  const tracked = await api.tracked()
+  const eventIds = new Set(tracked.map((item) => item.event_id))
+  let updated = false
+  for (const eventId of eventIds) {
+    try {
+      await api.refreshEvent(eventId)
+      updated = true
+    } catch {
+      // Keep the saved analysis and continue refreshing the remaining events.
+    }
+  }
+  return updated
+}
+
+export default function App() {
+  const startupRefresh = useRef(null)
+  const [analysisRevision, setAnalysisRevision] = useState(0)
+  const pipeline = usePipeline(() => setAnalysisRevision((revision) => revision + 1))
+
+  useEffect(() => {
+    let active = true
+    startupRefresh.current ??= refreshTrackedAnalyses()
+    startupRefresh.current.then((updated) => {
+      if (active && updated) setAnalysisRevision((revision) => revision + 1)
+    }).catch(() => {
+      // Pages can still display their saved data if the tracked list is unavailable.
+    })
+    return () => { active = false }
+  }, [])
+
+  return <Routes>
+    <Route path="/" element={<Alerts analysisRevision={analysisRevision} />} />
+    <Route path="/events" element={<Events analysisRevision={analysisRevision} pipeline={pipeline} />} />
+    <Route path="/events/:event_id" element={<Detail analysisRevision={analysisRevision} />} />
+    <Route path="/tracked" element={<Tracked />} />
+    <Route path="*" element={<Alerts analysisRevision={analysisRevision} />} />
+  </Routes>
+}

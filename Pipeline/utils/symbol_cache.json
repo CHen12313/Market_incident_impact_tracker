@@ -235,5 +235,28 @@
     "symbol": null,
     "as_of": 1794054581
   },
-  "sony": "SONY"
+  "sony": "SONY",
+  "fox corp": "FOXA",
+  "verisign": "VRSN",
+  "faber": "220A.T",
+  "na": "NVO",
+  "argyle liberty christian": {
+    "symbol": null,
+    "as_of": 1794062568
+  },
+  "essar oil": {
+    "symbol": null,
+    "as_of": 1794062568
+  },
+  "maruti suzuki": "MARUTI.NS",
+  "tata motors": "TMCV.NS",
+  "oil companies": {
+    "symbol": null,
+    "as_of": 1794063002
+  },
+  "thales group": {
+    "symbol": null,
+    "as_of": 1794063792
+  },
+  "entrust": "7191.T"
 }

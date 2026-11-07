@@ -1,0 +1,147 @@
+{
+  "event": {
+    "event_id": "2026-11-06-health-minister-instructs-trusts-to-pause",
+    "event_type": "outage",
+    "headline": "Health minister instructs trusts to pause cuts to Phone First service",
+    "summary": "The health minister has ordered a halt to cuts affecting the Phone First service, which was set to be discontinued in Belfast and the Northern Trust.",
+    "event_date": "2026-11-06",
+    "source_url": "https://www.bbc.co.uk/news/articles/crn8wnq05dyqo"
+  },
+  "impacts": [
+    {
+      "company_name": "N/A",
+      "relation": "direct",
+      "expected_direction": "unclear",
+      "reason": "No specific public companies are directly involved in the incident.",
+      "ticker": "NVO",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": -0.12,
+        "raw_return_pct": 0.02,
+        "market_return_pct": 0.31,
+        "expected_return_pct": -0.12,
+        "car_pct": 0.14,
+        "t_stat": 0.06,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -0.96,
+            "expected_pct": -0.02,
+            "abnormal_pct": -0.94,
+            "cum_actual_pct": -3.44,
+            "cum_expected_pct": 0.34,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": 0.2,
+            "expected_pct": -0.16,
+            "abnormal_pct": 0.37,
+            "cum_actual_pct": -3.24,
+            "cum_expected_pct": 0.17,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": -1.18,
+            "expected_pct": -0.15,
+            "abnormal_pct": -1.02,
+            "cum_actual_pct": -4.41,
+            "cum_expected_pct": 0.02,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": -0.98,
+            "expected_pct": -0.11,
+            "abnormal_pct": -0.87,
+            "cum_actual_pct": -5.39,
+            "cum_expected_pct": -0.09,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": 2.22,
+            "expected_pct": -0.05,
+            "abnormal_pct": 2.27,
+            "cum_actual_pct": -3.17,
+            "cum_expected_pct": -0.14,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": 2.2,
+            "expected_pct": 0.13,
+            "abnormal_pct": 2.07,
+            "cum_actual_pct": -0.98,
+            "cum_expected_pct": -0.01,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": 1.13,
+            "expected_pct": -0.02,
+            "abnormal_pct": 1.15,
+            "cum_actual_pct": 0.15,
+            "cum_expected_pct": -0.03,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": -0.64,
+            "expected_pct": -0.12,
+            "abnormal_pct": -0.52,
+            "cum_actual_pct": -0.49,
+            "cum_expected_pct": -0.16,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 4.95,
+            "expected_pct": -0.27,
+            "abnormal_pct": 5.22,
+            "cum_actual_pct": 4.46,
+            "cum_expected_pct": -0.42,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -4.46,
+            "expected_pct": 0.42,
+            "abnormal_pct": -4.88,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": 0.02,
+            "expected_pct": -0.12,
+            "abnormal_pct": 0.14,
+            "cum_actual_pct": 0.02,
+            "cum_expected_pct": -0.12,
+            "car_pct": 0.14
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 0.06)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "early",
+  "generated_at": "2026-11-07T15:03:13Z"
+}

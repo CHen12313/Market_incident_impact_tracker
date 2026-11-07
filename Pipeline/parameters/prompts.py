@@ -5,11 +5,13 @@ event_extractor_system_message = (
 )
 
 event_extractor_user_message = """Below are recent "{event_type}" news articles. Find the SINGLE clearest,
-most newsworthy {event_type} incident among them (one specific company, one specific event —
+most newsworthy {event_type} incident among them (one specific event —
 not a roundup or trend piece). If none of the articles describe a concrete incident, say so.
 
 For the incident you pick, identify:
-- the company it happened to directly (relation "direct")
+- all public companies named in the article that are direct parties to the incident (relation "direct").
+  For a merger, acquisition, or stake purchase, include both the buyer and target when both
+  are publicly traded. Use "unclear" if a direct party has no clear expected price direction.
 - up to {max_knock_on_companies} other companies the market might react to because of it
   (competitors, suppliers, customers — relation "competitor" | "supplier" | "customer" | "other")
 - for every company, your best guess of whether its stock would move "up", "down", or "unclear",
