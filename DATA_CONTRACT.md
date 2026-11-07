@@ -9,8 +9,15 @@ Pipeline ──Event File Contract──────────▶ Data_Cache/e
 Pipeline ──Pipeline Status Event Protocol──▶ Server ──Client Stream Frame Protocol──▶ Frontend
 ```
 
-**Version 1**, frozen at 0:20. Any change: tell all three people first, then
-bump the version here. The Chinese copy is [DATA_CONTRACT_CN.md](DATA_CONTRACT_CN.md);
+**Version 2.** v1 froze at 0:20 and covered the JSON wire shapes below, which
+are unchanged. v2 adds [Pipeline-internal types (Python)](#pipeline-internal-types-python):
+Chen's pipeline now represents all of this internally with `dataclasses` and
+`enum.StrEnum` instead of a plain dict, for compile-time/construction-time
+enforcement. Not one byte of the JSON actually written to
+`Data_Cache/events/*.json`, sent over SSE, or returned by the REST API
+changed — this is purely how Chen's process represents it before
+serializing. Any further change: tell all three people first, then bump the
+version here. The Chinese copy is [DATA_CONTRACT_CN.md](DATA_CONTRACT_CN.md);
 if the two disagree, this file wins. A complete example of an event file is
 `Data_Cache/events/2026-10-20-mock-nimbus-cloud-outage.json`.
 
@@ -27,6 +34,7 @@ if the two disagree, this file wins. A complete example of an event file is
   - [`status` — complete vs early](#status--complete-vs-early)
   - [Invariants](#invariants)
   - [Mock files](#mock-files)
+- [Pipeline-internal types (Python)](#pipeline-internal-types-python)
 - [Event summary — server-built list items](#event-summary--server-built-list-items)
 - [`stream_pipeline` — input and result](#stream_pipeline--input-and-result)
   - [`pipeline_params` — input to `stream_pipeline`](#pipeline_params--input-to-stream_pipeline)
@@ -54,8 +62,9 @@ user presses Refresh or Track. The server **only reads** these files and
 returns them unchanged; the frontend renders the fields as they are, with no
 maths of its own. Every number on screen is computed once, in the pipeline.
 
-How the pipeline builds it, stage by stage (the same `data` dict pattern as
-Job-finding-bot's Generator):
+How the pipeline builds it, stage by stage — same shared-context pattern as
+Job-finding-bot's Generator, except the context is a typed `PipelineContext`
+dataclass, not a plain dict (see [Pipeline-internal types](#pipeline-internal-types-python)):
 
 ```
 NewsCollector        adds    articles
@@ -289,6 +298,270 @@ Both come from `python3 scripts/make_mock_event.py [--days-after 3]`, which uses
 the same maths as `run_event_study()` and the same invariant checks, just with
 simulated prices. Mock `event_id`s contain `-mock-` and headlines start with
 `[MOCK]`. **Delete both files before the demo.**
+
+## Pipeline-internal types (Python)
+
+Everything above this line is the JSON wire shape and is unchanged from v1.
+This section is how Chen's pipeline represents that same data internally:
+`enum.StrEnum` for every closed string vocabulary already named above, and
+`dataclasses` instead of a plain dict for every structure, enforced at
+construction time instead of by convention. Ding and Xuan don't need to
+change anything on their side — see [Caveats](#caveats) below.
+
+### Enums
+
+All `enum.StrEnum` (stdlib, Python 3.11+): a `StrEnum` member *is* a `str`,
+so `json.dumps` writes it out as its plain string value with no custom
+encoder needed.
+
+```python
+class EventType(StrEnum):
+    MERGER = "merger"; BREACH = "breach"; RECALL = "recall"
+    OUTAGE = "outage"; LAWSUIT = "lawsuit"; REGULATION = "regulation"; OTHER = "other"
+
+    @classmethod
+    def searchable(cls) -> list["EventType"]:
+        """Every type except OTHER."""
+        return [t for t in cls if t is not cls.OTHER]
+
+class Relation(StrEnum):
+    DIRECT = "direct"; COMPETITOR = "competitor"; SUPPLIER = "supplier"
+    CUSTOMER = "customer"; OTHER = "other"
+
+class Direction(StrEnum):
+    UP = "up"; DOWN = "down"; UNCLEAR = "unclear"
+
+class EventStatus(StrEnum):
+    COMPLETE = "complete"; EARLY = "early"
+
+class InfoTag(StrEnum):
+    START = "start"; INFO = "info"; SUB_STAGE_SUCCESS = "sub_stage_success"
+    STAGE_SUCCESS = "stage_success"; SUB_STAGE_FAIL = "sub_stage_fail"; WARNING = "warning"
+
+class RunState(StrEnum):
+    """Server-side (Ding's `runs[run_id]["state"]`) — listed here since it's
+    part of the same shared vocabulary, even though it never appears in a
+    pipeline-side dataclass."""
+    RUNNING = "running"; DONE = "done"; ERROR = "error"
+```
+
+A value that doesn't match one of these — a typo'd `event_type` in a
+`POST /api/pipeline/run` body, a malformed `relation` from the LLM — now
+raises `ValueError` at the point of construction (`Relation(raw)`) instead
+of silently becoming a fabricated string that only breaks downstream, or
+never breaks at all.
+
+### Dataclasses
+
+Pipeline-internal shapes (never serialized directly):
+
+```python
+@dataclass
+class Article:
+    title: str
+    description: str
+    source: str
+    published: str  # YYYY-MM-DD
+    url: str
+
+@dataclass
+class ArticleBucket:
+    event_type: EventType
+    articles: list[Article]
+
+@dataclass
+class Company:
+    company_name: str
+    relation: Relation
+    expected_direction: Direction
+    reason: str
+    ticker: str | None = None  # filled in by TickerResolver; None until then
+```
+
+The event-file shapes (these are what `EventFile` serializes to exactly the
+JSON in [Full event file](#full-event-file) above — field names and values
+unchanged):
+
+```python
+@dataclass
+class EventInfo:
+    event_id: str
+    event_type: EventType
+    headline: str
+    summary: str
+    event_date: str  # YYYY-MM-DD
+    source_url: str
+
+@dataclass
+class ExtractedEvent:
+    """One entry in the pipeline's `events` list — EventExtractor's output,
+    TickerResolver's input."""
+    event: EventInfo
+    companies: list[Company]
+
+@dataclass
+class DailyRow:
+    day: int
+    date: str
+    actual_pct: float
+    expected_pct: float
+    abnormal_pct: float
+    cum_actual_pct: float
+    cum_expected_pct: float
+    car_pct: float | None
+
+@dataclass
+class Study:
+    market_ticker: str
+    event_day: str
+    days_after: int
+    beta: float
+    raw_return_pct: float
+    market_return_pct: float
+    expected_return_pct: float
+    car_pct: float
+    t_stat: float
+    is_significant: bool
+    verdict_text: str
+    daily: list[DailyRow]
+
+@dataclass
+class Impact:
+    company_name: str
+    ticker: str
+    relation: Relation
+    expected_direction: Direction
+    reason: str
+    prediction_match: bool | None
+    study: Study
+
+@dataclass
+class EventFile:
+    event: EventInfo
+    status: EventStatus
+    generated_at: str  # ISO-8601 UTC
+    impacts: list[Impact]
+
+    def check_invariants(self) -> None:
+        """The six invariants listed under Invariants above, called on the
+        object EventWriter is about to write, before it writes it. Replaces
+        the standalone check_contract_invariants() originally planned in
+        scripts/make_mock_event.py — same checks, same place in the flow,
+        now a method on the thing being checked."""
+```
+
+The status-event wire protocol (these serialize to exactly the frame shapes
+in [Pipeline Status Event Protocol](#pipeline-status-event-protocol--pipeline--server-status-events)
+and [Client Stream Frame Protocol](#client-stream-frame-protocol--server--frontend-sse-frames)):
+
+```python
+@dataclass(kw_only=True)
+class ProgressEvent:
+    type: Literal["progress"] = "progress"
+    completed: int
+    total: int
+    stage: str | None
+    stage_label: str | None
+
+@dataclass(kw_only=True)
+class InfoEvent:
+    type: Literal["info"] = "info"
+    message: str
+    tag: InfoTag
+
+@dataclass(kw_only=True)
+class PipelineResult:
+    type: Literal["result"] = "result"
+    success: bool
+    event_ids: list[str] = field(default_factory=list)
+    exit_reason: str | None = None
+    error_message: str | None = None
+```
+
+Pipeline input and shared context:
+
+```python
+@dataclass
+class PipelineParams:
+    """Replaces the raw `params` dict `stream_pipeline` used to take —
+    constructed from the POST /api/pipeline/run body, which is unchanged;
+    an invalid event_type in that body now fails here as a ValueError
+    instead of silently passing through."""
+    event_types: list[EventType] = field(default_factory=EventType.searchable)
+    days_back: int = 3
+
+@dataclass
+class PipelineContext:
+    """Replaces the shared `data` dict. One instance, threaded through every
+    stage's `run()`, mutated in place — same role as before, now typed."""
+    event_types: list[EventType]
+    days_back: int
+    emit: Callable[[ProgressEvent | InfoEvent], Awaitable[None]]
+
+    articles: list[ArticleBucket] | None = None          # NewsCollector
+    events: list[ExtractedEvent] | None = None           # EventExtractor; mutated by TickerResolver
+    impacts: list[Impact] | None = None                  # EventStudyRunner; mutated by PredictionChecker
+    event_ids: list[str] = field(default_factory=list)   # EventWriter
+    exit_reason: str | None = None                       # any stage may set this for a clean early stop
+```
+
+`run_id` and the old `output` key are gone: the pipeline never needed
+`run_id` (the server tags every event it receives instead), and nothing
+ever wrote to `output` — the real outputs were always `articles` / `events`
+/ `impacts` / `event_ids` as top-level fields, which `PipelineContext` now
+makes literal. `exit_reason` is what actually produces the documented
+`exit_reason: "No new events found"` result below — any stage can set it,
+and the controller checks it after every stage to end the run early and
+cleanly.
+
+`PipelineModule` correspondingly takes a `PipelineContext` instead of `dict`:
+
+```python
+class PipelineModule(ABC):
+    label: str | None = None
+
+    @abstractmethod
+    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]: ...
+
+    async def emit_status(self, ctx: PipelineContext, message: str, tag: InfoTag) -> None:
+        if ctx.emit is None:
+            return
+        await ctx.emit(InfoEvent(message=message, tag=tag))
+```
+
+`execute_pipeline`, `run_pipeline`, and `stream_pipeline` change signatures
+to match (`PipelineContext` in, `ProgressEvent`/`InfoEvent` emitted,
+`PipelineResult` returned) but keep the same control flow. The
+retry/backtrack machinery ported from Job-finding-bot (`loop_instructions`,
+`_retry_pipeline_segment`) is dropped — no stage in the 6-stage design above
+uses it; a stage that needs bounded retries can loop inside its own `run()`.
+
+### Serialization
+
+Writing out: `json.dumps(dataclasses.asdict(obj))`. `asdict()` recurses into
+nested dataclasses and leaves enum members as-is, but since every enum here
+is a `StrEnum`, `json.dumps` already treats them as plain strings — no
+custom encoder anywhere this crosses a boundary.
+
+Reading untrusted input back in (NewsAPI responses, the LLM's JSON) still
+needs real validation — stdlib `dataclasses` don't check types or values at
+construction, they're structure, not enforcement. `EventExtractor`'s
+validation step doesn't go away; it changes shape from
+`if relation not in VALID_RELATIONS` to `try: Relation(raw_relation) except
+ValueError`, with the enum as the single source of truth for what's valid
+instead of a hand-kept set.
+
+### Caveats
+
+- **This only enforces anything on the Python side.** It's solved for the
+  pipeline internally, and for Ding's Flask server *if* he also reads these
+  types in Python — it does nothing for Xuan's React frontend, which only
+  ever sees JSON. Reaching her side would need a JSON Schema generated from
+  these types, or hand-kept TypeScript types; neither exists today, and
+  nothing requires them.
+- **Stdlib `dataclasses` don't validate.** They're structure, not runtime
+  checking. `pydantic` would buy more for validating untrusted LLM JSON
+  specifically, at the cost of a dependency; not adopted here.
 
 ## Event summary — server-built list items
 
