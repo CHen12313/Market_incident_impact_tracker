@@ -1,14 +1,18 @@
 from abc import ABC, abstractmethod
 
+from Data_Classes.enums import InfoTag
+from Data_Classes.pipeline import InfoEvent, PipelineContext
+
 
 class PipelineModule(ABC):
     """
     Base class for all pipeline modules.
 
     Every module is one stage in the pipeline, run in sequence over one
-    shared `data` dict. `data` is the only channel for domain data: a stage
-    reads its inputs from it by key and writes its outputs back into it, in
-    place. `run`'s return value is a separate control channel — see below.
+    shared `PipelineContext`. `ctx` is the only channel for domain data: a
+    stage reads its inputs from its fields and writes its outputs back into
+    them, in place. `run`'s return value is a separate control channel —
+    see below.
 
     Modules that want to report progress call `self.emit_status(...)` from
     inside `run`; it's a no-op when nothing is listening.
@@ -26,26 +30,24 @@ class PipelineModule(ABC):
     label: str | None = None
 
     @abstractmethod
-    async def run(self, data: dict) -> tuple[str | None, bool]:
+    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
         """
-        Run this stage: mutate `data` in place, then return a control tuple.
+        Run this stage: mutate `ctx` in place, then return a control tuple.
 
         Returns:
-            (signal_name, satisfied): `signal_name` names the condition being
-            reported on, or None if there's nothing to report. `satisfied` is
-            False only when a named condition isn't met — the pipeline
-            controller may then re-run a declared retry region.
+            (signal_name, satisfied): reserved for a future retry/backtrack
+            controller — the current `execute_pipeline` doesn't act on
+            either value, and ends a run early only via `ctx.exit_reason`.
 
         Raises:
-            ValueError: a required input key is missing or invalid — failure
-            is never encoded in the return tuple.
+            ValueError: a required input field is missing or invalid —
+            failure is never encoded in the return tuple.
 
         See each subclass docstring for its data contract.
         """
         ...
 
-    async def emit_status(self, data: dict, **fields) -> None:
-        emit = data.get("emit", None)
-        if emit is None:
+    async def emit_status(self, ctx: PipelineContext, message: str, tag: InfoTag) -> None:
+        if ctx.emit is None:
             return
-        await emit({"type": "info", **fields})
+        await ctx.emit(InfoEvent(message=message, tag=tag))
