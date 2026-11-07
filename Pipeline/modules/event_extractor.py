@@ -28,7 +28,7 @@ class EventExtractor(PipelineModule):
 
     label = "Extracting events"
 
-    MODEL = "gpt-4o-mini"
+    MODEL = "gpt-5.4-nano-2026-03-17"
     MAX_KNOCK_ON_COMPANIES = 4
 
     def __init__(self, api_key: str | None = None, model: str | None = None,
