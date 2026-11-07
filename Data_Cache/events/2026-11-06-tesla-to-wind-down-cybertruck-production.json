@@ -7,13 +7,15 @@
     "event_date": "2026-11-06",
     "source_url": "https://uk.finance.yahoo.com/news/tesla-wind-down-cybertruck-production-094210977.html"
   },
+  "status": "early",
+  "generated_at": "2026-11-07T14:48:43Z",
   "impacts": [
     {
       "company_name": "Tesla",
+      "ticker": "TSLA",
       "relation": "direct",
       "expected_direction": "down",
       "reason": "Winding down production indicates ongoing struggles with sales.",
-      "ticker": "TSLA",
       "study": {
         "market_ticker": "^GSPC",
         "event_day": "2026-11-06",
@@ -143,10 +145,10 @@
     },
     {
       "company_name": "General Motors",
+      "ticker": "GM",
       "relation": "competitor",
       "expected_direction": "up",
       "reason": "Could see increased interest in their electric vehicle offerings.",
-      "ticker": "GM",
       "study": {
         "market_ticker": "^GSPC",
         "event_day": "2026-11-06",
@@ -276,10 +278,10 @@
     },
     {
       "company_name": "Rivian",
+      "ticker": "RIVN",
       "relation": "competitor",
       "expected_direction": "up",
       "reason": "Could benefit from Tesla's production issues as a newer competitor.",
-      "ticker": "RIVN",
       "study": {
         "market_ticker": "^GSPC",
         "event_day": "2026-11-06",
@@ -409,10 +411,10 @@
     },
     {
       "company_name": "Ford",
+      "ticker": "F",
       "relation": "competitor",
       "expected_direction": "up",
       "reason": "Potentially gaining market share in the electric truck segment.",
-      "ticker": "F",
       "study": {
         "market_ticker": "^GSPC",
         "event_day": "2026-11-06",
@@ -540,7 +542,5 @@
       },
       "prediction_match": null
     }
-  ],
-  "status": "early",
-  "generated_at": "2026-11-07T12:42:37Z"
+  ]
 }

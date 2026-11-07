@@ -7,13 +7,15 @@
     "event_date": "2026-11-05",
     "source_url": "https://www.cbc.ca/news/canada/toronto/class-action-downsview-long-term-care-gem-healthcare-9.7410212"
   },
+  "status": "early",
+  "generated_at": "2026-11-07T14:48:43Z",
   "impacts": [
     {
       "company_name": "Sienna Senior Living",
+      "ticker": "SIA.TO",
       "relation": "competitor",
       "expected_direction": "down",
       "reason": "Similar to Chartwell, any negative sentiment towards long-term care homes could affect Sienna's stock.",
-      "ticker": "SIA.TO",
       "study": {
         "market_ticker": "^GSPC",
         "event_day": "2026-11-05",
@@ -151,7 +153,5 @@
       },
       "prediction_match": null
     }
-  ],
-  "status": "early",
-  "generated_at": "2026-11-07T12:42:37Z"
+  ]
 }

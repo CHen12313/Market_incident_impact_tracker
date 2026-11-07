@@ -7,13 +7,15 @@
     "event_date": "2026-11-06",
     "source_url": "https://www.thehindubusinessline.com/companies/popees-plans-national-gcc-expansion-after-511-crore-merger/article71674351.ece"
   },
+  "status": "early",
+  "generated_at": "2026-11-07T14:48:43Z",
   "impacts": [
     {
       "company_name": "Danone",
+      "ticker": "BN.PA",
       "relation": "competitor",
       "expected_direction": "down",
       "reason": "Popees' expansion could threaten Danone's presence in the GCC market.",
-      "ticker": "BN.PA",
       "study": {
         "market_ticker": "^STOXX50E",
         "event_day": "2026-11-06",
@@ -143,10 +145,10 @@
     },
     {
       "company_name": "Nestlé",
+      "ticker": "NESR.DE",
       "relation": "competitor",
       "expected_direction": "down",
       "reason": "Popees' growth may lead to a more competitive landscape for Nestlé in the region.",
-      "ticker": "NESR.DE",
       "study": {
         "market_ticker": "^STOXX50E",
         "event_day": "2026-11-06",
@@ -274,7 +276,5 @@
       },
       "prediction_match": null
     }
-  ],
-  "status": "early",
-  "generated_at": "2026-11-07T12:42:37Z"
+  ]
 }
