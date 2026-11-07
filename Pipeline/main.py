@@ -11,6 +11,7 @@ from Data_Classes.event import EventInfo, Impact
 from Data_Classes.pipeline import DEFAULT_CACHE, PipelineContext, ProgressEvent
 from Pipeline.config import ALL_EVENT_TYPES, DEFAULT_DAYS_BACK
 from Pipeline.pipeline_module import PipelineModule
+from Pipeline.utils.event_files import event_lock, write_event
 
 logger = logging.getLogger(__name__)
 
@@ -120,7 +121,6 @@ async def run_pipeline(parameters: dict) -> tuple[bool, dict]:
 
 def refresh_event(event_id, *, data_cache=DEFAULT_CACHE):
     """Recalculate the cached event and keep prior studies for unavailable tickers."""
-    from Pipeline.event_files import event_lock, write_event
     from Pipeline.modules.event_study_runner import EventStudyRunner
     from Pipeline.modules.prediction_checker import PredictionChecker
 
