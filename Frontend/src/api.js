@@ -37,6 +37,15 @@ export const api = {
   }].filter((item) => item.matched.length)) : request('/api/alerts'),
   tracked: () => USE_MOCK ? Promise.resolve(mockTracked) : request('/api/tracked'),
   addTracked: (event_id, ticker) => USE_MOCK ? wait().then(() => { if (!mockTracked.some((item) => item.event_id === event_id && item.ticker === ticker)) mockTracked = [...mockTracked, { event_id, ticker, tracked_at: new Date().toISOString() }]; return mockTracked }) : request('/api/tracked', { method: 'POST', body: JSON.stringify({ event_id, ticker }) }),
+  removeTracked: (eventId, ticker) => {
+    if (!USE_MOCK) {
+      return request(`/api/tracked/${encodeURIComponent(eventId)}/${encodeURIComponent(ticker)}`, { method: 'DELETE' })
+    }
+    return wait().then(() => {
+      mockTracked = mockTracked.filter((item) => item.event_id !== eventId || item.ticker !== ticker)
+      return mockTracked
+    })
+  },
   runPipeline: (body) => USE_MOCK ? wait().then(() => { const run_id = `demo-${Date.now()}`; mockRuns.set(run_id, Date.now()); return { run_id } }) : request('/api/pipeline/run', { method: 'POST', body: JSON.stringify(body) }),
   pipelineStatus: (runId) => USE_MOCK ? Promise.resolve().then(() => { const elapsed = Date.now() - mockRuns.get(runId); const done = elapsed > 2400; return { state: done ? 'done' : 'running', completed: done ? 1 : 0, total: 1, last_message: done ? 'Scan complete.' : 'Checking recent news…' } }) : request(`/api/pipeline/status/${runId}`),
 }
