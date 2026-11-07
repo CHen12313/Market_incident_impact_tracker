@@ -168,7 +168,7 @@ LLM 关联到这个事件的每家公司各占一项：新闻里直接提到的�
 
 ### `study` — 事件研究结果
 
-由 `Pipeline/event_study.py` 里的 `run_event_study(ticker, event_date, days_after=10)` 生成。
+由 `Pipeline/utils/event_study.py` 里的 `run_event_study(ticker, event_date, days_after=10)` 生成。
 市场模型用第 −120 到 −10 个交易日拟合，所以新闻本身不会混进"正常走势"的估计里。
 
 ```python

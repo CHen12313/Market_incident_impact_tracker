@@ -193,7 +193,7 @@ window) is dropped by `EventStudyRunner`, which emits an `info` event with
 ### `study` — the event-study result
 
 Produced by `run_event_study(ticker, event_date, days_after=10)` in
-`Pipeline/event_study.py`. The market model is fitted on trading days −120 to
+`Pipeline/utils/event_study.py`. The market model is fitted on trading days −120 to
 −10, so the news itself can't leak into what "normal" looks like.
 
 ```python
