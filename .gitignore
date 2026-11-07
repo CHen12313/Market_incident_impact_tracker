@@ -227,3 +227,4 @@ Data_Cache/watchlist.json
 Data_Cache/tracked.json
 
 Data_Cache/prices/
+.DS_Store
