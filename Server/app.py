@@ -107,6 +107,7 @@ def create_app(config=None):
             top = max(impacts, key=lambda item: abs(item['study']['car_pct']))
             matched = [dict(ticker=item['ticker'], relation=item['relation'],
                             car_pct=item['study']['car_pct'],
+                            days_after=item['study'].get('days_after'),
                             is_significant=item['study']['is_significant'])
                        for item in impacts if item['ticker'] in watchlist]
             summary = {key: data['event'][key] for key in
@@ -208,7 +209,9 @@ def create_app(config=None):
                 async for event in stream:
                     if event['type'] == 'result':
                         if event['success']:
-                            frame = dict(type='done', success=True, event_ids=event.get('event_ids', []))
+                            event_ids = list(dict.fromkeys(event.get('event_ids', [])))
+                            frame = dict(type='done', success=True, event_ids=event_ids,
+                                         new_count=sum(event_id not in run['existing_ids'] for event_id in event_ids))
                             if event.get('exit_reason') is not None:
                                 frame['exit_reason'] = event['exit_reason']
                         else:
@@ -241,7 +244,8 @@ def create_app(config=None):
             if any(run['state'] == 'running' for run in runs.values()):
                 abort(409, description='A pipeline run is already running')
             run_id = str(uuid4())
-            run = dict(frames=[], state='running', latest=None)
+            run = dict(frames=[], state='running', latest=None,
+                       existing_ids={path.stem for path in (cache / 'events').glob('*.json')})
             runs[run_id] = run
             try:
                 threading.Thread(target=worker, args=(run, dict(event_types=types, days_back=days)),
@@ -270,7 +274,8 @@ def create_app(config=None):
                 elif frame['type'] == 'info':
                     result['last_message'] = frame['message']
                 elif frame['type'] == 'done':
-                    result.update(event_ids=frame['event_ids'], exit_reason=frame.get('exit_reason'))
+                    result.update(event_ids=frame['event_ids'], new_count=frame['new_count'],
+                                  exit_reason=frame.get('exit_reason'))
                 elif frame['type'] == 'error':
                     result['error_message'] = frame['message']
         return jsonify(result)

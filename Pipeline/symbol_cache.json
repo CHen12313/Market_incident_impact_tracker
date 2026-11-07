@@ -159,5 +159,58 @@
     "as_of": 1794057833
   },
   "paypal": "PYPL",
-  "square": "PS"
+  "square": "PS",
+  "roku": "ROKU",
+  "netflix": "NFLX",
+  "disney": "DIS",
+  "hamilton health centre": {
+    "symbol": null,
+    "as_of": 1794061021
+  },
+  "toronto general hospital": {
+    "symbol": null,
+    "as_of": 1794061022
+  },
+  "cerner corporation": {
+    "symbol": null,
+    "as_of": 1794061022
+  },
+  "epic systems": {
+    "symbol": null,
+    "as_of": 1794061022
+  },
+  "frances national blood service": {
+    "symbol": null,
+    "as_of": 1794061023
+  },
+  "refrigeration equipment provider": {
+    "symbol": null,
+    "as_of": 1794061023
+  },
+  "hospitals": "APOLLOHOSP.NS",
+  "healthcare providers": {
+    "symbol": null,
+    "as_of": 1794061024
+  },
+  "snapchat": {
+    "symbol": null,
+    "as_of": 1794061024
+  },
+  "meta": "META",
+  "tiktok": {
+    "symbol": null,
+    "as_of": 1794061024
+  },
+  "twitter": {
+    "symbol": null,
+    "as_of": 1794061025
+  },
+  "cleveland clinic": {
+    "symbol": null,
+    "as_of": 1794061186
+  },
+  "cybersecurity firms": {
+    "symbol": null,
+    "as_of": 1794061186
+  }
 }

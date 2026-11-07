@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link, NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom'
+import { Link, NavLink, Route, Routes, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { CartesianGrid, Legend, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip as ChartTooltip, XAxis, YAxis } from 'recharts'
 import { api, USE_MOCK } from './api'
 
@@ -11,12 +11,12 @@ function Tip({ label, children }) { return <span className="term" title={childre
 function Footer() { return <footer>Information about past price moves, not investment advice.</footer> }
 function Shell({ children }) { return <><header><Link className="brand" to="/">Market Incident Tracker</Link><nav><NavLink to="/">Alerts</NavLink><NavLink to="/events">All events</NavLink><NavLink to="/tracked">Tracked</NavLink></nav>{USE_MOCK && <span className="mock">Demo data</span>}</header><main>{children}</main><Footer /></> }
 
-function Watchlist() {
+function Watchlist({ onChange }) {
   const [tickers, setTickers] = useState([]); const [input, setInput] = useState(''); const [error, setError] = useState('')
   const refresh = useCallback(() => load(api.watchlist, (data) => setTickers(data.tickers), setError), [])
   useEffect(() => { refresh() }, [refresh])
-  const add = async (event) => { event.preventDefault(); if (!input.trim()) return; try { const data = await api.addWatchlist(input); setTickers(data.tickers); setInput('') } catch (e) { setError(e.message) } }
-  return <section className="watchlist"><div><h2>Your watchlist</h2><p>We’ll highlight events that may affect these stocks.</p></div><form onSubmit={add}><input value={input} onChange={(e) => setInput(e.target.value.toUpperCase())} placeholder="Add ticker, e.g. AAPL" aria-label="Ticker symbol" /><button>Add</button></form><div className="chips">{tickers.length ? tickers.map((ticker) => <span className="chip" key={ticker}>{ticker}<button onClick={() => api.removeWatchlist(ticker).then((data) => setTickers(data.tickers))} aria-label={`Remove ${ticker}`}>×</button></span>) : <span className="muted">No stocks added yet.</span>}</div>{error && <p className="error">{error}</p>}</section>
+  const add = async (event) => { event.preventDefault(); if (!input.trim()) return; try { const data = await api.addWatchlist(input); setTickers(data.tickers); setInput(''); onChange() } catch (e) { setError(e.message) } }
+  return <section className="watchlist"><div><h2>Your watchlist</h2><p>We’ll highlight events that may affect these stocks.</p></div><form onSubmit={add}><input value={input} onChange={(e) => setInput(e.target.value.toUpperCase())} placeholder="Add ticker, e.g. AAPL" aria-label="Ticker symbol" /><button>Add</button></form><div className="chips">{tickers.length ? tickers.map((ticker) => <span className="chip" key={ticker}>{ticker}<button onClick={() => api.removeWatchlist(ticker).then((data) => { setTickers(data.tickers); onChange() }).catch((error) => setError(error.message))} aria-label={`Remove ${ticker}`}>×</button></span>) : <span className="muted">No stocks added yet.</span>}</div>{error && <p className="error">{error}</p>}</section>
 }
 
 async function trackStock(eventId, ticker) {
@@ -26,7 +26,13 @@ async function trackStock(eventId, ticker) {
 
 function EventCard({ event, alert = false }) { const navigate = useNavigate(); return <article className="event-card" role="link" tabIndex={0} onClick={() => navigate(`/events/${event.event_id}`)} onKeyDown={(key) => { if (key.key === 'Enter') navigate(`/events/${event.event_id}`) }}><div className="event-heading"><span className={`pill ${event.event_type}`}>{typeLabel(event.event_type)}</span>{event.status === 'early' && <span className="early">Early, still tracking</span>}<time>{event.event_date}</time></div><h3>{event.headline}</h3>{alert && <div className="matches">{event.matched.map((item) => <span key={item.ticker}>{item.ticker} · {item.relation === 'direct' ? 'direct impact' : `${item.relation} impact`} · <strong className={item.car_pct < 0 ? 'down' : 'up'}>{signed(item.car_pct)}</strong>{item.is_significant && ' · significant'}</span>)}</div>}<p className="impact-line">Largest measured impact: <strong className={event.top_impact?.car_pct < 0 ? 'down' : 'up'}>{event.top_impact ? `${event.top_impact.ticker} ${signed(event.top_impact.car_pct)}` : 'Not available'}</strong></p></article> }
 
-function Alerts() { const [alerts, setAlerts] = useState(null); const [error, setError] = useState(''); const refresh = useCallback(() => load(api.alerts, setAlerts, setError), []); useEffect(() => { refresh() }, [refresh]); return <Shell><div className="hero"><p className="eyebrow">YOUR ALERTS</p><h1>News that may move the stocks you follow</h1><p>Start here: the cards below show only events connected to your watchlist.</p></div><Watchlist /><section><div className="section-title"><div><h2>Relevant events</h2><p>Click an event to see what happened and how the price moved.</p></div><button className="secondary" onClick={refresh}>Refresh</button></div>{error && <p className="error">{error}</p>}{alerts === null ? <Loading /> : alerts.length ? <div className="card-list">{alerts.map((event) => <EventCard event={event} alert key={event.event_id} />)}</div> : <Empty text="No current alerts. Add a ticker to your watchlist or check all events." />}</section><GraphPlaceholder /></Shell> }
+function Alerts() { const [alerts, setAlerts] = useState(null); const [error, setError] = useState(''); const refresh = useCallback(() => load(api.alerts, setAlerts, setError), []); useEffect(() => { refresh() }, [refresh]); return <Shell><div className="hero"><p className="eyebrow">YOUR ALERTS</p><h1>News that may move the stocks you follow</h1><p>Start here: the cards below show only events connected to your watchlist.</p></div><Watchlist onChange={refresh} />{alerts && <WatchlistImpact alerts={alerts} />}<section><div className="section-title"><div><h2>Relevant events</h2><p>Click an event to see what happened and how the price moved.</p></div><button className="secondary" onClick={refresh}>Refresh</button></div>{error && <p className="error">{error}</p>}{alerts === null ? <Loading /> : alerts.length ? <div className="card-list">{alerts.map((event) => <EventCard event={event} alert key={event.event_id} />)}</div> : <Empty text="No current alerts. Add a ticker to your watchlist or check all events." />}</section></Shell> }
+
+function scanSummary({ event_ids = [], new_count, exit_reason }) {
+  if (exit_reason) return `No new events. ${exit_reason}`
+  if (new_count == null) return 'Scan complete.'
+  return `${new_count} new · ${event_ids.length - new_count} updated`
+}
 
 function Pipeline({ onComplete }) {
   const [state, setState] = useState(null)
@@ -64,7 +70,7 @@ function Pipeline({ onComplete }) {
           if (!isActive()) return
           setState(status)
           if (status.state === 'running') timer = setTimeout(poll, 1500)
-          else if (status.state === 'done') finish(status.exit_reason || 'Scan complete.')
+          else if (status.state === 'done') finish(scanSummary(status))
           else finish(status.error_message || 'Scan failed.', true)
         } catch (error) {
           finish(error.message, true)
@@ -89,8 +95,7 @@ function Pipeline({ onComplete }) {
         if (isActive()) setState((previous) => ({ ...previous, last_message: message }))
       })
       source.addEventListener('done', (event) => {
-        const { exit_reason } = JSON.parse(event.data)
-        finish(exit_reason || 'Scan complete.')
+        finish(scanSummary(JSON.parse(event.data)))
       })
       source.addEventListener('error', (event) => {
         if (!isActive()) return
@@ -126,6 +131,7 @@ function Events() {
 }
 
 function Detail() { const { event_id } = useParams(); const navigate = useNavigate(); const [detail, setDetail] = useState(null); const [selected, setSelected] = useState(null); const [error, setError] = useState(''); const [refreshing, setRefreshing] = useState(false); const [saved, setSaved] = useState(null)
+  const [searchParams] = useSearchParams()
   const [tracking, setTracking] = useState(false)
   const [trackError, setTrackError] = useState('')
   useEffect(() => { void load(api.tracked, setSaved, setTrackError) }, [])
@@ -133,7 +139,7 @@ function Detail() { const { event_id } = useParams(); const navigate = useNaviga
   if (error) return <Shell><p className="error">{error}</p><button onClick={() => navigate('/events')}>Back to events</button></Shell>; if (!detail) return <Shell><Loading /></Shell>
   const impacts = [...detail.impacts].sort((a, b) => Number(b.relation === 'direct') - Number(a.relation === 'direct'))
   const isTracked = (ticker) => saved?.some((item) => item.event_id === event_id && item.ticker === ticker)
-  const impact = impacts.find((item) => item.ticker === selected)
+  const impact = impacts.find((item) => item.ticker === (selected ?? searchParams.get('ticker')))
     || impacts.find((item) => isTracked(item.ticker))
     || impacts[0]
   const { study } = impact
@@ -192,6 +198,49 @@ function Tracked() {
     ) : <Empty text="Nothing is being tracked yet. Choose Track on an event detail page." />}
   </Shell>
 }
-function GraphPlaceholder() { return <section className="graph-placeholder" aria-label="Graph placeholder"><div><p className="eyebrow">COMING NEXT</p><h2>Market impact overview</h2><p>This space is reserved for a portfolio-level graph.</p></div><span aria-hidden="true">Graph placeholder</span></section> }
+function WatchlistImpact({ alerts }) {
+  const rows = alerts.flatMap((event) => event.matched
+    .filter((impact) => Number.isFinite(impact.car_pct))
+    .map((impact) => ({ event, impact })))
+  rows.sort((a, b) => Math.abs(b.impact.car_pct) - Math.abs(a.impact.car_pct))
+  const extent = rows.reduce((max, { impact }) => Math.max(max, Math.abs(impact.car_pct)), 1)
+  const limit = Math.ceil(extent / 5) * 5
+
+  return <section className="watchlist-impact" aria-labelledby="watchlist-impact-title">
+    <h2 id="watchlist-impact-title">Watchlist impact overview</h2>
+    <p>Cumulative abnormal return (CAR) measures how each stock moved relative to its market-based expectation.</p>
+    {rows.length ? <>
+      <div className="impact-axis" aria-hidden="true">
+        <span>{signed(-limit)}</span><span>0%</span><span>{signed(limit)}</span>
+      </div>
+      <ul className="impact-rows">{rows.map(({ event, impact }) => {
+        const width = Math.abs(impact.car_pct) / limit * 50
+        const negative = impact.car_pct < 0
+        const detailUrl = `/events/${event.event_id}?${new URLSearchParams({ ticker: impact.ticker })}`
+        return <li key={JSON.stringify([event.event_id, impact.ticker])}>
+          <Link className="impact-row" to={detailUrl}>
+            <div className="impact-description">
+              <strong>{impact.ticker}</strong> <span>{event.headline}</span>
+              <small>
+                <time dateTime={event.event_date}>{event.event_date}</time>
+                {Number.isInteger(impact.days_after) && (
+                  <> · {impact.days_after === 0 ? 'Event trading day' : `Event trading day through day +${impact.days_after}`}</>
+                )}
+                {(impact.days_after == null ? event.status === 'early' : impact.days_after < 5) && (
+                  <> <span className="early">Early</span></>
+                )}
+              </small>
+            </div>
+            <div className="impact-scale" aria-hidden="true">
+              <span className={negative ? 'negative-bar' : 'positive-bar'}
+                style={{ width: `${width}%`, left: `${negative ? 50 - width : 50}%` }} />
+            </div>
+            <strong className={negative ? 'down' : impact.car_pct > 0 ? 'up' : ''}>{signed(impact.car_pct)}</strong>
+          </Link>
+        </li>
+      })}</ul>
+    </> : <Empty text="No measured impacts for your watchlist yet." />}
+  </section>
+}
 function Loading() { return <div className="loading">Loading…</div> } function Empty({ text }) { return <div className="empty">{text}</div> }
 export default function App() { return <Routes><Route path="/" element={<Alerts />} /><Route path="/events" element={<Events />} /><Route path="/events/:event_id" element={<Detail />} /><Route path="/tracked" element={<Tracked />} /><Route path="*" element={<Alerts />} /></Routes> }

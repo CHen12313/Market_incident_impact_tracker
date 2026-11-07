@@ -1,0 +1,167 @@
+{
+  "event": {
+    "event_id": "2026-11-04-cyberattack-disrupts-blood-storage-refrigeration-systems",
+    "event_type": "outage",
+    "headline": "Cyberattack disrupts blood storage refrigeration systems in France",
+    "summary": "A cyberattack on a refrigeration equipment provider in France has compromised blood storage systems, threatening the integrity of stored blood products.",
+    "event_date": "2026-11-04",
+    "source_url": "https://www.bleepingcomputer.com/news/security/cyberattack-disrupts-blood-storage-refrigeration-systems-in-france/"
+  },
+  "impacts": [
+    {
+      "company_name": "Hospitals",
+      "relation": "customer",
+      "expected_direction": "down",
+      "reason": "Hospitals rely on blood supplies, and disruptions can affect their operations.",
+      "ticker": "APOLLOHOSP.NS",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-04",
+        "days_after": 2,
+        "beta": 0.16,
+        "raw_return_pct": 0.13,
+        "market_return_pct": -2.46,
+        "expected_return_pct": -0.43,
+        "car_pct": 0.56,
+        "t_stat": 0.22,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-21",
+            "actual_pct": -1.3,
+            "expected_pct": 0.12,
+            "abnormal_pct": -1.42,
+            "cum_actual_pct": -10.65,
+            "cum_expected_pct": 0.52,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-22",
+            "actual_pct": 0.06,
+            "expected_pct": -0.2,
+            "abnormal_pct": 0.26,
+            "cum_actual_pct": -10.59,
+            "cum_expected_pct": 0.31,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-23",
+            "actual_pct": 1.65,
+            "expected_pct": -0.1,
+            "abnormal_pct": 1.75,
+            "cum_actual_pct": -8.94,
+            "cum_expected_pct": 0.22,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-26",
+            "actual_pct": 1.47,
+            "expected_pct": 0.09,
+            "abnormal_pct": 1.38,
+            "cum_actual_pct": -7.47,
+            "cum_expected_pct": 0.31,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-27",
+            "actual_pct": -0.67,
+            "expected_pct": 0.08,
+            "abnormal_pct": -0.75,
+            "cum_actual_pct": -8.14,
+            "cum_expected_pct": 0.39,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-28",
+            "actual_pct": 4.43,
+            "expected_pct": 0.03,
+            "abnormal_pct": 4.41,
+            "cum_actual_pct": -3.7,
+            "cum_expected_pct": 0.41,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-29",
+            "actual_pct": 0.77,
+            "expected_pct": -0.06,
+            "abnormal_pct": 0.84,
+            "cum_actual_pct": -2.93,
+            "cum_expected_pct": 0.35,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-10-30",
+            "actual_pct": 3.02,
+            "expected_pct": -0.3,
+            "abnormal_pct": 3.32,
+            "cum_actual_pct": 0.09,
+            "cum_expected_pct": 0.05,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-02",
+            "actual_pct": 0.13,
+            "expected_pct": -0.09,
+            "abnormal_pct": 0.22,
+            "cum_actual_pct": 0.22,
+            "cum_expected_pct": -0.04,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-03",
+            "actual_pct": -0.22,
+            "expected_pct": 0.04,
+            "abnormal_pct": -0.27,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-04",
+            "actual_pct": 1.89,
+            "expected_pct": 0.23,
+            "abnormal_pct": 1.66,
+            "cum_actual_pct": 1.89,
+            "cum_expected_pct": 0.23,
+            "car_pct": 1.66
+          },
+          {
+            "day": 1,
+            "date": "2026-11-05",
+            "actual_pct": -2.66,
+            "expected_pct": -0.69,
+            "abnormal_pct": -1.96,
+            "cum_actual_pct": -0.77,
+            "cum_expected_pct": -0.46,
+            "car_pct": -0.31
+          },
+          {
+            "day": 2,
+            "date": "2026-11-06",
+            "actual_pct": 0.9,
+            "expected_pct": 0.03,
+            "abnormal_pct": 0.86,
+            "cum_actual_pct": 0.13,
+            "cum_expected_pct": -0.43,
+            "car_pct": 0.56
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 0.22)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "early",
+  "generated_at": "2026-11-07T14:19:46Z"
+}
