@@ -1,0 +1,633 @@
+{
+  "associated british foods|Europe": "ABF.L",
+  "columbia sportswear|Europe": "COLM",
+  "danone|Europe": "BSN.F",
+  "teijin|Europe": "TIJ.SG",
+  "guess|Europe": "GES",
+  "paynearby|Europe": {
+    "symbol": null,
+    "as_of": 1759159380
+  },
+  "spartannash|Europe": "SRJ.F",
+  "amazon|Europe": "AMZN",
+  "hanesbrands|Europe": "HBI",
+  "interparfums|Europe": "I8P.F",
+  "kaya|Europe": "NP7.F",
+  "trump|Europe": "DJT",
+  "gildan activewear|Europe": "GIL",
+  "ralph lauren|Europe": "RL",
+  "rocky brands|Europe": "RCKY",
+  "birkenstock|Europe": "BIRK",
+  "wolverine world wide|Europe": "WWW",
+  "beachbody|Europe": "BODI",
+  "bpost|Europe": "13B.F",
+  "deluxe corporation|Europe": "DL8.F",
+  "pop mart|Europe": "KYG7170M1033.SG",
+  "giorgio armani|Europe": {
+    "symbol": null,
+    "as_of": 1759173484
+  },
+  "kering|Europe": "KER.PA",
+  "marie brizard|Europe": "BED.F",
+  "trump administration|Europe": {
+    "symbol": null,
+    "as_of": 1759173486
+  },
+  "big 5 sporting goods|Europe": "BGFV",
+  "morgan stanley|Europe": "MS",
+  "sofi|Europe": "SOFI",
+  "dreamworks|Europe": {
+    "symbol": null,
+    "as_of": 1759173747
+  },
+  "universal|Europe": {
+    "symbol": null,
+    "as_of": 1759173749
+  },
+  "fmcg|Europe": {
+    "symbol": null,
+    "as_of": 1759173753
+  },
+  "urban outfitters|Europe": "URBN",
+  "kodiak|US": "KOD",
+  "nvidia|US": "NVDA",
+  "on semi|US": "ON",
+  "youxin technology|US": "YAAS",
+  "factory|US": "CAKE",
+  "light|US": "LWLG",
+  "oracle|US": "ORCL",
+  "touring capital|US": {
+    "symbol": null,
+    "as_of": 1759174263
+  },
+  "nxp semiconductors|US": "NXPI",
+  "cisco|US": "CSCO",
+  "enersys|US": "ENS",
+  "goldman sachs|US": "GS",
+  "tmobile|US": "TMUS",
+  "amd|US": "AMD",
+  "global x|US": {
+    "symbol": null,
+    "as_of": 1759174274
+  },
+  "palantir|US": "PLTR",
+  "manufacturing|Europe": {
+    "symbol": null,
+    "as_of": 1759177807
+  },
+  "semiconductor|Europe": {
+    "symbol": null,
+    "as_of": 1759177807
+  },
+  "yue yuen industrial|Europe": "YUE1.SG",
+  "mars inc|Europe": {
+    "symbol": null,
+    "as_of": 1759234923
+  },
+  "nayara energy|Europe": {
+    "symbol": null,
+    "as_of": 1759234924
+  },
+  "russian energy|Europe": {
+    "symbol": null,
+    "as_of": 1759234924
+  },
+  "eu|Europe": "EU",
+  "indonesia|Europe": "TLKM.JK",
+  "devon energy|Europe": "DVN",
+  "eog resources|Europe": "EOG",
+  "nextera energy|Europe": "NEE",
+  "williams companies|Europe": "WMB",
+  "nextera energy inc|Europe": {
+    "symbol": null,
+    "as_of": 1759234940
+  },
+  "vitol group|Europe": {
+    "symbol": null,
+    "as_of": 1759234941
+  },
+  "diamondback energy|US": "FANG",
+  "tesco|Europe": "TSCO.L",
+  "asml|Europe": "ASML",
+  "hsbc bank malta|Europe": "HSB.MT",
+  "credo technology|US": "CRDO",
+  "gorilla technology group|US": "GRRR",
+  "opensolar|US": {
+    "symbol": null,
+    "as_of": 1759614548
+  },
+  "rea group|US": "KRG",
+  "anthology|US": {
+    "symbol": null,
+    "as_of": 1759614551
+  },
+  "dualentry|US": {
+    "symbol": null,
+    "as_of": 1759614552
+  },
+  "guideline|US": "GO91.F",
+  "gusto|US": {
+    "symbol": null,
+    "as_of": 1759614553
+  },
+  "taiwan|US": "TSM",
+  "us|US": {
+    "symbol": null,
+    "as_of": 1759614555
+  },
+  "shenandoah telecommunications co|US": "SHEN",
+  "aisprouts|US": {
+    "symbol": null,
+    "as_of": 1759614560
+  },
+  "anthropic|US": {
+    "symbol": null,
+    "as_of": 1759614560
+  },
+  "minnesota power|Europe": {
+    "symbol": null,
+    "as_of": 1759615703
+  },
+  "oil|Europe": {
+    "symbol": null,
+    "as_of": 1759615704
+  },
+  "saudi arabia|Europe": {
+    "symbol": null,
+    "as_of": 1759615704
+  },
+  "allete|Europe": "ALE",
+  "cvc|Europe": "Z1W.F",
+  "princes group|Europe": {
+    "symbol": null,
+    "as_of": 1759615710
+  },
+  "battery recycling|Europe": {
+    "symbol": null,
+    "as_of": 1759615713
+  },
+  "plug power|Europe": "PLUG",
+  "blackrock|Europe": "BLK",
+  "stablecoins|Europe": {
+    "symbol": null,
+    "as_of": 1759615718
+  },
+  "ai|US": "AI",
+  "bank of england|US": {
+    "symbol": null,
+    "as_of": 1760057474
+  },
+  "coreweave|US": "CRWV",
+  "imf|US": {
+    "symbol": null,
+    "as_of": 1760057475
+  },
+  "california|US": "PACB",
+  "cambricon|US": "688256.SS",
+  "semiconductor|US": "TSM",
+  "venture capital|US": "600783.SS",
+  "optus|US": "131030.KQ",
+  "telcos|US": {
+    "symbol": null,
+    "as_of": 1760057489
+  },
+  "wto|US": "WTO",
+  "qualcomm|US": "QCOM",
+  "assurant|US": "AIZ",
+  "bgc group|US": "BGC",
+  "fox entertainment|US": {
+    "symbol": null,
+    "as_of": 1760198026
+  },
+  "mog digitech|US": "1942.HK",
+  "confluent|US": "CFLT",
+  "psi software|US": "PSAN.DE",
+  "veeam|US": {
+    "symbol": null,
+    "as_of": 1760198032
+  },
+  "nxp semiconductors nv|US": "NXPI",
+  "ibm|US": "IBM",
+  "kpmg|US": {
+    "symbol": null,
+    "as_of": 1760198038
+  },
+  "orange|US": "TPA1.SG",
+  "script network|US": {
+    "symbol": null,
+    "as_of": 1760198040
+  },
+  "applied digital|US": "APLD",
+  "klarna|US": "KLAR",
+  "moodys|US": "MCO",
+  "erdos technologies|US": {
+    "symbol": null,
+    "as_of": 1760198155
+  },
+  "lumentum|US": "LITE",
+  "dldj exchange|US": {
+    "symbol": null,
+    "as_of": 1760198620
+  },
+  "openai|US": {
+    "symbol": null,
+    "as_of": 1760209420
+  },
+  "indiauk|US": {
+    "symbol": null,
+    "as_of": 1760209427
+  },
+  "kong|US": {
+    "symbol": null,
+    "as_of": 1760209432
+  },
+  "arm energy|US": {
+    "symbol": null,
+    "as_of": 1760209623
+  },
+  "nano nuclear energy|US": "NNE",
+  "t1 energy|US": "TE",
+  "talon|US": "TLNCU",
+  "china|US": {
+    "symbol": null,
+    "as_of": 1760209630
+  },
+  "exxonmobil|US": {
+    "symbol": null,
+    "as_of": 1760209630
+  },
+  "iran|US": {
+    "symbol": null,
+    "as_of": 1760209631
+  },
+  "russia|US": {
+    "symbol": null,
+    "as_of": 1760209631
+  },
+  "asbury carbons|US": {
+    "symbol": null,
+    "as_of": 1760209634
+  },
+  "canada bank|US": {
+    "symbol": null,
+    "as_of": 1760209635
+  },
+  "jefferies|US": "JEF",
+  "apollo|US": "APO",
+  "eagle creek|US": {
+    "symbol": null,
+    "as_of": 1760209639
+  },
+  "mars|US": "MMC",
+  "tcs|US": "TCS.TO",
+  "healthcare triangle|US": "HCTI",
+  "hellenic healthcare|US": {
+    "symbol": null,
+    "as_of": 1760209826
+  },
+  "microsoft|US": "MSFT",
+  "purehealth|US": {
+    "symbol": null,
+    "as_of": 1760209828
+  },
+  "biontech|US": "BNTX",
+  "quoin pharmaceuticals|US": "QNRX",
+  "regeneron pharmaceuticals|US": "REGN",
+  "shuttle pharmaceuticals|US": "SHPH",
+  "vertex pharmaceuticals|US": "VRTX",
+  "biotech|US": "ONCY",
+  "bristol myers squibb|US": "BMY",
+  "orbital therapeutics|US": {
+    "symbol": null,
+    "as_of": 1760209841
+  },
+  "epic systems|US": {
+    "symbol": null,
+    "as_of": 1760209843
+  },
+  "haleon|US": "HLN",
+  "astrazeneca|US": "AZN",
+  "monolith|US": "MPWR",
+  "pfizer|US": "PFE",
+  "canary capital|US": {
+    "symbol": null,
+    "as_of": 1760210002
+  },
+  "coinbase|US": "COIN",
+  "devon energy|US": "DVN",
+  "rbc capital|US": {
+    "symbol": null,
+    "as_of": 1760210004
+  },
+  "rail vision|US": "RVSN",
+  "affinius capital|US": {
+    "symbol": null,
+    "as_of": 1760210009
+  },
+  "finland|US": "MFL.V",
+  "infobric|US": {
+    "symbol": null,
+    "as_of": 1760210011
+  },
+  "kkr|US": "KKR",
+  "firefly aerospace|US": "FLY",
+  "scitec|US": {
+    "symbol": null,
+    "as_of": 1760210016
+  },
+  "ether|US": "ETHA",
+  "jon stryker|US": {
+    "symbol": null,
+    "as_of": 1760210168
+  },
+  "roundhill|US": "WPAY",
+  "stryker corporation|US": "SYK",
+  "amazon|US": "AMZN",
+  "fast retailing|US": {
+    "symbol": null,
+    "as_of": 1760210174
+  },
+  "trump|US": "DJT",
+  "uniqlo|US": {
+    "symbol": null,
+    "as_of": 1760210175
+  },
+  "barfresh food group|US": "BRFH",
+  "carlyle|US": "CG",
+  "id fresh food|US": {
+    "symbol": null,
+    "as_of": 1760210179
+  },
+  "kedaara|US": {
+    "symbol": null,
+    "as_of": 1760210180
+  },
+  "costco|US": "COST",
+  "pepsico|US": "PEP",
+  "walmart|US": "WMT",
+  "canary islands|Europe": {
+    "symbol": null,
+    "as_of": 1760210361
+  },
+  "czr exchange|Europe": {
+    "symbol": null,
+    "as_of": 1760210361
+  },
+  "la times|Europe": {
+    "symbol": null,
+    "as_of": 1760210361
+  },
+  "vfx studios|Europe": {
+    "symbol": null,
+    "as_of": 1760210362
+  },
+  "anoto group ab|Europe": "XTL1.F",
+  "green cabbage|Europe": {
+    "symbol": null,
+    "as_of": 1760210365
+  },
+  "redmonk|Europe": {
+    "symbol": null,
+    "as_of": 1760210365
+  },
+  "ai|Europe": "AI",
+  "china|Europe": {
+    "symbol": null,
+    "as_of": 1760210370
+  },
+  "goldman sachs|Europe": "GS",
+  "bsnl|Europe": {
+    "symbol": null,
+    "as_of": 1760210374
+  },
+  "orange|Europe": "TPA1.SG",
+  "vodafone idea|Europe": {
+    "symbol": null,
+    "as_of": 1760210376
+  },
+  "food additives|Europe": {
+    "symbol": null,
+    "as_of": 1760210380
+  },
+  "precision medicine|Europe": "PRAX",
+  "aeg europe|Europe": {
+    "symbol": null,
+    "as_of": 1760210570
+  },
+  "greenland|Europe": "CGR0.F",
+  "iran|Europe": {
+    "symbol": null,
+    "as_of": 1760210574
+  },
+  "amg|Europe": "AMG",
+  "asbury carbons|Europe": {
+    "symbol": null,
+    "as_of": 1760210578
+  },
+  "cointelegraph|Europe": {
+    "symbol": null,
+    "as_of": 1760210579
+  },
+  "federal reserve|Europe": {
+    "symbol": null,
+    "as_of": 1760210579
+  },
+  "jindal stainless|Europe": "JSL.BO",
+  "k p group|Europe": {
+    "symbol": null,
+    "as_of": 1760210582
+  },
+  "na|Europe": {
+    "symbol": null,
+    "as_of": 1760210583
+  },
+  "repsol|Europe": "REP.MC",
+  "adani enterprises|Europe": "ADANIENT.NS",
+  "cesc|Europe": "CESC.BO",
+  "tata power|Europe": "TATAPOWER.NS",
+  "torrent power|Europe": "TORNTPOWER.NS",
+  "bcc research|Europe": {
+    "symbol": null,
+    "as_of": 1760210751
+  },
+  "biotech|Europe": {
+    "symbol": null,
+    "as_of": 1760210751
+  },
+  "biogen|Europe": "BIIB",
+  "healthcare|Europe": "GEHC",
+  "stoke therapeutics|Europe": "STOK",
+  "astrazeneca|Europe": "AZN",
+  "haleon|Europe": "HLN",
+  "powerbrick|Europe": {
+    "symbol": null,
+    "as_of": 1760210955
+  },
+  "stellantis|Europe": "STLAP.PA",
+  "dws|Europe": "DWS.VI",
+  "eqt|Europe": "EQT",
+  "oaktree|Europe": "OCSL",
+  "vanguard|Europe": {
+    "symbol": null,
+    "as_of": 1760210963
+  },
+  "blockchain|Europe": "GI000A2P2W41.SG",
+  "nano nuclear energy|Europe": "NNE",
+  "arriva group|Europe": {
+    "symbol": null,
+    "as_of": 1760210971
+  },
+  "rts infrastructure|Europe": {
+    "symbol": null,
+    "as_of": 1760210972
+  },
+  "dassault systemes|Europe": "DSY.PA",
+  "mahindra  mahindra|Europe": "MOM.SG",
+  "brandart|Europe": {
+    "symbol": null,
+    "as_of": 1760211181
+  },
+  "terotecna|Europe": {
+    "symbol": null,
+    "as_of": 1760211181
+  },
+  "uniqlo|Europe": {
+    "symbol": null,
+    "as_of": 1760211182
+  },
+  "velasca|Europe": {
+    "symbol": null,
+    "as_of": 1760211182
+  },
+  "fast retailing|Europe": "FR7.F",
+  "shein|Europe": {
+    "symbol": null,
+    "as_of": 1760211188
+  },
+  "none|Europe": {
+    "symbol": null,
+    "as_of": 1760211191
+  },
+  "levi strauss|Europe": "LEVI",
+  "patagonia|Europe": "PGDC.V",
+  "stripe|HongKong": {
+    "symbol": null,
+    "as_of": 1760211359
+  },
+  "none|HongKong": {
+    "symbol": null,
+    "as_of": 1760211522
+  },
+  "ai technology group|US": "AIPG",
+  "apple|US": "AAPL",
+  "globaltech|US": "GLBH",
+  "world mobile chain|US": {
+    "symbol": null,
+    "as_of": 1760304954
+  },
+  "andreessen horowitz|US": {
+    "symbol": null,
+    "as_of": 1760304957
+  },
+  "elon musk|US": {
+    "symbol": null,
+    "as_of": 1760304957
+  },
+  "furtherai|US": {
+    "symbol": null,
+    "as_of": 1760304958
+  },
+  "kyiv|US": "KYIV",
+  "nicholas stern|US": {
+    "symbol": null,
+    "as_of": 1760305132
+  },
+  "turkey|US": {
+    "symbol": null,
+    "as_of": 1760305133
+  },
+  "ukraine|US": {
+    "symbol": null,
+    "as_of": 1760305133
+  },
+  "blackrock|US": "BLK",
+  "porsche|US": {
+    "symbol": null,
+    "as_of": 1760305141
+  },
+  "reliance bp mobility|US": {
+    "symbol": null,
+    "as_of": 1760305141
+  },
+  "healthcare providers|US": {
+    "symbol": null,
+    "as_of": 1760305302
+  },
+  "medincell|US": {
+    "symbol": null,
+    "as_of": 1760305302
+  },
+  "teva pharmaceuticals|US": {
+    "symbol": null,
+    "as_of": 1760305303
+  },
+  "finasteride|US": {
+    "symbol": null,
+    "as_of": 1760305305
+  },
+  "nrx pharmaceuticals|US": "NRXP",
+  "avm biotechnology|US": {
+    "symbol": null,
+    "as_of": 1760305315
+  },
+  "fda|US": {
+    "symbol": null,
+    "as_of": 1760305318
+  },
+  "thestreet|US": {
+    "symbol": null,
+    "as_of": 1760305318
+  },
+  "goldman sachs|APAC": "GS",
+  "hang seng bank|APAC": "0011.HK",
+  "hsbc|APAC": "HSBC",
+  "sungrow|APAC": "300274.SZ",
+  "ai|APAC": "AI",
+  "nvidia|APAC": "NVDA",
+  "tesla|APAC": "TSLA",
+  "chinese tech firms|APAC": {
+    "symbol": null,
+    "as_of": 1760380466
+  },
+  "asian markets|APAC": {
+    "symbol": null,
+    "as_of": 1760380632
+  },
+  "federal reserve|APAC": {
+    "symbol": null,
+    "as_of": 1760380633
+  },
+  "wall street|APAC": "WSSE",
+  "gold|APAC": {
+    "symbol": null,
+    "as_of": 1760380948
+  },
+  "indonesia|APAC": "KPIG.JK",
+  "amri anjulius|APAC": {
+    "symbol": null,
+    "as_of": 1760380953
+  },
+  "china|APAC": {
+    "symbol": null,
+    "as_of": 1760380954
+  },
+  "sp 500|APAC": {
+    "symbol": null,
+    "as_of": 1760380954
+  },
+  "us stocks|APAC": {
+    "symbol": null,
+    "as_of": 1760565380
+  },
+  "microsoft|APAC": "MSFT"
+}
