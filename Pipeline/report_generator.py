@@ -1,5 +1,5 @@
 import openai
-from config import NEWS_API_KEY, NEWS_API_BACKUP, NEWS_API_BACKUP2, NEWS_API_BACKUP3, NEWS_API_BACKUP4, NEWS_API_BACKUP5, NEWS_API_BACKUP6, OPENAI_API_KEY, NEWS_LOOKBACK_DAYS, SECTOR_DEAL_TERMS, REGION_ANCHORS, ALPHA_VANTAGE_API_KEY
+from Pipeline.config import NEWS_API_KEY, NEWS_API_BACKUP, NEWS_API_BACKUP2, NEWS_API_BACKUP3, NEWS_API_BACKUP4, NEWS_API_BACKUP5, NEWS_API_BACKUP6, OPENAI_API_KEY, NEWS_LOOKBACK_DAYS, SECTOR_DEAL_TERMS, REGION_ANCHORS, ALPHA_VANTAGE_API_KEY
 from newsapi.newsapi_client import NewsApiClient
 import httpx
 from datetime import datetime, timedelta
@@ -9,10 +9,9 @@ import requests
 import json
 from datetime import date, timedelta, timezone
 import re
-from transcript_crawler import fetch_latest_transcript
 from newspaper import Article
 import string
-from additional_info_collector import get_company_info
+from Pipeline.additional_info_collector import get_company_info
 
 #from main import base_path, json_path
 
@@ -386,25 +385,6 @@ class IBDMarketAnalyst:
         analysis += "\n\n" + readings
         print(f"✓ got recommended readings")
 
-        # ——— Section 7 – Macro Economics ————————————————
-        print(f"Using crawler to extract podcast transcript...")
-        podcast_transcript = fetch_latest_transcript()
-        print(f"✓ got podcast transcript")
-        podcast_prompt, _, max_tokens = prompts[6]
-        podcast_prompt += "\n\n Here is the latest transcript: \n" + podcast_transcript
-        messages.append({"role": "user", "content": podcast_prompt})
-
-        print("Sending request for podcast (section 7)...")
-        resp = self.openai_client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[messages[0], messages[2], messages[-1]],   # just system + response for section 1+ this user prompt
-            max_tokens=max_tokens,
-            temperature=0.3,
-            timeout=120
-        )
-
-        resp = resp.choices[0].message.content.strip()
-        analysis += "\n\n" + resp + "\n@@@ The information used in this section is gathered from 'Thoughts on the market',by Morgan Stanley"
         return analysis
     
     def verify_link(self, url: str) -> bool:

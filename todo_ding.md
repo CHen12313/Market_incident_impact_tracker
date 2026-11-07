@@ -18,7 +18,7 @@ Data_Cache/
 
 ## 0. 前 20 分钟
 
-- [ ] 和 Chen、Xuan 确认第 2 节的 API
+- [ ] 和 Chen、Xuan 确认 [API 说明](API.md) 中的接口约定
 - [ ] `Server/app.py` 跑起来，`GET /api/health` 返回 `{"ok": true}`（端口 5000，和 Xuan 的 Vite 代理一致）
 - [ ] 先用 Chen 提交的 `Data_Cache/events/mock_event.json` 当数据源，**不用等 pipeline**
 
@@ -29,41 +29,7 @@ Data_Cache/
 
 ## 2. API
 
-| 方法 | 路径 | 请求 | 返回 |
-|---|---|---|---|
-| GET | `/api/health` | | `{"ok": true}` |
-| GET | `/api/events` | | `[事件摘要]`，按 `event_date` 从新到旧 |
-| GET | `/api/events/<event_id>` | | 事件详情，**原样返回** `Data_Cache/events/{event_id}.json` |
-| POST | `/api/events/<event_id>/refresh` | | 调用 `refresh_event(event_id)`，返回新的详情 |
-| GET | `/api/watchlist` | | `{"tickers": ["AAPL", "MSFT"]}` |
-| POST | `/api/watchlist` | `{"ticker": "AAPL"}` | 同上（统一转大写、去重） |
-| DELETE | `/api/watchlist/<ticker>` | | 同上 |
-| GET | `/api/alerts` | | `[事件摘要 + "matched": [{"ticker", "relation", "car_pct", "is_significant"}]]` |
-| GET | `/api/tracked` | | `[{"event_id", "ticker", "tracked_at"}]` |
-| POST | `/api/tracked` | `{"event_id", "ticker"}` | 同上 |
-| DELETE | `/api/tracked/<event_id>/<ticker>` | | 同上 |
-| POST | `/api/pipeline/run` | `{"event_types": [...], "days_back": 3}` | `{"run_id": "..."}`；已有任务在跑时返回 409 |
-| GET | `/api/pipeline/stream/<run_id>` | | SSE：`progress` / `info` / `result` 事件 |
-| GET | `/api/pipeline/status/<run_id>` | | `{"state": "running/done/error", "completed", "total", "last_message"}`（SSE 的备用方案） |
-
-**事件摘要**（`/api/events` 和 `/api/alerts` 用，从详情文件里算出来）：
-
-```json
-{
-  "event_id": "2026-10-21-acme-data-breach",
-  "event_type": "breach",
-  "headline": "string",
-  "event_date": "YYYY-MM-DD",
-  "status": "complete | early",
-  "affected_count": 5,
-  "top_impact": {"ticker": "ACME", "car_pct": -6.2, "is_significant": true},
-  "touches_watchlist": true
-}
-```
-
-- `top_impact`：`impacts` 里 `|car_pct|` 最大的那一个
-- 错误统一返回 `{"error": "说明"}` 加对应状态码（400/404/409/500）
-- 详情 JSON 的完整格式见 `todo_chen.md` 第 4 节
+- [ ] 按 [API 说明](API.md) 实现并验证接口，包括返回结构、错误和 SSE。
 
 ## 3. 运行 pipeline 并实时推送进度（SSE）
 
@@ -96,3 +62,11 @@ Chen 的 `stream_pipeline(params)` 是 **async generator**，而 Flask 的流式
 | 4:45 | 功能冻结 |
 
 **最后检查：** 断网（或 yfinance 不可用）的情况下，打开两个演示事件也能正常显示（依赖 Chen 的价格缓存）。
+
+## 实现进展（2026-11-07）
+
+- 已实现 `Server/app.py`：全部 API、JSON 错误、SPA 托管、原子文件写入和进程内锁。
+- SSE 以 `DATA_CONTRACT.md` 为准：保存完整帧记录，支持多客户端、断线重放、15 秒心跳及状态轮询；不使用一次消费的 queue。
+- 已用 `Server.seed_mock` 将 `Pipeline/Mock_Event/` 中两个 mock 放入契约数据目录，支持离线读取。
+- 已通过 `tests/test_server.py` 的 5 组自动测试；启动和对接说明见 `Server/README.md`。
+- 待联调：Chen 的 `Pipeline.main.stream_pipeline` / `refresh_event`，以及 Xuan 的 `Server/static_spa/` 构建产物。真实价格缓存和断网完整演示尚未验证。

@@ -1,4 +1,5 @@
-from config import ALPHA_VANTAGE_API_KEY, FINNHUB_API_KEY
+from Pipeline.config import ALPHA_VANTAGE_API_KEY, FINNHUB_API_KEY
+from Pipeline.event_files import atomic_write
 import requests
 import os
 from pathlib import Path
@@ -190,8 +191,7 @@ def choose_best_symbol_global(
     return best_cand
 
 def save_cache(cache):
-    CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    CACHE_PATH.write_text(json.dumps(cache, ensure_ascii=False, indent=2))
+    atomic_write(CACHE_PATH, lambda file: json.dump(cache, file, ensure_ascii=False, indent=2))
 
 def normalize_name(name: str) -> str:
     return ''.join(ch for ch in name.lower().strip() if ch.isalnum() or ch.isspace())
@@ -212,6 +212,8 @@ def lookup_symbol_company(company_name: str) -> list[dict]:
         return []
 
 def lookup_symbol_company_finnhub(company_name: str) -> List[Dict[str, Any]]:
+    if not FINNHUB_API_KEY:
+        return []
     url = "https://finnhub.io/api/v1/search"
     params = {"q": company_name, "token": FINNHUB_API_KEY}
     r = requests.get(url, params=params, timeout=10)
@@ -433,7 +435,10 @@ def get_company_symbol(company_name: str, region: Optional[str] = None, finnhub_
             return symbol_value
 
     #Finnhub fallback ---
-    finnhub_top_candidates = lookup_symbol_company_finnhub(company_name)[:finnhub_top_k]
+    try:
+        finnhub_top_candidates = lookup_symbol_company_finnhub(company_name)[:finnhub_top_k]
+    except requests.RequestException:
+        finnhub_top_candidates = []
 
     if best_yahoo_candidate:
         yahoo_root = symbol_root(best_yahoo_candidate.get("symbol"))
