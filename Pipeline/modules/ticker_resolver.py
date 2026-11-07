@@ -20,7 +20,7 @@ class TickerResolver(PipelineModule):
     label = "Resolving tickers"
 
     async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
-        from Pipeline.additional_info_collector import get_company_symbol
+        from Pipeline.utils.additional_info_collector import get_company_symbol
 
         for record in context.events:
             companies = {}

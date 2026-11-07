@@ -4,7 +4,7 @@ import asyncio
 from Data_Classes.enums import InfoTag
 from Data_Classes.event import EventInfo, Impact
 from Data_Classes.pipeline import PipelineContext
-from Pipeline.event_study import run_event_study
+from Pipeline.utils.event_study import run_event_study
 from Pipeline.pipeline_module import PipelineModule
 
 

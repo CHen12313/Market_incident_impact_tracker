@@ -11,7 +11,7 @@ from datetime import date, timedelta, timezone
 import re
 from newspaper import Article
 import string
-from Pipeline.additional_info_collector import get_company_info
+from Pipeline.utils.additional_info_collector import get_company_info
 
 #from main import base_path, json_path
 

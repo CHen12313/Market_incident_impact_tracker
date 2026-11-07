@@ -1,6 +1,6 @@
 """Persist each event and its impacts to the event cache."""
 from Data_Classes.pipeline import PipelineContext
-from Pipeline.event_files import write_event
+from Pipeline.utils.event_files import write_event
 from Pipeline.pipeline_module import PipelineModule
 
 

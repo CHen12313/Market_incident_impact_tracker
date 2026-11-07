@@ -158,8 +158,8 @@ class ServerTests(unittest.TestCase):
             patch('Pipeline.modules.news_collector.NewsCollector._fetch', return_value=[article]),
             patch('Pipeline.modules.event_extractor.OPENAI_API_KEY', 'test'),
             patch('Pipeline.modules.event_extractor.EventExtractor._extract_one', return_value=extracted),
-            patch('Pipeline.additional_info_collector.get_company_symbol', return_value='ACME'),
-            patch('Pipeline.event_study.yf.Ticker', side_effect=AssertionError('Expected cached prices')),
+            patch('Pipeline.utils.additional_info_collector.get_company_symbol', return_value='ACME'),
+            patch('Pipeline.utils.event_study.yf.Ticker', side_effect=AssertionError('Expected cached prices')),
         ):
             response = self.client.post('/api/pipeline/run', json={'event_types': ['outage'], 'days_back': 3})
             run_id = response.json['run_id']

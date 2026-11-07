@@ -134,7 +134,7 @@ class EventFile:
     def check_invariants(self) -> None:
         """The six invariants DATA_CONTRACT.md lists under "Invariants".
         Diagnostic only — not currently called from the write path (see
-        write_event in Pipeline/event_files.py), since cross-exchange
+        write_event in Pipeline/utils/event_files.py), since cross-exchange
         holiday calendars can legitimately give two companies of the same
         event slightly different realized days_after; raises AssertionError
         naming the first invariant that fails."""
