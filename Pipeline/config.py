@@ -1,15 +1,19 @@
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 
-NEWS_API_BACKUP = "***REMOVED_NEWS_API_BACKUP***"
-NEWS_API_BACKUP2 = "***REMOVED_NEWS_API_BACKUP2***"
-NEWS_API_BACKUP3 = "***REMOVED_NEWS_API_BACKUP3***"
-NEWS_API_BACKUP4 = "***REMOVED_NEWS_API_BACKUP4***"
-NEWS_API_BACKUP5 = "***REMOVED_NEWS_API_BACKUP5***"
-NEWS_API_BACKUP6 = "***REMOVED_NEWS_API_BACKUP6***"
-NEWS_API_KEY = "***REMOVED_NEWS_API_KEY***"
-OPENAI_API_KEY = "***REMOVED_OPENAI_API_KEY***"
-ALPHA_VANTAGE_API_KEY = "***REMOVED_ALPHA_VANTAGE_API_KEY***"
-FINNHUB_API_KEY = "***REMOVED_FINNHUB_API_KEY***"
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+
+NEWS_API_BACKUP = os.environ["NEWS_API_BACKUP"]
+NEWS_API_BACKUP2 = os.environ["NEWS_API_BACKUP2"]
+NEWS_API_BACKUP3 = os.environ["NEWS_API_BACKUP3"]
+NEWS_API_BACKUP4 = os.environ["NEWS_API_BACKUP4"]
+NEWS_API_BACKUP5 = os.environ["NEWS_API_BACKUP5"]
+NEWS_API_BACKUP6 = os.environ["NEWS_API_BACKUP6"]
+NEWS_API_KEY = os.environ["NEWS_API_KEY"]
+OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
+ALPHA_VANTAGE_API_KEY = os.environ["ALPHA_VANTAGE_API_KEY"]
+FINNHUB_API_KEY = os.environ["FINNHUB_API_KEY"]
 
 # Time Settings
 NEWS_LOOKBACK_DAYS = 7  # Number of days to look back for news 
@@ -127,7 +131,7 @@ SECTOR_DEAL_TERMS = {
 REGION_ANCHORS = {
     "Europe": [
         "Europe", "European Union", "EU", "Eurozone",
-        "European Commission", "DG COMP", "ECB", "ESMA", "CMA", 
+        "European Commission", "DG COMP", "ECB", "ESMA", "CMA",
         "Euro Stoxx", "DAX", "CAC", "FTSE"
     ],
     "APAC": [
@@ -135,5 +139,40 @@ REGION_ANCHORS = {
         "China", "Japan", "South Korea", "Australia", "New Zealand",
         "HKEX", "SGX", "Nikkei", "Hang Seng"
     ]
+}
+
+# Incident types this pipeline searches for (DATA_CONTRACT.md's `event_type`,
+# minus "other" — NewsCollector doesn't search for that one).
+ALL_EVENT_TYPES = ["merger", "breach", "recall", "outage", "lawsuit", "regulation"]
+DEFAULT_DAYS_BACK = 3
+
+# Search terms per incident type, same role as SECTOR_DEAL_TERMS but keyed by
+# event_type instead of sector. NewsCollector ORs these together as its query.
+INCIDENT_TERMS = {
+    "merger": [
+        "merger", "acquisition", "acquire", "buyout", "takeover", "stake",
+        "deal", "transaction"
+    ],
+    "breach": [
+        "data breach", "cyberattack", "cyber attack", "hack", "hacked",
+        "ransomware", "security breach", "data leak", "exposed data"
+    ],
+    "recall": [
+        "recall", "recalled", "product recall", "safety recall", "defect",
+        "withdrawn from market"
+    ],
+    "outage": [
+        "outage", "service disruption", "downtime", "system failure",
+        "went down", "service interruption"
+    ],
+    "lawsuit": [
+        "lawsuit", "sued", "litigation", "class action", "legal action",
+        "court filing"
+    ],
+    "regulation": [
+        "fine", "fined", "regulatory action", "sanctions", "investigation",
+        "regulator", "compliance violation", "penalty"
+    ],
+    "_default": ["incident", "controversy", "crisis"]
 }
 
