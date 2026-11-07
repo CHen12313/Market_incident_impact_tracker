@@ -38,7 +38,7 @@ class EventExtractor(PipelineModule):
         self.max_knock_on_companies = max_knock_on_companies if max_knock_on_companies is not None else self.MAX_KNOCK_ON_COMPANIES
         if not self.api_key:
             raise ValueError("Set OPENAI_API_KEY before scanning news.")
-        self.client = openai.Client(api_key=self.api_key, timeout=30)
+        self.client = openai.AsyncClient(api_key=self.api_key, timeout=30)
 
     def _build_messages(self, event_type: EventType, articles: list) -> list[dict]:
         article_block = "\n\n".join(
@@ -56,13 +56,14 @@ class EventExtractor(PipelineModule):
             {"role": "user", "content": user_message},
         ]
 
-    def _extract_one(self, event_type: EventType, articles: list) -> dict | None:
-        response = self.client.chat.completions.create(
+    async def _extract_one(self, event_type: EventType, articles: list) -> dict | None:
+        completion = await self.client.chat.completions.create(
             model=self.model,
             messages=self._build_messages(event_type, articles),
             response_format={"type": "json_object"},
             temperature=0.2,
-        ).choices[0].message.content
+        )
+        response = completion.choices[0].message.content
 
         try:
             raw_response = json.loads(response)
@@ -147,12 +148,13 @@ class EventExtractor(PipelineModule):
         if context.articles is None:
             raise ValueError("EventExtractor: `articles` is missing")
 
-        events: list[ExtractedEvent] = []
-        for bucket in context.articles:
-            if not bucket.articles:
-                continue
+        buckets = [bucket for bucket in context.articles if bucket.articles]
+        raw_responses = await asyncio.gather(
+            *(self._extract_one(bucket.event_type, bucket.articles) for bucket in buckets)
+        )
 
-            raw_response = await asyncio.to_thread(self._extract_one, bucket.event_type, bucket.articles)
+        events: list[ExtractedEvent] = []
+        for bucket, raw_response in zip(buckets, raw_responses):
             if raw_response is None:
                 continue
 
