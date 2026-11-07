@@ -1,0 +1,197 @@
+{
+  "event": {
+    "event_id": "2026-10-30-intel-profit-outlook-disappoints",
+    "event_type": "other",
+    "headline": "Intel profit outlook falls short of expectations",
+    "summary": "Intel gave a weaker-than-expected profit outlook and told Reuters that an explosion at its Israel plant was expected to reduce revenue by roughly $600 million over two quarters.",
+    "event_date": "2026-10-30",
+    "source_url": "https://ca.marketscreener.com/news/intel-signals-slower-growth-as-pc-market-remains-under-pressure-ce785fdadd80f325"
+  },
+  "impacts": [
+    {
+      "company_name": "Intel",
+      "ticker": "INTC",
+      "relation": "direct",
+      "expected_direction": "down",
+      "reason": "Intel directly faces weaker profit expectations and lost revenue from the plant disruption.",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-10-30",
+        "days_after": 5,
+        "beta": 3.46,
+        "raw_return_pct": -42.8,
+        "market_return_pct": -4.42,
+        "expected_return_pct": -17.11,
+        "car_pct": -25.69,
+        "t_stat": -2.62,
+        "is_significant": true,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-16",
+            "actual_pct": -5.79,
+            "expected_pct": -4.08,
+            "abnormal_pct": -1.71,
+            "cum_actual_pct": -3.06,
+            "cum_expected_pct": -0.08,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-19",
+            "actual_pct": 2.43,
+            "expected_pct": 1.11,
+            "abnormal_pct": 1.31,
+            "cum_actual_pct": -0.64,
+            "cum_expected_pct": 1.03,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-20",
+            "actual_pct": -0.37,
+            "expected_pct": 0.68,
+            "abnormal_pct": -1.05,
+            "cum_actual_pct": -1.01,
+            "cum_expected_pct": 1.71,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-21",
+            "actual_pct": 1.39,
+            "expected_pct": 1.7,
+            "abnormal_pct": -0.31,
+            "cum_actual_pct": 0.38,
+            "cum_expected_pct": 3.41,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-22",
+            "actual_pct": -8.04,
+            "expected_pct": -4.48,
+            "abnormal_pct": -3.55,
+            "cum_actual_pct": -7.66,
+            "cum_expected_pct": -1.07,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-23",
+            "actual_pct": 1.72,
+            "expected_pct": -2.1,
+            "abnormal_pct": 3.82,
+            "cum_actual_pct": -5.94,
+            "cum_expected_pct": -3.17,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-26",
+            "actual_pct": 4.04,
+            "expected_pct": 2.11,
+            "abnormal_pct": 1.93,
+            "cum_actual_pct": -1.9,
+            "cum_expected_pct": -1.06,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-10-27",
+            "actual_pct": 3.61,
+            "expected_pct": 1.76,
+            "abnormal_pct": 1.85,
+            "cum_actual_pct": 1.71,
+            "cum_expected_pct": 0.7,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-10-28",
+            "actual_pct": 1.91,
+            "expected_pct": 0.66,
+            "abnormal_pct": 1.25,
+            "cum_actual_pct": 3.62,
+            "cum_expected_pct": 1.36,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-10-29",
+            "actual_pct": -3.62,
+            "expected_pct": -1.36,
+            "abnormal_pct": -2.27,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-10-30",
+            "actual_pct": -28.58,
+            "expected_pct": -6.59,
+            "abnormal_pct": -21.99,
+            "cum_actual_pct": -28.58,
+            "cum_expected_pct": -6.59,
+            "car_pct": -21.99
+          },
+          {
+            "day": 1,
+            "date": "2026-11-02",
+            "actual_pct": -8.8,
+            "expected_pct": -2.07,
+            "abnormal_pct": -6.74,
+            "cum_actual_pct": -37.38,
+            "cum_expected_pct": -8.66,
+            "car_pct": -28.72
+          },
+          {
+            "day": 2,
+            "date": "2026-11-03",
+            "actual_pct": 0.97,
+            "expected_pct": 0.96,
+            "abnormal_pct": 0.01,
+            "cum_actual_pct": -36.41,
+            "cum_expected_pct": -7.7,
+            "car_pct": -28.71
+          },
+          {
+            "day": 3,
+            "date": "2026-11-04",
+            "actual_pct": -3.77,
+            "expected_pct": 5.17,
+            "abnormal_pct": -8.94,
+            "cum_actual_pct": -40.18,
+            "cum_expected_pct": -2.53,
+            "car_pct": -37.65
+          },
+          {
+            "day": 4,
+            "date": "2026-11-05",
+            "actual_pct": -10.33,
+            "expected_pct": -15.37,
+            "abnormal_pct": 5.04,
+            "cum_actual_pct": -50.51,
+            "cum_expected_pct": -17.9,
+            "car_pct": -32.61
+          },
+          {
+            "day": 5,
+            "date": "2026-11-06",
+            "actual_pct": 7.71,
+            "expected_pct": 0.79,
+            "abnormal_pct": 6.93,
+            "cum_actual_pct": -42.8,
+            "cum_expected_pct": -17.11,
+            "car_pct": -25.69
+          }
+        ],
+        "verdict_text": "Fell 25.69% relative to the market-based expectation over 6 trading days (t = -2.62)."
+      },
+      "prediction_match": true
+    }
+  ],
+  "status": "complete",
+  "generated_at": "2026-11-07T13:38:28Z"
+}
