@@ -1,24 +1,27 @@
 import asyncio
+import json
 import logging
+from pathlib import Path
+import re
 from typing import List
 
 from Pipeline.config import ALL_EVENT_TYPES, DEFAULT_DAYS_BACK
 from Pipeline.pipeline_module import PipelineModule
 
 logger = logging.getLogger(__name__)
+DEFAULT_CACHE = Path(__file__).resolve().parents[1] / "Data_Cache"
 
 
 def _build_steps(params: dict) -> tuple[List[PipelineModule], dict, dict]:
-    """
-    Build the ordered module list for one run, plus the backtrack
-    instructions `execute_pipeline` needs and a {class name: index} map for
-    resolving them.
+    from Pipeline.modules.analysis import EventStudyRunner, EventWriter, PredictionChecker, TickerResolver
+    from Pipeline.modules.event_extractor import EventExtractor
+    from Pipeline.modules.news_collector import NewsCollector
 
-    Not implemented yet — the modules it will wire in (NewsCollector,
-    EventExtractor, TickerResolver, EventStudyRunner, PredictionChecker,
-    EventWriter) don't exist yet. See todo_chen.md section 2.
-    """
-    raise NotImplementedError("Pipeline modules aren't built yet (todo_chen.md section 2)")
+    news = NewsCollector()
+    if not news.api_keys:
+        raise ValueError("Set NEWS_API_KEY before scanning news.")
+    steps = [news, EventExtractor(), TickerResolver(), EventStudyRunner(), PredictionChecker(), EventWriter()]
+    return steps, {}, {step.__class__.__name__: index for index, step in enumerate(steps)}
 
 
 async def execute_pipeline(data: dict, pipeline_steps: List[PipelineModule], loop_instructions: dict[str, dict], step_index_map: dict) -> tuple[bool, dict]:
@@ -74,51 +77,41 @@ async def execute_pipeline(data: dict, pipeline_steps: List[PipelineModule], loo
 
 
 async def run_pipeline(params: dict) -> tuple[bool, dict]:
-    """
-    Run one event-extraction / impact-analysis pass end to end.
-
-    `params` must carry `event_types` and `days_back` (see todo_chen.md
-    section 5), plus whatever `emit` status-event sink the caller wants
-    status events sent to. `run_id` is minted by the server (Ding), not here.
-    """
-    emit = params.get("emit")
-    if emit is None:
-        raise ValueError("Unable to establish status stream, emit() is None")
-
+    """Run the scan and return the terminal result described by the data contract."""
     data = {
-        "run_id": params.get("run_id"),
         "event_types": params.get("event_types") or ALL_EVENT_TYPES,
         "days_back": params.get("days_back") or DEFAULT_DAYS_BACK,
-        "output": {},
-        "emit": emit,
+        "data_cache": Path(params.get("data_cache", DEFAULT_CACHE)),
+        "event_ids": [],
+        "emit": params["emit"],
     }
-
     try:
-        pipeline_steps, loop_instructions, step_index_map = _build_steps(params)
-    except NotImplementedError:
-        raise
-    except ValueError:
-        logger.exception("Failed to build pipeline for run_id %s", data["run_id"])
-        raise
+        steps, loops, indexes = _build_steps(params)
+        success, data = await execute_pipeline(data, steps, loops, indexes)
+        return success, {"event_ids": list(dict.fromkeys(data["event_ids"])), "exit_reason": data.get("exit_reason")}
+    except ValueError as error:
+        logger.warning("Pipeline could not complete: %s", error)
+        return False, {"error_message": str(error)}
+    except Exception:
+        logger.exception("Pipeline failed")
+        return False, {"error_message": "Pipeline failed while contacting a provider or processing data."}
 
-    try:
-        success, data = await execute_pipeline(
-            data=data,
-            pipeline_steps=pipeline_steps,
-            loop_instructions=loop_instructions,
-            step_index_map=step_index_map,
-        )
-        exit_reason = data.get("exit_reason")
-        if success and exit_reason is None:
-            return success, {"output": data["output"]}
-        elif success and exit_reason is not None:
-            return success, {"exit_reason": exit_reason}
-    except ValueError as e:
-        logger.exception(e)
-        return False, {"error_message": str(e)}
-    except Exception as e:
-        logger.exception(e)
-        return False, {"error_message": str(e)}
+
+def refresh_event(event_id, *, data_cache=DEFAULT_CACHE):
+    """Recalculate the cached event and keep prior studies for unavailable tickers."""
+    from Pipeline.event_files import event_lock, write_event
+    from Pipeline.modules.analysis import analyse_companies, check_predictions
+
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", event_id):
+        raise ValueError("Invalid event ID")
+    path = Path(data_cache) / "events" / f"{event_id}.json"
+    with event_lock:
+        document = json.loads(path.read_text(encoding="utf-8"))
+        impacts, failures = analyse_companies(document["event"], document["impacts"], data_cache, keep_previous=True)
+        if len(failures) == len(impacts):
+            raise ValueError("No updated market data was available for this event.")
+        check_predictions(impacts)
+        return write_event(data_cache, document["event"], impacts)
 
 
 async def stream_pipeline(params: dict):
@@ -132,7 +125,7 @@ async def stream_pipeline(params: dict):
 
     async def emit(event):
         await status_queue.put(event)
-    params["emit"] = emit
+    params = dict(params, emit=emit)
 
     async def _run():
         try:
@@ -141,11 +134,16 @@ async def stream_pipeline(params: dict):
             await status_queue.put(_SENTINEL)
 
     task = asyncio.create_task(_run())
-    while True:
-        event = await status_queue.get()
-        if event is _SENTINEL:
-            break
-        yield event
+    try:
+        while True:
+            event = await status_queue.get()
+            if event is _SENTINEL:
+                break
+            yield event
 
-    success, payload = await task
-    yield {"type": "result", "success": success, **payload}
+        success, payload = await task
+        yield {"type": "result", "success": success, **payload}
+    finally:
+        if not task.done():
+            task.cancel()
+            await asyncio.gather(task, return_exceptions=True)

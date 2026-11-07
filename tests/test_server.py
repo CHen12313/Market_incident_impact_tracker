@@ -25,8 +25,8 @@ class ServerTests(unittest.TestCase):
         self.client = self.app.test_client()
 
     def fixtures(self):
-        shutil.copytree(ROOT / 'Pipeline/Mock_Event', self.cache / 'events')
-        path = next((self.cache / 'events').glob('*.json'))
+        shutil.copytree(ROOT / 'Data_Cache/events', self.cache / 'events')
+        path = self.cache / 'events' / '2026-10-20-mock-nimbus-cloud-outage.json'
         return json.loads(path.read_text())
 
     def wait_run(self, run_id):
@@ -66,8 +66,8 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(len(self.client.get('/api/watchlist').json['tickers']), 2)
         alerts = self.client.get('/api/alerts').json
         self.assertEqual(len(alerts), 2)
-        self.assertEqual(alerts[0]['affected_count'], len(impacts))
-        self.assertEqual({x['relation'] for x in alerts[0]['matched']}, {x['relation'] for x in impacts[:2]})
+        self.assertEqual(next(x for x in alerts if x['event_id'] == event_id)['affected_count'], len(impacts))
+        self.assertEqual({x['relation'] for x in next(x for x in alerts if x['event_id'] == event_id)['matched']}, {x['relation'] for x in impacts[:2]})
         summaries = self.client.get('/api/events').json
         top = max(impacts, key=lambda x: abs(x['study']['car_pct']))
         summary = next(x for x in summaries if x['event_id'] == event_id)
@@ -131,6 +131,57 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(self.client.get(url, headers={'Last-Event-ID': 'oops'}).status_code, 400)
         self.assertEqual(self.client.post('/api/pipeline/run').status_code, 200)
         self.wait_run(next(reversed(self.app.extensions['pipeline_runs'])))
+
+    def test_real_pipeline_writes_and_refreshes_event(self):
+        import numpy as np
+        import pandas as pd
+
+        event_date = '2025-06-02'
+        source = 'https://example.com/outage'
+        article = dict(title='Acme outage', description='Service interrupted', source='Example',
+                       published=event_date, url=source)
+        extracted = dict(event_found=True, headline='Acme outage', summary='Service interrupted',
+                         event_date=event_date, source_url=source,
+                         companies=[dict(company_name='Acme', relation='direct',
+                                         expected_direction='down', reason='Acme operates the service')])
+        prices = self.cache / 'prices'
+        prices.mkdir(parents=True)
+        dates = pd.bdate_range('2024-11-13', '2025-07-01')
+        market = np.sin(np.arange(len(dates))) / 100
+        stock = market * 1.2 + np.cos(np.arange(len(dates))) / 200
+        stock[dates.get_loc(event_date)] -= 0.08
+        for ticker, returns in (('ACME', stock), ('^GSPC', market)):
+            pd.Series(100 * np.cumprod(1 + returns), index=dates, name='Close').to_csv(prices / f'{ticker}.csv')
+
+        with (
+            patch('Pipeline.modules.news_collector.NewsCollector.API_KEYS', ['test']),
+            patch('Pipeline.modules.news_collector.NewsCollector._fetch', return_value=[article]),
+            patch('Pipeline.modules.event_extractor.OPENAI_API_KEY', 'test'),
+            patch('Pipeline.modules.event_extractor.EventExtractor._extract_one', return_value=extracted),
+            patch('Pipeline.additional_info_collector.get_company_symbol', return_value='ACME'),
+            patch('Pipeline.event_study.yf.Ticker', side_effect=AssertionError('Expected cached prices')),
+        ):
+            response = self.client.post('/api/pipeline/run', json={'event_types': ['outage'], 'days_back': 3})
+            run_id = response.json['run_id']
+            status = self.wait_run(run_id)
+            self.assertEqual(status['state'], 'done', status)
+            self.assertEqual(status['completed'], 6)
+            self.assertEqual(status['event_ids'], ['2025-06-02-acme-outage'])
+            self.assertIn('event: done', self.client.get(f'/api/pipeline/stream/{run_id}').text)
+            self.assertEqual(self.client.get('/api/events').json[0]['event_id'], status['event_ids'][0])
+            detail_url = f"/api/events/{status['event_ids'][0]}"
+            detail = self.client.get(detail_url).json
+            impact = detail['impacts'][0]
+            study = impact['study']
+            self.assertEqual(detail['status'], 'complete')
+            self.assertTrue(impact['prediction_match'])
+            self.assertEqual(study['event_day'], event_date)
+            self.assertEqual(study['daily'][9]['cum_actual_pct'], 0)
+            self.assertEqual(study['daily'][-1]['car_pct'], study['car_pct'])
+            refreshed = self.client.post(detail_url + '/refresh')
+            self.assertEqual(refreshed.status_code, 200)
+            self.assertEqual(refreshed.json, self.client.get(detail_url).json)
+            self.assertEqual(refreshed.json['impacts'][0]['study'], study)
 
     def test_early_failure_crash_and_missing_result(self):
         async def early(params):

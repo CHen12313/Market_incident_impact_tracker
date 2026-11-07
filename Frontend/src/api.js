@@ -1,7 +1,7 @@
 import mockEvent from './mock/mock_event.json'
 
 // Set to false during integration with Flask. All callers use the API contract below.
-export const USE_MOCK = true
+export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true'
 
 let mockWatchlist = ['NMBS']
 let mockTracked = []

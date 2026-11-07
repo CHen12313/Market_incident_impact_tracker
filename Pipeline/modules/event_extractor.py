@@ -41,7 +41,9 @@ class EventExtractor(PipelineModule):
         self.api_key = api_key if api_key is not None else OPENAI_API_KEY
         self.model = model if model is not None else self.MODEL
         self.max_knock_on_companies = max_knock_on_companies if max_knock_on_companies is not None else self.MAX_KNOCK_ON_COMPANIES
-        self.client = openai.Client(api_key=self.api_key)
+        if not self.api_key:
+            raise ValueError("Set OPENAI_API_KEY before scanning news.")
+        self.client = openai.Client(api_key=self.api_key, timeout=30)
 
     def _build_messages(self, event_type: str, articles: list[dict]) -> list[dict]:
         article_block = "\n\n".join(
@@ -73,7 +75,7 @@ class EventExtractor(PipelineModule):
             logger.warning("EventExtractor: non-JSON response for '%s'", event_type)
             return None
 
-        if not raw.get("event_found"):
+        if not isinstance(raw, dict) or not raw.get("event_found"):
             return None
 
         return raw
@@ -100,7 +102,7 @@ class EventExtractor(PipelineModule):
         except (TypeError, ValueError):
             return None, f"invalid event_date {event_date!r}"
 
-        if source_url not in allowed_urls:  # never trust a URL the model didn't copy verbatim
+        if not isinstance(source_url, str) or source_url not in allowed_urls:  # never trust a URL the model didn't copy verbatim
             return None, "source_url not among the provided articles"
 
         if not isinstance(companies, list) or not companies:
@@ -114,7 +116,9 @@ class EventExtractor(PipelineModule):
             relation = c.get("relation")
             expected_direction = c.get("expected_direction")
             reason = c.get("reason")
-            if not company_name or relation not in self.VALID_RELATIONS or expected_direction not in self.VALID_DIRECTIONS or not reason:
+            if not all(isinstance(value, str) and value.strip() for value in (company_name, relation, expected_direction, reason)):
+                continue
+            if relation not in self.VALID_RELATIONS or expected_direction not in self.VALID_DIRECTIONS:
                 continue
             cleaned_companies.append({
                 "company_name": company_name,

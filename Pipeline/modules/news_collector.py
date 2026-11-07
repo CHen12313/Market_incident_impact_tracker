@@ -37,7 +37,7 @@ class NewsCollector(PipelineModule):
     def __init__(self, api_keys: list[str] | None = None, max_pages: int | None = None,
                  page_size: int | None = None, max_hits_per_type: int | None = None,
                  incident_terms: dict | None = None):
-        self.api_keys = api_keys if api_keys is not None else self.API_KEYS
+        self.api_keys = list(dict.fromkeys(key for key in (api_keys if api_keys is not None else self.API_KEYS) if key))
         self.max_pages = max_pages if max_pages is not None else self.MAX_PAGES
         self.page_size = page_size if page_size is not None else self.PAGE_SIZE
         self.max_hits_per_type = max_hits_per_type if max_hits_per_type is not None else self.MAX_HITS_PER_TYPE
@@ -51,6 +51,7 @@ class NewsCollector(PipelineModule):
 
     def _fetch(self, query: str, start_cutoff, use_title_filter: bool) -> list[dict]:
         hits = []
+        succeeded = False
         for current_key in self.api_keys:  # main key first, then fallback
             headers = {"x-api-key": current_key}
             for page in range(1, self.max_pages + 1):
@@ -66,13 +67,14 @@ class NewsCollector(PipelineModule):
                 r = requests.get("https://newsapi.org/v2/everything", params=params, headers=headers, timeout=15)
 
                 if r.status_code == 429:
-                    logger.warning("[NewsAPI 429] Rate limit hit for API key %s", current_key)
+                    logger.warning("[NewsAPI 429] Rate limit hit")
                     break  # try next API key
 
                 if r.status_code != 200:
                     logger.warning("[NewsAPI %s] %s", r.status_code, r.json().get("message"))
                     break
 
+                succeeded = True
                 for a in r.json().get("articles", []):
                     pub_date = a.get("publishedAt", "")[:10]
                     try:
@@ -94,6 +96,8 @@ class NewsCollector(PipelineModule):
                     break  # avoid unnecessary pages
             if hits:
                 break  # stop retrying once successful
+        if not succeeded:
+            raise ValueError("NewsAPI rejected the request. Check the API key and quota.")
         return hits
 
     def _collect(self, event_types: list[str], days_back: int) -> list[dict]:

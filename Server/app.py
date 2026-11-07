@@ -132,7 +132,12 @@ def create_app(config=None):
     @app.post('/api/events/<event_id>/refresh')
     def refresh(event_id):
         read_event(event_id)
-        return jsonify(pipeline_function('EVENT_REFRESH', 'refresh_event')(event_id))
+        callback = pipeline_function('EVENT_REFRESH', 'refresh_event')
+        try:
+            result = callback(event_id) if app.config['EVENT_REFRESH'] else callback(event_id, data_cache=cache)
+        except ValueError as error:
+            abort(422, description=str(error))
+        return jsonify(result)
 
     @app.route('/api/watchlist', methods=['GET', 'POST'])
     def watchlist():
@@ -196,6 +201,8 @@ def create_app(config=None):
 
     def worker(run, params):
         async def consume():
+            if not app.config['PIPELINE_STREAM']:
+                params['data_cache'] = cache
             stream = pipeline_function('PIPELINE_STREAM', 'stream_pipeline')(params)
             try:
                 async for event in stream:

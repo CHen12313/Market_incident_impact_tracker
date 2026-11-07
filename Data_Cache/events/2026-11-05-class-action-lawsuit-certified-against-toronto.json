@@ -1,0 +1,157 @@
+{
+  "event": {
+    "event_id": "2026-11-05-class-action-lawsuit-certified-against-toronto",
+    "event_type": "lawsuit",
+    "headline": "Class action lawsuit certified against Toronto long-term care home for COVID-19 negligence",
+    "summary": "An Ontario court has certified a class action lawsuit alleging gross negligence by a Toronto long-term care home that resulted in numerous COVID-19 deaths.",
+    "event_date": "2026-11-05",
+    "source_url": "https://www.cbc.ca/news/canada/toronto/class-action-downsview-long-term-care-gem-healthcare-9.7410212"
+  },
+  "impacts": [
+    {
+      "company_name": "Sienna Senior Living",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Similar to Chartwell, any negative sentiment towards long-term care homes could affect Sienna's stock.",
+      "ticker": "SIA.TO",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-05",
+        "days_after": 1,
+        "beta": -0.2,
+        "raw_return_pct": 0.83,
+        "market_return_pct": -4.04,
+        "expected_return_pct": 0.68,
+        "car_pct": 0.15,
+        "t_stat": 0.09,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-22",
+            "actual_pct": 2.49,
+            "expected_pct": 0.18,
+            "abnormal_pct": 2.32,
+            "cum_actual_pct": 0.21,
+            "cum_expected_pct": 0.67,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-23",
+            "actual_pct": -0.1,
+            "expected_pct": 0.04,
+            "abnormal_pct": -0.14,
+            "cum_actual_pct": 0.11,
+            "cum_expected_pct": 0.71,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-26",
+            "actual_pct": -0.24,
+            "expected_pct": -0.21,
+            "abnormal_pct": -0.04,
+            "cum_actual_pct": -0.13,
+            "cum_expected_pct": 0.5,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-27",
+            "actual_pct": -1.17,
+            "expected_pct": -0.19,
+            "abnormal_pct": -0.99,
+            "cum_actual_pct": -1.3,
+            "cum_expected_pct": 0.32,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-28",
+            "actual_pct": -1.88,
+            "expected_pct": -0.12,
+            "abnormal_pct": -1.76,
+            "cum_actual_pct": -3.18,
+            "cum_expected_pct": 0.19,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-29",
+            "actual_pct": 0.3,
+            "expected_pct": -0.01,
+            "abnormal_pct": 0.31,
+            "cum_actual_pct": -2.88,
+            "cum_expected_pct": 0.19,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-30",
+            "actual_pct": -0.87,
+            "expected_pct": 0.3,
+            "abnormal_pct": -1.17,
+            "cum_actual_pct": -3.75,
+            "cum_expected_pct": 0.49,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-02",
+            "actual_pct": -0.31,
+            "expected_pct": 0.04,
+            "abnormal_pct": -0.34,
+            "cum_actual_pct": -4.05,
+            "cum_expected_pct": 0.52,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-03",
+            "actual_pct": 3.16,
+            "expected_pct": -0.14,
+            "abnormal_pct": 3.3,
+            "cum_actual_pct": -0.89,
+            "cum_expected_pct": 0.38,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-04",
+            "actual_pct": 0.89,
+            "expected_pct": -0.38,
+            "abnormal_pct": 1.27,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-05",
+            "actual_pct": 0.2,
+            "expected_pct": 0.81,
+            "abnormal_pct": -0.61,
+            "cum_actual_pct": 0.2,
+            "cum_expected_pct": 0.81,
+            "car_pct": -0.61
+          },
+          {
+            "day": 1,
+            "date": "2026-11-06",
+            "actual_pct": 0.64,
+            "expected_pct": -0.13,
+            "abnormal_pct": 0.77,
+            "cum_actual_pct": 0.83,
+            "cum_expected_pct": 0.68,
+            "car_pct": 0.15
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 0.09)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "early",
+  "generated_at": "2026-11-07T12:42:37Z"
+}

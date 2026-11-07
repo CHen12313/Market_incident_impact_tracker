@@ -1,0 +1,320 @@
+{
+  "event": {
+    "event_id": "2026-11-04-spacex-faces-regulatory-scrutiny-after-democratic",
+    "event_type": "regulation",
+    "headline": "SpaceX faces regulatory scrutiny after Democratic midterm wins",
+    "summary": "Following the Democratic wins in the midterm elections, SpaceX is facing increased regulatory scrutiny that may impact its market confidence and future government contracts.",
+    "event_date": "2026-11-04",
+    "source_url": "https://cryptobriefing.com/spacex-shares-fall-amid-democratic-win-regulatory-scrutiny-concerns/"
+  },
+  "impacts": [
+    {
+      "company_name": "Tesla",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Tesla may be affected by the same regulatory environment impacting SpaceX.",
+      "ticker": "TSLA",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-04",
+        "days_after": 2,
+        "beta": 2.7,
+        "raw_return_pct": -9.89,
+        "market_return_pct": -2.46,
+        "expected_return_pct": -7.2,
+        "car_pct": -2.69,
+        "t_stat": -0.65,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-21",
+            "actual_pct": 3.41,
+            "expected_pct": 1.38,
+            "abnormal_pct": 2.04,
+            "cum_actual_pct": -3.35,
+            "cum_expected_pct": 8.23,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-22",
+            "actual_pct": -3.08,
+            "expected_pct": -3.45,
+            "abnormal_pct": 0.38,
+            "cum_actual_pct": -6.42,
+            "cum_expected_pct": 4.77,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-23",
+            "actual_pct": -0.63,
+            "expected_pct": -1.59,
+            "abnormal_pct": 0.96,
+            "cum_actual_pct": -7.05,
+            "cum_expected_pct": 3.19,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-26",
+            "actual_pct": 5.21,
+            "expected_pct": 1.7,
+            "abnormal_pct": 3.52,
+            "cum_actual_pct": -1.84,
+            "cum_expected_pct": 4.88,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-27",
+            "actual_pct": 4.04,
+            "expected_pct": 1.43,
+            "abnormal_pct": 2.62,
+            "cum_actual_pct": 2.2,
+            "cum_expected_pct": 6.31,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-28",
+            "actual_pct": -0.8,
+            "expected_pct": 0.56,
+            "abnormal_pct": -1.36,
+            "cum_actual_pct": 1.41,
+            "cum_expected_pct": 6.87,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-29",
+            "actual_pct": -0.23,
+            "expected_pct": -1.01,
+            "abnormal_pct": 0.78,
+            "cum_actual_pct": 1.18,
+            "cum_expected_pct": 5.86,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-10-30",
+            "actual_pct": -0.87,
+            "expected_pct": -5.1,
+            "abnormal_pct": 4.23,
+            "cum_actual_pct": 0.31,
+            "cum_expected_pct": 0.76,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-02",
+            "actual_pct": 1.0,
+            "expected_pct": -1.56,
+            "abnormal_pct": 2.57,
+            "cum_actual_pct": 1.32,
+            "cum_expected_pct": -0.8,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-03",
+            "actual_pct": -1.32,
+            "expected_pct": 0.8,
+            "abnormal_pct": -2.12,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-04",
+            "actual_pct": -3.34,
+            "expected_pct": 4.09,
+            "abnormal_pct": -7.43,
+            "cum_actual_pct": -3.34,
+            "cum_expected_pct": 4.09,
+            "car_pct": -7.43
+          },
+          {
+            "day": 1,
+            "date": "2026-11-05",
+            "actual_pct": -10.77,
+            "expected_pct": -11.96,
+            "abnormal_pct": 1.18,
+            "cum_actual_pct": -14.11,
+            "cum_expected_pct": -7.87,
+            "car_pct": -6.24
+          },
+          {
+            "day": 2,
+            "date": "2026-11-06",
+            "actual_pct": 4.23,
+            "expected_pct": 0.66,
+            "abnormal_pct": 3.56,
+            "cum_actual_pct": -9.89,
+            "cum_expected_pct": -7.2,
+            "car_pct": -2.69
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.65)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "General Motors",
+      "relation": "competitor",
+      "expected_direction": "up",
+      "reason": "As a competitor, GM may benefit from regulatory challenges faced by Tesla and SpaceX.",
+      "ticker": "GM",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-04",
+        "days_after": 2,
+        "beta": 1.1,
+        "raw_return_pct": -2.27,
+        "market_return_pct": -2.46,
+        "expected_return_pct": -2.73,
+        "car_pct": 0.46,
+        "t_stat": 0.13,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-21",
+            "actual_pct": -1.27,
+            "expected_pct": 0.62,
+            "abnormal_pct": -1.89,
+            "cum_actual_pct": -15.26,
+            "cum_expected_pct": 2.77,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-22",
+            "actual_pct": 1.45,
+            "expected_pct": -1.34,
+            "abnormal_pct": 2.78,
+            "cum_actual_pct": -13.81,
+            "cum_expected_pct": 1.43,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-23",
+            "actual_pct": -1.67,
+            "expected_pct": -0.58,
+            "abnormal_pct": -1.09,
+            "cum_actual_pct": -15.48,
+            "cum_expected_pct": 0.85,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-26",
+            "actual_pct": 0.51,
+            "expected_pct": 0.75,
+            "abnormal_pct": -0.24,
+            "cum_actual_pct": -14.97,
+            "cum_expected_pct": 1.6,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-27",
+            "actual_pct": 5.54,
+            "expected_pct": 0.64,
+            "abnormal_pct": 4.9,
+            "cum_actual_pct": -9.42,
+            "cum_expected_pct": 2.25,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-28",
+            "actual_pct": 2.41,
+            "expected_pct": 0.29,
+            "abnormal_pct": 2.12,
+            "cum_actual_pct": -7.02,
+            "cum_expected_pct": 2.54,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-29",
+            "actual_pct": 3.93,
+            "expected_pct": -0.35,
+            "abnormal_pct": 4.27,
+            "cum_actual_pct": -3.09,
+            "cum_expected_pct": 2.19,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-10-30",
+            "actual_pct": 1.96,
+            "expected_pct": -2.0,
+            "abnormal_pct": 3.96,
+            "cum_actual_pct": -1.13,
+            "cum_expected_pct": 0.18,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-02",
+            "actual_pct": 2.91,
+            "expected_pct": -0.57,
+            "abnormal_pct": 3.48,
+            "cum_actual_pct": 1.78,
+            "cum_expected_pct": -0.39,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-03",
+            "actual_pct": -1.78,
+            "expected_pct": 0.39,
+            "abnormal_pct": -2.17,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-04",
+            "actual_pct": 4.63,
+            "expected_pct": 1.72,
+            "abnormal_pct": 2.91,
+            "cum_actual_pct": 4.63,
+            "cum_expected_pct": 1.72,
+            "car_pct": 2.91
+          },
+          {
+            "day": 1,
+            "date": "2026-11-05",
+            "actual_pct": -3.35,
+            "expected_pct": -4.79,
+            "abnormal_pct": 1.43,
+            "cum_actual_pct": 1.28,
+            "cum_expected_pct": -3.07,
+            "car_pct": 4.35
+          },
+          {
+            "day": 2,
+            "date": "2026-11-06",
+            "actual_pct": -3.55,
+            "expected_pct": 0.33,
+            "abnormal_pct": -3.88,
+            "cum_actual_pct": -2.27,
+            "cum_expected_pct": -2.73,
+            "car_pct": 0.46
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 0.13)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "early",
+  "generated_at": "2026-11-07T12:42:37Z"
+}
