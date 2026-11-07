@@ -18,8 +18,8 @@ Ding 的 Flask 服务和 Xuan 的 React 前端共用此接口约定。开发时�
 | POST | `/api/tracked` | `{"event_id", "ticker"}` | 同上 |
 | DELETE | `/api/tracked/<event_id>/<ticker>` | | 同上 |
 | POST | `/api/pipeline/run` | `{"event_types": [...], "days_back": 3}` | `{"run_id": "..."}`；已有任务在跑时返回 409 |
-| GET | `/api/pipeline/stream/<run_id>` | | SSE：`progress` / `info` / `result` 事件 |
-| GET | `/api/pipeline/status/<run_id>` | | `{"state": "running/done/error", "completed", "total", "last_message"}`（SSE 的备用方案） |
+| GET | `/api/pipeline/stream/<run_id>` | | SSE：`progress` / `info` / `done` / `error` frame（见下方 Pipeline 进度） |
+| GET | `/api/pipeline/status/<run_id>` | | `{"state", "completed", "total", "stage_label", "last_message", "event_ids", "exit_reason", "error_message"}`（SSE 的备用方案） |
 
 **事件摘要**（`/api/events` 和 `/api/alerts` 用，从详情文件里算出来）：
 
@@ -96,23 +96,44 @@ Ding 的 Flask 服务和 Xuan 的 React 前端共用此接口约定。开发时�
 
 ## Pipeline 进度
 
-启动接口返回 `{"run_id":"<uuid>"}`。已有任务运行时返回 HTTP 409。用该 ID 连接 SSE 接口，响应类型为 `text/event-stream`，每条消息用空行结束。前端按事件名监听，并对 `event.data` 进行 JSON 解析。
+启动接口返回 `{"run_id":"<uuid>"}`。已有任务运行时返回 HTTP 409。用该 ID 连接 SSE 接口，响应类型为 `text/event-stream`，每条消息用空行结束，且带 `id:`（`seq`，每次 run 从 0 开始的计数器）。前端用 `EventSource`，按事件名监听（`addEventListener`，不是 `onmessage`），并对 `event.data` 进行 JSON 解析。`Pipeline` 内部产出的 `progress` / `info` / `result` 事件由服务器转换为发到前端的 frame：`result` 本身**不会**到达前端，服务器把它翻译成 `done`（成功）或 `error`（失败）。
 
 ```text
+id: 0
 event: progress
-data: {"type":"progress","completed":1,"total":3}
+data: {"type":"progress","seq":0,"completed":0,"total":6,"stage":null,"stage_label":null}
 
+id: 1
 event: info
-data: {"type":"info","tag":"pipeline","message":"Analyzing events"}
+data: {"type":"info","seq":1,"message":"Searching news for the last 3 days","tag":"start"}
 
-event: result
-data: {"type":"result","success":true,"event_ids":["2026-10-21-acme-data-breach"]}
+id: 2
+event: progress
+data: {"type":"progress","seq":2,"completed":1,"total":6,"stage":"NewsCollector","stage_label":"Collecting news"}
+
+id: 3
+event: info
+data: {"type":"info","seq":3,"message":"Found 14 articles","tag":"stage_success"}
+
+ …
+
+id: 14
+event: progress
+data: {"type":"progress","seq":14,"completed":6,"total":6,"stage":"EventWriter","stage_label":"Saving results"}
+
+id: 15
+event: done
+data: {"type":"done","seq":15,"success":true,"event_ids":["2026-11-07-acme-recall"]}
 
 ```
 
-- `result` 是终止事件。收到后关闭连接，按 `success` 判断是否成功，成功时刷新列表。
-- 后台抛出异常时发送名为 `error` 的终止事件，数据形如 `{"type":"error","message":"Pipeline failed"}`。带 JSON 数据的 `error` 表示任务失败。连接故障时可关闭 SSE 并每 2 秒轮询状态接口。
-- 状态响应形如 `{"state":"running","completed":1,"total":3,"last_message":"Analyzing events"}`。`state` 为 `running`、`done` 或 `error`。任务结束后停止轮询，`done` 时刷新列表，`error` 时展示 `last_message`。
+- `progress`：`{type, seq, completed, total, stage, stage_label}`。`total` 固定为 6（pipeline 的阶段数）；`stage` 是模块的类名，`stage_label` 是该模块的 `label` 类属性（例如 `"Collecting news"`），用作前端进度条的说明文字。第一条 `progress` 的 `completed` 为 0、`stage`/`stage_label` 为 `null`。
+- `info`：`{type, seq, message, tag}`。`tag` 为 `start`、`info`、`sub_stage_success`、`stage_success`、`sub_stage_fail` 或 `warning` 之一；未知 tag 按 `info` 处理。
+- `done`：终止 frame。正常完成：`{type:"done", seq, success:true, event_ids:[...]}`。提前退出（例如没有新事件）：`{type:"done", seq, success:true, event_ids:[], exit_reason:"..."}`，`event_ids` 为 `[]`。收到 `done` 后关闭连接；若 `event_ids` 非空则刷新并高亮这些事件，若有 `exit_reason` 则展示为普通提示（不是错误）。
+- `error`：终止 frame，`{type, seq, message}`。来源：pipeline 失败（`result.success` 为 `false`，`message` 取自 `error_message`）、请求参数被 `POST /api/pipeline/run` 拒绝（`400`，这种情况下 SSE 连接从未建立）、或后台线程崩溃且没有产出 `result`（`message: "Pipeline crashed"`）。收到 `error` 后关闭连接并展示 `message`。
+- 每次 run 只有一个终止 frame（`done` 或 `error`），发出后服务器关闭该响应；连接断开/刷新可以重连并追上进度（`Last-Event-ID` 请求头）。
+- 连接错误持续超过约 5 秒时，改为轮询 `/api/pipeline/status/<run_id>`，每 2 秒一次，直到 `state` 不再是 `running`。
+- 状态响应形如 `{"run_id":"...","state":"running","completed":3,"total":6,"stage_label":"Matching companies to tickers","last_message":"Resolved 9 of 11 tickers","event_ids":[],"exit_reason":null,"error_message":null}`。`state` 为 `running`、`done` 或 `error`。`done` 时刷新列表并使用 `event_ids`/`exit_reason`，`error` 时展示 `error_message`。
 
 ## HTTP 错误
 
