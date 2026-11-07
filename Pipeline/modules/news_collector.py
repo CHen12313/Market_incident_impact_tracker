@@ -4,6 +4,9 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
+from Data_Classes.enums import EventType, InfoTag
+from Data_Classes.event import Article, ArticleBucket
+from Data_Classes.pipeline import PipelineContext
 from Pipeline.config import (
     INCIDENT_TERMS,
     NEWS_API_KEY,
@@ -21,9 +24,8 @@ logger = logging.getLogger(__name__)
 
 class NewsCollector(PipelineModule):
     """
-    Reads `event_types` and `days_back` from `data`, writes `data["articles"]`:
-    one {"event_type", "articles": [{title, description, source, published, url}, ...]}
-    bucket per requested event_type. See DATA_CONTRACT.md.
+    Reads `ctx.event_types` and `ctx.days_back`, writes `ctx.articles`: one
+    `ArticleBucket` per requested event_type. See DATA_CONTRACT.md.
     """
 
     label = "Collecting news"
@@ -43,14 +45,14 @@ class NewsCollector(PipelineModule):
         self.max_hits_per_type = max_hits_per_type if max_hits_per_type is not None else self.MAX_HITS_PER_TYPE
         self.incident_terms = incident_terms if incident_terms is not None else self.INCIDENT_TERMS
 
-    def _terms_for(self, event_type: str) -> str:
+    def _terms_for(self, event_type: EventType) -> str:
         """Return a NewsAPI-ready OR string, e.g. "(recall OR defect OR ...)"."""
         raw_terms = self.incident_terms.get(event_type.lower(), self.incident_terms["_default"])
         or_block = " OR ".join({t.lower() for t in raw_terms})
         return f"({or_block})"
 
     def _fetch(self, query: str, start_cutoff, use_title_filter: bool) -> list[dict]:
-        hits = []
+        hits: list[dict] = []
         succeeded = False
         for current_key in self.api_keys:  # main key first, then fallback
             headers = {"x-api-key": current_key}
@@ -100,42 +102,40 @@ class NewsCollector(PipelineModule):
             raise ValueError("NewsAPI rejected the request. Check the API key and quota.")
         return hits
 
-    def _collect(self, event_types: list[str], days_back: int) -> list[dict]:
+    def _collect(self, event_types: list[EventType], days_back: int) -> list[ArticleBucket]:
         """
-        Return one {"event_type", "articles"} bucket per entry in `event_types`.
-        First try qInTitle; if empty, fall back to q= (full-text).
+        Return one ArticleBucket per entry in `event_types`. First try
+        qInTitle; if empty, fall back to q= (full-text).
         """
         start_cutoff = (datetime.now(timezone.utc) - timedelta(days=days_back)).date()
 
         buckets = []
         for event_type in event_types:
             query = self._terms_for(event_type)
-            articles = self._fetch(query, start_cutoff, use_title_filter=True) or self._fetch(query, start_cutoff, use_title_filter=False)
+            raw = self._fetch(query, start_cutoff, use_title_filter=True) or self._fetch(query, start_cutoff, use_title_filter=False)
+            articles = [Article(**a) for a in raw]
             logger.info("Collected %d article(s) for '%s'.", len(articles), event_type)
-            buckets.append({"event_type": event_type, "articles": articles})
+            buckets.append(ArticleBucket(event_type=event_type, articles=articles))
 
         return buckets
 
-    async def run(self, data: dict) -> tuple[str | None, bool]:
-        event_types = data.get("event_types")
-        if not event_types:
+    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
+        if not ctx.event_types:
             raise ValueError("NewsCollector: `event_types` is missing or empty")
-
-        days_back = data.get("days_back")
-        if days_back is None:
+        if ctx.days_back is None:
             raise ValueError("NewsCollector: `days_back` is missing")
 
-        await self.emit_status(data, message=f"Searching news for {', '.join(event_types)}...", tag="start")
+        await self.emit_status(ctx, message=f"Searching news for {', '.join(ctx.event_types)}...", tag=InfoTag.START)
 
-        buckets = await asyncio.to_thread(self._collect, event_types, days_back)
+        buckets = await asyncio.to_thread(self._collect, ctx.event_types, ctx.days_back)
 
         for bucket in buckets:
-            if not bucket["articles"]:
-                await self.emit_status(data, message=f"No articles found for '{bucket['event_type']}'", tag="warning")
+            if not bucket.articles:
+                await self.emit_status(ctx, message=f"No articles found for '{bucket.event_type}'", tag=InfoTag.WARNING)
 
-        data["articles"] = buckets
+        ctx.articles = buckets
 
-        total = sum(len(bucket["articles"]) for bucket in buckets)
-        await self.emit_status(data, message=f"Found {total} articles", tag="stage_success")
+        total = sum(len(bucket.articles) for bucket in buckets)
+        await self.emit_status(ctx, message=f"Found {total} articles", tag=InfoTag.STAGE_SUCCESS)
 
         return None, True

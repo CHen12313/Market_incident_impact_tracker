@@ -1,4 +1,5 @@
 """Persist event documents and price caches without exposing partial writes."""
+import dataclasses
 import json
 import os
 from pathlib import Path
@@ -6,6 +7,8 @@ import tempfile
 from threading import RLock
 from datetime import datetime, timezone
 
+from Data_Classes.enums import EventStatus, Relation
+from Data_Classes.event import EventFile
 
 event_lock = RLock()
 
@@ -25,13 +28,18 @@ def atomic_write(path, write):
 
 
 def write_event(cache, event, impacts):
-    impacts.sort(key=lambda item: (item["relation"] != "direct", -abs(item["study"]["car_pct"])))
-    document = dict(
+    """`event` is an `EventInfo`, `impacts` a list of `Impact` (see
+    Data_Classes/event.py). Returns the plain dict actually written, since
+    that's what crosses back out to the HTTP/JSON boundary (Server/app.py's
+    `jsonify`, refresh_event's caller) — the dataclasses stay internal."""
+    impacts = sorted(impacts, key=lambda item: (item.relation != Relation.DIRECT, -abs(item.study.car_pct)))
+    document = EventFile(
         event=event, impacts=impacts,
-        status="early" if min(item["study"]["days_after"] for item in impacts) < 5 else "complete",
+        status=EventStatus.EARLY if min(item.study.days_after for item in impacts) < 5 else EventStatus.COMPLETE,
         generated_at=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
     )
-    path = Path(cache) / "events" / f"{event['event_id']}.json"
+    path = Path(cache) / "events" / f"{event.event_id}.json"
+    payload = dataclasses.asdict(document)
     with event_lock:
-        atomic_write(path, lambda file: json.dump(document, file, ensure_ascii=False, allow_nan=False, indent=2))
-    return document
+        atomic_write(path, lambda file: json.dump(payload, file, ensure_ascii=False, allow_nan=False, indent=2))
+    return payload

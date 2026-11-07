@@ -29,24 +29,6 @@ class Company:
 
 
 @dataclass
-class EventInfo:
-    event_id: str
-    event_type: EventType
-    headline: str
-    summary: str
-    event_date: str  # YYYY-MM-DD
-    source_url: str
-
-
-@dataclass
-class ExtractedEvent:
-    """One entry in the pipeline's `events` list — EventExtractor's output,
-    TickerResolver's input."""
-    event: EventInfo
-    companies: list[Company]
-
-
-@dataclass
 class DailyRow:
     day: int
     date: str
@@ -56,6 +38,10 @@ class DailyRow:
     cum_actual_pct: float
     cum_expected_pct: float
     car_pct: float | None
+
+    @classmethod
+    def from_dict(cls, raw: dict) -> "DailyRow":
+        return cls(**raw)
 
 
 @dataclass
@@ -70,8 +56,12 @@ class Study:
     car_pct: float
     t_stat: float
     is_significant: bool
-    verdict_text: str
     daily: list[DailyRow]
+    verdict_text: str = ""  # filled in by PredictionChecker; absent from run_event_study()'s result
+
+    @classmethod
+    def from_dict(cls, raw: dict) -> "Study":
+        return cls(**{**raw, "daily": [DailyRow.from_dict(d) for d in raw["daily"]]})
 
 
 @dataclass
@@ -81,8 +71,45 @@ class Impact:
     relation: Relation
     expected_direction: Direction
     reason: str
-    prediction_match: bool | None
     study: Study
+    prediction_match: bool | None = None  # filled in by PredictionChecker; absent before that
+
+    @classmethod
+    def from_dict(cls, raw: dict) -> "Impact":
+        return cls(
+            company_name=raw["company_name"],
+            ticker=raw["ticker"],
+            relation=Relation(raw["relation"]),
+            expected_direction=Direction(raw["expected_direction"]),
+            reason=raw["reason"],
+            study=Study.from_dict(raw["study"]),
+            prediction_match=raw.get("prediction_match"),
+        )
+
+
+@dataclass
+class EventInfo:
+    event_id: str
+    event_type: EventType
+    headline: str
+    summary: str
+    event_date: str  # YYYY-MM-DD
+    source_url: str
+
+    @classmethod
+    def from_dict(cls, raw: dict) -> "EventInfo":
+        return cls(**{**raw, "event_type": EventType(raw["event_type"])})
+
+
+@dataclass
+class ExtractedEvent:
+    """One entry in the pipeline's `events` list. Starts as EventExtractor's
+    output ({event, companies}); TickerResolver mutates `companies` in
+    place (fills `ticker`, drops ticker-less companies); EventStudyRunner
+    then fills `impacts` (companies is no longer read after that point)."""
+    event: EventInfo
+    companies: list[Company]
+    impacts: list[Impact] | None = None
 
 
 @dataclass
@@ -95,10 +122,22 @@ class EventFile:
     generated_at: str  # ISO-8601 UTC
     impacts: list[Impact]
 
+    @classmethod
+    def from_dict(cls, raw: dict) -> "EventFile":
+        return cls(
+            event=EventInfo.from_dict(raw["event"]),
+            status=EventStatus(raw["status"]),
+            generated_at=raw["generated_at"],
+            impacts=[Impact.from_dict(i) for i in raw["impacts"]],
+        )
+
     def check_invariants(self) -> None:
         """The six invariants DATA_CONTRACT.md lists under "Invariants".
-        Call before writing; raises AssertionError naming the first one that
-        fails."""
+        Diagnostic only — not currently called from the write path (see
+        write_event in Pipeline/event_files.py), since cross-exchange
+        holiday calendars can legitimately give two companies of the same
+        event slightly different realized days_after; raises AssertionError
+        naming the first invariant that fails."""
         assert self.impacts, "EventFile.impacts must not be empty"
 
         days_after_values = {impact.study.days_after for impact in self.impacts}

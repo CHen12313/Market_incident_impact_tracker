@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
+from Data_Classes.event import DailyRow, Study
 from Pipeline.event_files import atomic_write
 
 DEFAULT_CACHE = Path(__file__).resolve().parents[1] / "Data_Cache"
@@ -76,20 +77,20 @@ def run_event_study(ticker, event_date, days_after=10, market_ticker=None, *, ca
     daily = []
     for day, (timestamp, row) in enumerate(window.iterrows(), start=-10):
         actual, expected = cumulative.loc[timestamp].map(lambda value: round(float(value), 2))
-        daily.append(dict(
+        daily.append(DailyRow(
             day=day, date=timestamp.date().isoformat(), actual_pct=round(float(row.actual), 2),
             expected_pct=round(float(row.expected), 2), abnormal_pct=round(float(row.actual - row.expected), 2),
             cum_actual_pct=actual, cum_expected_pct=expected,
             car_pct=round(actual - expected, 2) if day >= 0 else None,
         ))
     last = daily[-1]
-    count = last["day"] + 1
+    count = last.day + 1
     car = float(cumulative.iloc[-1]["actual"] - cumulative.iloc[-1]["expected"])
     t_stat = round(car / (float(sigma) * count ** 0.5), 2)
-    return dict(
-        market_ticker=market_ticker, event_day=daily[10]["date"], days_after=last["day"],
-        beta=round(float(beta), 2), raw_return_pct=last["cum_actual_pct"],
+    return Study(
+        market_ticker=market_ticker, event_day=daily[10].date, days_after=last.day,
+        beta=round(float(beta), 2), raw_return_pct=last.cum_actual_pct,
         market_return_pct=round(float(window["market"].iloc[10:].sum()), 2),
-        expected_return_pct=last["cum_expected_pct"], car_pct=last["car_pct"],
+        expected_return_pct=last.cum_expected_pct, car_pct=last.car_pct,
         t_stat=t_stat, is_significant=abs(t_stat) >= 2, daily=daily,
     )
