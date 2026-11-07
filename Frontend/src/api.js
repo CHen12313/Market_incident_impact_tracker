@@ -33,7 +33,7 @@ export const api = {
   addWatchlist: (ticker) => USE_MOCK ? wait().then(() => { mockWatchlist = [...new Set([...mockWatchlist, ticker.trim().toUpperCase()])]; return { tickers: mockWatchlist } }) : request('/api/watchlist', { method: 'POST', body: JSON.stringify({ ticker }) }),
   removeWatchlist: (ticker) => USE_MOCK ? wait().then(() => { mockWatchlist = mockWatchlist.filter((item) => item !== ticker); return { tickers: mockWatchlist } }) : request(`/api/watchlist/${ticker}`, { method: 'DELETE' }),
   alerts: () => USE_MOCK ? Promise.resolve([{
-    ...summary(), matched: mockEvent.impacts.filter((impact) => mockWatchlist.includes(impact.ticker)).map((impact) => ({ ticker: impact.ticker, relation: impact.relation, days_after: impact.study.days_after, car_pct: impact.study.car_pct, is_significant: impact.study.is_significant })),
+    ...summary(), matched: mockEvent.impacts.filter((impact) => mockWatchlist.includes(impact.ticker)).map((impact) => ({ ticker: impact.ticker, relation: impact.relation, days_after: impact.study.days_after, prices_through: impact.study.daily?.at(-1)?.date, car_pct: impact.study.car_pct, is_significant: impact.study.is_significant })),
   }].filter((item) => item.matched.length)) : request('/api/alerts'),
   tracked: () => USE_MOCK ? Promise.resolve(mockTracked) : request('/api/tracked'),
   addTracked: (event_id, ticker) => USE_MOCK ? wait().then(() => { if (!mockTracked.some((item) => item.event_id === event_id && item.ticker === ticker)) mockTracked = [...mockTracked, { event_id, ticker, tracked_at: new Date().toISOString() }]; return mockTracked }) : request('/api/tracked', { method: 'POST', body: JSON.stringify({ event_id, ticker }) }),

@@ -1,0 +1,679 @@
+{
+  "event": {
+    "event_id": "2026-11-06-fox-corp-closes-22b-acquisition-of",
+    "event_type": "merger",
+    "headline": "Fox Corp. Closes $22B Acquisition Of Roku",
+    "summary": "Fox Corp. has completed its $22 billion acquisition of Roku, integrating the streaming platform into its digital operations.",
+    "event_date": "2026-11-06",
+    "source_url": "http://deadline.com/2026/11/fox-corp-closes-roku-acquisition-1237215436/"
+  },
+  "impacts": [
+    {
+      "company_name": "Fox Corp.",
+      "relation": "direct",
+      "expected_direction": "up",
+      "reason": "The acquisition is expected to enhance Fox's digital advertising and streaming capabilities.",
+      "ticker": "FOXA",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": -0.24,
+        "raw_return_pct": -1.52,
+        "market_return_pct": 0.31,
+        "expected_return_pct": -0.0,
+        "car_pct": -1.52,
+        "t_stat": -0.57,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -2.45,
+            "expected_pct": 0.2,
+            "abnormal_pct": -2.64,
+            "cum_actual_pct": -2.01,
+            "cum_expected_pct": -1.47,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": -1.91,
+            "expected_pct": -0.09,
+            "abnormal_pct": -1.81,
+            "cum_actual_pct": -3.92,
+            "cum_expected_pct": -1.57,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": -1.22,
+            "expected_pct": -0.07,
+            "abnormal_pct": -1.15,
+            "cum_actual_pct": -5.15,
+            "cum_expected_pct": -1.64,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": -1.77,
+            "expected_pct": 0.01,
+            "abnormal_pct": -1.77,
+            "cum_actual_pct": -6.91,
+            "cum_expected_pct": -1.63,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": 1.77,
+            "expected_pct": 0.14,
+            "abnormal_pct": 1.62,
+            "cum_actual_pct": -5.15,
+            "cum_expected_pct": -1.49,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -1.97,
+            "expected_pct": 0.51,
+            "abnormal_pct": -2.47,
+            "cum_actual_pct": -7.11,
+            "cum_expected_pct": -0.98,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": -0.76,
+            "expected_pct": 0.19,
+            "abnormal_pct": -0.95,
+            "cum_actual_pct": -7.87,
+            "cum_expected_pct": -0.79,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 6.92,
+            "expected_pct": -0.02,
+            "abnormal_pct": 6.93,
+            "cum_actual_pct": -0.96,
+            "cum_expected_pct": -0.8,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 3.8,
+            "expected_pct": -0.31,
+            "abnormal_pct": 4.11,
+            "cum_actual_pct": 2.84,
+            "cum_expected_pct": -1.11,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -2.84,
+            "expected_pct": 1.11,
+            "abnormal_pct": -3.95,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": -1.52,
+            "expected_pct": -0.0,
+            "abnormal_pct": -1.52,
+            "cum_actual_pct": -1.52,
+            "cum_expected_pct": -0.0,
+            "car_pct": -1.52
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.57)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Roku",
+      "relation": "direct",
+      "expected_direction": "down",
+      "reason": "Roku shares will cease trading, indicating a loss of independent market presence.",
+      "ticker": "ROKU",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 0.69,
+        "raw_return_pct": 0.09,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.44,
+        "car_pct": -0.35,
+        "t_stat": -0.16,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -0.92,
+            "expected_pct": -0.13,
+            "abnormal_pct": -0.79,
+            "cum_actual_pct": -1.21,
+            "cum_expected_pct": 0.37,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": -0.85,
+            "expected_pct": 0.71,
+            "abnormal_pct": -1.56,
+            "cum_actual_pct": -2.06,
+            "cum_expected_pct": 1.08,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": -0.36,
+            "expected_pct": 0.64,
+            "abnormal_pct": -1.0,
+            "cum_actual_pct": -2.42,
+            "cum_expected_pct": 1.72,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": -0.85,
+            "expected_pct": 0.42,
+            "abnormal_pct": -1.27,
+            "cum_actual_pct": -3.27,
+            "cum_expected_pct": 2.13,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": 0.64,
+            "expected_pct": 0.01,
+            "abnormal_pct": 0.63,
+            "cum_actual_pct": -2.62,
+            "cum_expected_pct": 2.15,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -0.77,
+            "expected_pct": -1.03,
+            "abnormal_pct": 0.26,
+            "cum_actual_pct": -3.4,
+            "cum_expected_pct": 1.12,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": 0.26,
+            "expected_pct": -0.13,
+            "abnormal_pct": 0.39,
+            "cum_actual_pct": -3.14,
+            "cum_expected_pct": 0.99,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 3.11,
+            "expected_pct": 0.48,
+            "abnormal_pct": 2.63,
+            "cum_actual_pct": -0.03,
+            "cum_expected_pct": 1.47,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 1.5,
+            "expected_pct": 1.32,
+            "abnormal_pct": 0.18,
+            "cum_actual_pct": 1.47,
+            "cum_expected_pct": 2.78,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -1.47,
+            "expected_pct": -2.78,
+            "abnormal_pct": 1.31,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": 0.09,
+            "expected_pct": 0.44,
+            "abnormal_pct": -0.35,
+            "cum_actual_pct": 0.09,
+            "cum_expected_pct": 0.44,
+            "car_pct": -0.35
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.16)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Netflix",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Increased competition from Fox's expanded streaming capabilities may pressure Netflix's market share.",
+      "ticker": "NFLX",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 0.22,
+        "raw_return_pct": -3.28,
+        "market_return_pct": 0.31,
+        "expected_return_pct": -0.16,
+        "car_pct": -3.12,
+        "t_stat": -1.41,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -1.79,
+            "expected_pct": -0.35,
+            "abnormal_pct": -1.44,
+            "cum_actual_pct": 0.24,
+            "cum_expected_pct": 2.85,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": -2.96,
+            "expected_pct": -0.08,
+            "abnormal_pct": -2.88,
+            "cum_actual_pct": -2.72,
+            "cum_expected_pct": 2.76,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": -2.16,
+            "expected_pct": -0.1,
+            "abnormal_pct": -2.06,
+            "cum_actual_pct": -4.88,
+            "cum_expected_pct": 2.66,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": -0.85,
+            "expected_pct": -0.17,
+            "abnormal_pct": -0.67,
+            "cum_actual_pct": -5.73,
+            "cum_expected_pct": 2.49,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": 0.1,
+            "expected_pct": -0.3,
+            "abnormal_pct": 0.4,
+            "cum_actual_pct": -5.63,
+            "cum_expected_pct": 2.19,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": 0.05,
+            "expected_pct": -0.63,
+            "abnormal_pct": 0.67,
+            "cum_actual_pct": -5.58,
+            "cum_expected_pct": 1.56,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": 0.42,
+            "expected_pct": -0.34,
+            "abnormal_pct": 0.76,
+            "cum_actual_pct": -5.17,
+            "cum_expected_pct": 1.22,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 1.73,
+            "expected_pct": -0.15,
+            "abnormal_pct": 1.89,
+            "cum_actual_pct": -3.43,
+            "cum_expected_pct": 1.07,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 4.68,
+            "expected_pct": 0.11,
+            "abnormal_pct": 4.57,
+            "cum_actual_pct": 1.25,
+            "cum_expected_pct": 1.18,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -1.25,
+            "expected_pct": -1.18,
+            "abnormal_pct": -0.07,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": -3.28,
+            "expected_pct": -0.16,
+            "abnormal_pct": -3.11,
+            "cum_actual_pct": -3.28,
+            "cum_expected_pct": -0.16,
+            "car_pct": -3.12
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -1.41)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Amazon",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Amazon's streaming services could be impacted by Fox's strengthened position in the market.",
+      "ticker": "AMZN",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 1.6,
+        "raw_return_pct": -0.35,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.43,
+        "car_pct": -0.78,
+        "t_stat": -0.37,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -0.95,
+            "expected_pct": -0.9,
+            "abnormal_pct": -0.05,
+            "cum_actual_pct": -5.17,
+            "cum_expected_pct": 6.21,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": 0.44,
+            "expected_pct": 1.04,
+            "abnormal_pct": -0.6,
+            "cum_actual_pct": -4.73,
+            "cum_expected_pct": 7.25,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": 1.61,
+            "expected_pct": 0.88,
+            "abnormal_pct": 0.73,
+            "cum_actual_pct": -3.12,
+            "cum_expected_pct": 8.12,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": 0.59,
+            "expected_pct": 0.37,
+            "abnormal_pct": 0.23,
+            "cum_actual_pct": -2.53,
+            "cum_expected_pct": 8.49,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": -4.25,
+            "expected_pct": -0.56,
+            "abnormal_pct": -3.69,
+            "cum_actual_pct": -6.78,
+            "cum_expected_pct": 7.93,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -1.41,
+            "expected_pct": -2.97,
+            "abnormal_pct": 1.56,
+            "cum_actual_pct": -8.19,
+            "cum_expected_pct": 4.96,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": 2.2,
+            "expected_pct": -0.89,
+            "abnormal_pct": 3.09,
+            "cum_actual_pct": -5.99,
+            "cum_expected_pct": 4.07,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 2.06,
+            "expected_pct": 0.51,
+            "abnormal_pct": 1.55,
+            "cum_actual_pct": -3.93,
+            "cum_expected_pct": 4.57,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 6.12,
+            "expected_pct": 2.45,
+            "abnormal_pct": 3.67,
+            "cum_actual_pct": 2.19,
+            "cum_expected_pct": 7.02,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -2.19,
+            "expected_pct": -7.02,
+            "abnormal_pct": 4.83,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": -0.35,
+            "expected_pct": 0.43,
+            "abnormal_pct": -0.78,
+            "cum_actual_pct": -0.35,
+            "cum_expected_pct": 0.43,
+            "car_pct": -0.78
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.37)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Disney",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Disney may face intensified competition in the streaming space due to Fox's acquisition of Roku.",
+      "ticker": "DIS",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 0.24,
+        "raw_return_pct": -0.4,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.17,
+        "car_pct": -0.57,
+        "t_stat": -0.37,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -0.54,
+            "expected_pct": -0.03,
+            "abnormal_pct": -0.51,
+            "cum_actual_pct": -4.25,
+            "cum_expected_pct": -0.02,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": -1.88,
+            "expected_pct": 0.26,
+            "abnormal_pct": -2.14,
+            "cum_actual_pct": -6.13,
+            "cum_expected_pct": 0.24,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": -0.15,
+            "expected_pct": 0.24,
+            "abnormal_pct": -0.39,
+            "cum_actual_pct": -6.29,
+            "cum_expected_pct": 0.48,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": -1.08,
+            "expected_pct": 0.16,
+            "abnormal_pct": -1.24,
+            "cum_actual_pct": -7.37,
+            "cum_expected_pct": 0.64,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": 1.71,
+            "expected_pct": 0.02,
+            "abnormal_pct": 1.69,
+            "cum_actual_pct": -5.65,
+            "cum_expected_pct": 0.66,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": 0.03,
+            "expected_pct": -0.34,
+            "abnormal_pct": 0.37,
+            "cum_actual_pct": -5.63,
+            "cum_expected_pct": 0.32,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": 1.96,
+            "expected_pct": -0.03,
+            "abnormal_pct": 1.98,
+            "cum_actual_pct": -3.67,
+            "cum_expected_pct": 0.29,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 0.95,
+            "expected_pct": 0.18,
+            "abnormal_pct": 0.77,
+            "cum_actual_pct": -2.72,
+            "cum_expected_pct": 0.47,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 4.18,
+            "expected_pct": 0.47,
+            "abnormal_pct": 3.71,
+            "cum_actual_pct": 1.45,
+            "cum_expected_pct": 0.94,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -1.45,
+            "expected_pct": -0.94,
+            "abnormal_pct": -0.51,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": -0.4,
+            "expected_pct": 0.17,
+            "abnormal_pct": -0.57,
+            "cum_actual_pct": -0.4,
+            "cum_expected_pct": 0.17,
+            "car_pct": -0.57
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.37)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "early",
+  "generated_at": "2026-11-07T14:50:02Z"
+}

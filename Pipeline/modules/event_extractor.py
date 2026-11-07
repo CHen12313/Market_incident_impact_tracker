@@ -20,10 +20,10 @@ class EventExtractor(PipelineModule):
     """
     Reads `context.articles` (NewsCollector's buckets), writes
     `context.events`: one `ExtractedEvent` per distinct incident the LLM
-    found newsworthy. `companies[].ticker` is filled in later by
-    TickerResolver. A bucket that yields no event, or an LLM response that
-    fails validation, is dropped (with a `warning` status event) rather
-    than raising — see DATA_CONTRACT.md.
+    found newsworthy. Each event includes direct companies and up to
+    `max_knock_on_companies` indirect companies. TickerResolver fills in
+    `companies[].ticker` later. A bucket that yields no event or fails
+    validation is dropped with a warning status event. See DATA_CONTRACT.md.
     """
 
     label = "Extracting events"

@@ -105,11 +105,16 @@ def create_app(config=None):
             data = json.loads(path.read_text())
             impacts = data['impacts']
             top = max(impacts, key=lambda item: abs(item['study']['car_pct']))
-            matched = [dict(ticker=item['ticker'], relation=item['relation'],
-                            car_pct=item['study']['car_pct'],
-                            days_after=item['study'].get('days_after'),
-                            is_significant=item['study']['is_significant'])
-                       for item in impacts if item['ticker'] in watchlist]
+            matched = []
+            for item in impacts:
+                if item['ticker'] not in watchlist:
+                    continue
+                study = item['study']
+                daily = study.get('daily') or []
+                matched.append(dict(ticker=item['ticker'], relation=item['relation'],
+                                    car_pct=study['car_pct'], days_after=study.get('days_after'),
+                                    prices_through=daily[-1].get('date') if daily else None,
+                                    is_significant=study['is_significant']))
             summary = {key: data['event'][key] for key in
                        ('event_id', 'event_type', 'headline', 'event_date')}
             summary.update(status=data['status'], affected_count=len(impacts),

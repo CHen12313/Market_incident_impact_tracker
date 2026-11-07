@@ -1,0 +1,247 @@
+{
+  "event": {
+    "event_id": "2026-10-15-sally-rooney-s-books-withdrawn-from",
+    "event_type": "recall",
+    "headline": "Sally Rooney's books withdrawn from UK sale over support for Palestine Action",
+    "summary": "Publisher Faber has stopped selling Sally Rooney's books in the UK due to legal concerns related to her support for the banned group Palestine Action.",
+    "event_date": "2026-10-15",
+    "source_url": "https://www.israelnationalnews.com/news/434636"
+  },
+  "impacts": [
+    {
+      "company_name": "Faber",
+      "relation": "direct",
+      "expected_direction": "down",
+      "reason": "The withdrawal may lead to decreased sales and revenue.",
+      "ticker": "220A.T",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-10-15",
+        "days_after": 10,
+        "beta": -0.22,
+        "raw_return_pct": 4.64,
+        "market_return_pct": 0.04,
+        "expected_return_pct": -0.37,
+        "car_pct": 5.01,
+        "t_stat": 1.17,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-09-30",
+            "actual_pct": 0.54,
+            "expected_pct": 0.02,
+            "abnormal_pct": 0.52,
+            "cum_actual_pct": 0.53,
+            "cum_expected_pct": 0.49,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-01",
+            "actual_pct": -0.54,
+            "expected_pct": -0.07,
+            "abnormal_pct": -0.46,
+            "cum_actual_pct": -0.0,
+            "cum_expected_pct": 0.41,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-02",
+            "actual_pct": 0.54,
+            "expected_pct": -0.19,
+            "abnormal_pct": 0.73,
+            "cum_actual_pct": 0.54,
+            "cum_expected_pct": 0.22,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-05",
+            "actual_pct": 0.0,
+            "expected_pct": -0.18,
+            "abnormal_pct": 0.18,
+            "cum_actual_pct": 0.54,
+            "cum_expected_pct": 0.04,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-06",
+            "actual_pct": 0.0,
+            "expected_pct": -0.16,
+            "abnormal_pct": 0.16,
+            "cum_actual_pct": 0.54,
+            "cum_expected_pct": -0.11,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-07",
+            "actual_pct": -0.54,
+            "expected_pct": 0.02,
+            "abnormal_pct": -0.55,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": -0.1,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-08",
+            "actual_pct": 0.0,
+            "expected_pct": 0.07,
+            "abnormal_pct": -0.07,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": -0.03,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-10-09",
+            "actual_pct": 0.0,
+            "expected_pct": -0.16,
+            "abnormal_pct": 0.16,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": -0.19,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-10-13",
+            "actual_pct": 0.0,
+            "expected_pct": -0.02,
+            "abnormal_pct": 0.02,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": -0.21,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-10-14",
+            "actual_pct": 0.0,
+            "expected_pct": 0.21,
+            "abnormal_pct": -0.21,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-10-15",
+            "actual_pct": 0.76,
+            "expected_pct": -0.1,
+            "abnormal_pct": 0.86,
+            "cum_actual_pct": 0.76,
+            "cum_expected_pct": -0.1,
+            "car_pct": 0.86
+          },
+          {
+            "day": 1,
+            "date": "2026-10-16",
+            "actual_pct": -0.64,
+            "expected_pct": 0.2,
+            "abnormal_pct": -0.85,
+            "cum_actual_pct": 0.11,
+            "cum_expected_pct": 0.1,
+            "car_pct": 0.01
+          },
+          {
+            "day": 2,
+            "date": "2026-10-19",
+            "actual_pct": 0.0,
+            "expected_pct": -0.12,
+            "abnormal_pct": 0.12,
+            "cum_actual_pct": 0.11,
+            "cum_expected_pct": -0.02,
+            "car_pct": 0.13
+          },
+          {
+            "day": 3,
+            "date": "2026-10-20",
+            "actual_pct": 0.0,
+            "expected_pct": -0.09,
+            "abnormal_pct": 0.09,
+            "cum_actual_pct": 0.11,
+            "cum_expected_pct": -0.11,
+            "car_pct": 0.22
+          },
+          {
+            "day": 4,
+            "date": "2026-10-21",
+            "actual_pct": -0.11,
+            "expected_pct": -0.16,
+            "abnormal_pct": 0.05,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": -0.27,
+            "car_pct": 0.27
+          },
+          {
+            "day": 5,
+            "date": "2026-10-22",
+            "actual_pct": -0.43,
+            "expected_pct": 0.23,
+            "abnormal_pct": -0.66,
+            "cum_actual_pct": -0.43,
+            "cum_expected_pct": -0.04,
+            "car_pct": -0.39
+          },
+          {
+            "day": 6,
+            "date": "2026-10-23",
+            "actual_pct": -0.11,
+            "expected_pct": 0.08,
+            "abnormal_pct": -0.19,
+            "cum_actual_pct": -0.54,
+            "cum_expected_pct": 0.04,
+            "car_pct": -0.58
+          },
+          {
+            "day": 7,
+            "date": "2026-10-26",
+            "actual_pct": 0.76,
+            "expected_pct": -0.18,
+            "abnormal_pct": 0.94,
+            "cum_actual_pct": 0.22,
+            "cum_expected_pct": -0.15,
+            "car_pct": 0.37
+          },
+          {
+            "day": 8,
+            "date": "2026-10-27",
+            "actual_pct": 0.0,
+            "expected_pct": -0.16,
+            "abnormal_pct": 0.16,
+            "cum_actual_pct": 0.22,
+            "cum_expected_pct": -0.31,
+            "car_pct": 0.53
+          },
+          {
+            "day": 9,
+            "date": "2026-10-28",
+            "actual_pct": 0.11,
+            "expected_pct": -0.09,
+            "abnormal_pct": 0.2,
+            "cum_actual_pct": 0.33,
+            "cum_expected_pct": -0.4,
+            "car_pct": 0.73
+          },
+          {
+            "day": 10,
+            "date": "2026-10-29",
+            "actual_pct": 4.31,
+            "expected_pct": 0.03,
+            "abnormal_pct": 4.28,
+            "cum_actual_pct": 4.64,
+            "cum_expected_pct": -0.37,
+            "car_pct": 5.01
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 1.17)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "complete",
+  "generated_at": "2026-11-07T15:03:13Z"
+}

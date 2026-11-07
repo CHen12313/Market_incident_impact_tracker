@@ -18,6 +18,7 @@
 .impact-row:hover, .impact-row:focus-visible { background: #eef5ff; }
 .impact-description { overflow-wrap: anywhere; font-size: 14px; }
 .impact-description small { display: block; margin-top: 5px; color: #52647c; }
+.impact-reading { margin: 6px 0 0; color: #364d68; }
 .impact-scale { position: relative; height: 24px; background: #f2f5f9; border-radius: 4px; }
 .impact-scale::after { content: ""; position: absolute; left: 50%; inset-block: 0; width: 1px; background: #61748b; }
 .impact-scale span { position: absolute; top: 5px; height: 14px; border-radius: 3px; }
