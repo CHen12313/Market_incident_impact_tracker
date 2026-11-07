@@ -17,7 +17,7 @@ def _prices(ticker, start, end, cache):
     if not re.fullmatch(r"[A-Z0-9^][A-Z0-9.^=\-]{0,31}", ticker):
         raise ValueError("Invalid ticker for price history")
     path = Path(cache) / "prices" / f"{ticker}.csv"
-    prices = pd.Series(dtype=float, name="Close")
+    prices = pd.Series(dtype=float, name="Close", index=pd.DatetimeIndex([]))
     if path.exists():
         prices = pd.read_csv(path, index_col=0, parse_dates=True)["Close"].dropna()
         if not prices.empty and prices.index.min().date() <= start + timedelta(days=7) and prices.index.max().date() >= end - timedelta(days=4):

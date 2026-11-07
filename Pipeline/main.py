@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 import dataclasses
 import json
@@ -13,17 +14,17 @@ from Pipeline.config import ALL_EVENT_TYPES, DEFAULT_DAYS_BACK
 from Pipeline.pipeline_module import PipelineModule
 from Pipeline.utils.event_files import event_lock, write_event
 
+from Pipeline.modules.event_extractor import EventExtractor
+from Pipeline.modules.event_study_runner import EventStudyRunner
+from Pipeline.modules.event_writer import EventWriter
+from Pipeline.modules.news_collector import NewsCollector
+from Pipeline.modules.prediction_checker import PredictionChecker
+from Pipeline.modules.ticker_resolver import TickerResolver
+
 logger = logging.getLogger(__name__)
 
 
 def _build_steps(parameters: dict) -> tuple[List[PipelineModule], dict, dict]:
-    from Pipeline.modules.event_extractor import EventExtractor
-    from Pipeline.modules.event_study_runner import EventStudyRunner
-    from Pipeline.modules.event_writer import EventWriter
-    from Pipeline.modules.news_collector import NewsCollector
-    from Pipeline.modules.prediction_checker import PredictionChecker
-    from Pipeline.modules.ticker_resolver import TickerResolver
-
     news = NewsCollector()
     if not news.api_keys:
         raise ValueError("Set NEWS_API_KEY before scanning news.")
@@ -121,9 +122,6 @@ async def run_pipeline(parameters: dict) -> tuple[bool, dict]:
 
 def refresh_event(event_id, *, data_cache=DEFAULT_CACHE):
     """Recalculate the cached event and keep prior studies for unavailable tickers."""
-    from Pipeline.modules.event_study_runner import EventStudyRunner
-    from Pipeline.modules.prediction_checker import PredictionChecker
-
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", event_id):
         raise ValueError("Invalid event ID")
     path = Path(data_cache) / "events" / f"{event_id}.json"
@@ -171,3 +169,36 @@ async def stream_pipeline(parameters: dict):
         if not task.done():
             task.cancel()
             await asyncio.gather(task, return_exceptions=True)
+
+
+def regenerate_demo_events(*, data_cache=DEFAULT_CACHE) -> None:
+    """
+    Re-run the event study for every event already in `data_cache/events`,
+    straight from the price cache — no NewsCollector/EventExtractor/
+    TickerResolver, so this needs no API keys and doesn't depend on live
+    yfinance. Used by `--demo` to refresh the demo files before a run.
+    """
+    events_directory = Path(data_cache) / "events"
+    event_ids = sorted(path.stem for path in events_directory.glob("*.json"))
+    if not event_ids:
+        print(f"No cached event files found in {events_directory}")
+        return
+
+    for event_id in event_ids:
+        try:
+            refresh_event(event_id, data_cache=data_cache)
+            print(f"Regenerated {event_id}")
+        except Exception as error:
+            print(f"Skipped {event_id}: {error}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Pipeline CLI")
+    parser.add_argument("--demo", action="store_true",
+                         help="Regenerate every cached event file's study from Data_Cache/prices, offline")
+    arguments = parser.parse_args()
+
+    if arguments.demo:
+        regenerate_demo_events()
+    else:
+        parser.print_help()
