@@ -1,4 +1,4 @@
-from config import ALPHA_VANTAGE_API_KEY, FINNHUB_API_KEY
+from Pipeline.config import ALPHA_VANTAGE_API_KEY, FINNHUB_API_KEY
 import requests
 import os
 from pathlib import Path
