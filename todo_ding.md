@@ -62,3 +62,11 @@ Chen 的 `stream_pipeline(params)` 是 **async generator**，而 Flask 的流式
 | 4:45 | 功能冻结 |
 
 **最后检查：** 断网（或 yfinance 不可用）的情况下，打开两个演示事件也能正常显示（依赖 Chen 的价格缓存）。
+
+## 实现进展（2026-11-07）
+
+- 已实现 `Server/app.py`：全部 API、JSON 错误、SPA 托管、原子文件写入和进程内锁。
+- SSE 以 `DATA_CONTRACT.md` 为准：保存完整帧记录，支持多客户端、断线重放、15 秒心跳及状态轮询；不使用一次消费的 queue。
+- 已用 `Server.seed_mock` 将 `Pipeline/Mock_Event/` 中两个 mock 放入契约数据目录，支持离线读取。
+- 已通过 `tests/test_server.py` 的 5 组自动测试；启动和对接说明见 `Server/README.md`。
+- 待联调：Chen 的 `Pipeline.main.stream_pipeline` / `refresh_event`，以及 Xuan 的 `Server/static_spa/` 构建产物。真实价格缓存和断网完整演示尚未验证。
