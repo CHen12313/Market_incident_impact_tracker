@@ -212,5 +212,28 @@
   "cybersecurity firms": {
     "symbol": null,
     "as_of": 1794061186
-  }
+  },
+  "quick ride": {
+    "symbol": null,
+    "as_of": 1794054496
+  },
+  "ola": {
+    "symbol": null,
+    "as_of": 1794054496
+  },
+  "uber": "UBER",
+  "zomato": {
+    "symbol": null,
+    "as_of": 1794054497
+  },
+  "spirit of tasmania": {
+    "symbol": null,
+    "as_of": 1794054497
+  },
+  "square enix": "9684.T",
+  "steam": {
+    "symbol": null,
+    "as_of": 1794054581
+  },
+  "sony": "SONY"
 }

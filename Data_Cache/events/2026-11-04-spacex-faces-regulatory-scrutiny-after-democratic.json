@@ -7,13 +7,15 @@
     "event_date": "2026-11-04",
     "source_url": "https://cryptobriefing.com/spacex-shares-fall-amid-democratic-win-regulatory-scrutiny-concerns/"
   },
+  "status": "early",
+  "generated_at": "2026-11-07T14:48:43Z",
   "impacts": [
     {
       "company_name": "Tesla",
+      "ticker": "TSLA",
       "relation": "competitor",
       "expected_direction": "down",
       "reason": "Tesla may be affected by the same regulatory environment impacting SpaceX.",
-      "ticker": "TSLA",
       "study": {
         "market_ticker": "^GSPC",
         "event_day": "2026-11-04",
@@ -163,10 +165,10 @@
     },
     {
       "company_name": "General Motors",
+      "ticker": "GM",
       "relation": "competitor",
       "expected_direction": "up",
-      "reason": "Potential regulatory challenges for competitors like Tesla could benefit GM.",
-      "ticker": "GM",
+      "reason": "As a competitor, GM may benefit from regulatory challenges faced by Tesla and SpaceX.",
       "study": {
         "market_ticker": "^GSPC",
         "event_day": "2026-11-04",
@@ -314,7 +316,5 @@
       },
       "prediction_match": null
     }
-  ],
-  "status": "early",
-  "generated_at": "2026-11-07T13:21:52Z"
+  ]
 }

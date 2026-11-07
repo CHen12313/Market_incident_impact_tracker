@@ -227,4 +227,6 @@ Data_Cache/watchlist.json
 Data_Cache/tracked.json
 
 Data_Cache/prices/
+
+# macOS
 .DS_Store

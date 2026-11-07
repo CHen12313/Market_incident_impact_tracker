@@ -1,9 +1,10 @@
 import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
 env_file = Path(__file__).resolve().parent.parent / ".env"
 if env_file.is_file():
-    from dotenv import load_dotenv
-
     load_dotenv(env_file)
 
 NEWS_API_BACKUP = os.environ.get("NEWS_API_BACKUP", "")
@@ -178,3 +179,7 @@ INCIDENT_TERMS = {
     "_default": ["incident", "controversy", "crisis"]
 }
 
+# Lowercase company name -> ticker. TickerResolver checks this before calling
+# get_company_symbol(), for demo companies whose real-world lookup is flaky
+# or fictional (mock events). Empty until the demo events are picked.
+DEMO_TICKER_OVERRIDES: dict[str, str] = {}
