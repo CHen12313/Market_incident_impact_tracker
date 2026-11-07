@@ -305,7 +305,7 @@ None    # 不显著，或 expected_direction == "unclear" —— 无从验证
 ```python
 {
     "event_types": ["breach", "recall", "outage"],  # 可选；默认为除 "other" 以外的所有 event_type
-    "days_back":   3,                               # 可选，默认 3；NewsCollector 往前搜索几天
+    "days_back":   30,                              # 可选，默认 30；NewsCollector 往前搜索几天
 }
 ```
 

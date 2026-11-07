@@ -146,7 +146,7 @@ REGION_ANCHORS = {
 # Incident types this pipeline searches for (DATA_CONTRACT.md's `event_type`,
 # minus "other" — NewsCollector doesn't search for that one).
 ALL_EVENT_TYPES = ["merger", "breach", "recall", "outage", "lawsuit", "regulation"]
-DEFAULT_DAYS_BACK = 3
+DEFAULT_DAYS_BACK = 30
 
 # Search terms per incident type, same role as SECTOR_DEAL_TERMS but keyed by
 # event_type instead of sector. NewsCollector ORs these together as its query.

@@ -1,0 +1,586 @@
+{
+  "event": {
+    "event_id": "2026-11-05-more-bomb-threats-divert-flights-cause",
+    "event_type": "outage",
+    "headline": "More Bomb Threats Divert Flights, Cause Disruption in Europe",
+    "summary": "Airlines were forced to divert flights across Europe due to bomb threats, impacting multiple airliners and causing significant travel disruptions.",
+    "event_date": "2026-11-05",
+    "source_url": "https://www.insurancejournal.com/news/international/2026/11/05/891643.htm"
+  },
+  "impacts": [
+    {
+      "company_name": "Wizz Air Holdings Plc",
+      "relation": "direct",
+      "expected_direction": "down",
+      "reason": "Flight diversions typically lead to increased operational costs and customer dissatisfaction.",
+      "ticker": "WIZZ.L",
+      "study": {
+        "market_ticker": "^FTSE",
+        "event_day": "2026-11-05",
+        "days_after": 1,
+        "beta": 1.29,
+        "raw_return_pct": 0.89,
+        "market_return_pct": -1.44,
+        "expected_return_pct": -1.79,
+        "car_pct": 2.68,
+        "t_stat": 0.8,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-22",
+            "actual_pct": -2.84,
+            "expected_pct": -0.3,
+            "abnormal_pct": -2.54,
+            "cum_actual_pct": -8.0,
+            "cum_expected_pct": -1.63,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-23",
+            "actual_pct": -2.41,
+            "expected_pct": -0.38,
+            "abnormal_pct": -2.03,
+            "cum_actual_pct": -10.41,
+            "cum_expected_pct": -2.01,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-26",
+            "actual_pct": 1.58,
+            "expected_pct": 0.97,
+            "abnormal_pct": 0.61,
+            "cum_actual_pct": -8.84,
+            "cum_expected_pct": -1.04,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-27",
+            "actual_pct": 1.76,
+            "expected_pct": -0.93,
+            "abnormal_pct": 2.69,
+            "cum_actual_pct": -7.08,
+            "cum_expected_pct": -1.98,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-28",
+            "actual_pct": -0.61,
+            "expected_pct": 0.13,
+            "abnormal_pct": -0.74,
+            "cum_actual_pct": -7.69,
+            "cum_expected_pct": -1.84,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-29",
+            "actual_pct": 2.15,
+            "expected_pct": 0.37,
+            "abnormal_pct": 1.78,
+            "cum_actual_pct": -5.54,
+            "cum_expected_pct": -1.47,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-30",
+            "actual_pct": -2.35,
+            "expected_pct": 0.13,
+            "abnormal_pct": -2.48,
+            "cum_actual_pct": -7.89,
+            "cum_expected_pct": -1.34,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-02",
+            "actual_pct": 5.28,
+            "expected_pct": 0.42,
+            "abnormal_pct": 4.86,
+            "cum_actual_pct": -2.61,
+            "cum_expected_pct": -0.92,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-03",
+            "actual_pct": -1.85,
+            "expected_pct": -1.44,
+            "abnormal_pct": -0.41,
+            "cum_actual_pct": -4.46,
+            "cum_expected_pct": -2.36,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-04",
+            "actual_pct": 4.46,
+            "expected_pct": 2.36,
+            "abnormal_pct": 2.1,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-05",
+            "actual_pct": -1.42,
+            "expected_pct": -0.52,
+            "abnormal_pct": -0.91,
+            "cum_actual_pct": -1.42,
+            "cum_expected_pct": -0.52,
+            "car_pct": -0.9
+          },
+          {
+            "day": 1,
+            "date": "2026-11-06",
+            "actual_pct": 2.31,
+            "expected_pct": -1.27,
+            "abnormal_pct": 3.58,
+            "cum_actual_pct": 0.89,
+            "cum_expected_pct": -1.79,
+            "car_pct": 2.68
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 0.80)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Air France-KLM",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "As a major airline in Europe, they may also experience fallout from reduced travel confidence.",
+      "ticker": "AF.PA",
+      "study": {
+        "market_ticker": "^STOXX50E",
+        "event_day": "2026-11-05",
+        "days_after": 1,
+        "beta": 1.52,
+        "raw_return_pct": 19.15,
+        "market_return_pct": -1.53,
+        "expected_return_pct": -2.31,
+        "car_pct": 21.46,
+        "t_stat": 6.85,
+        "is_significant": true,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-22",
+            "actual_pct": -2.79,
+            "expected_pct": -2.95,
+            "abnormal_pct": 0.16,
+            "cum_actual_pct": -9.61,
+            "cum_expected_pct": -4.53,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-23",
+            "actual_pct": -3.14,
+            "expected_pct": -0.46,
+            "abnormal_pct": -2.68,
+            "cum_actual_pct": -12.75,
+            "cum_expected_pct": -4.99,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-26",
+            "actual_pct": 2.99,
+            "expected_pct": 1.21,
+            "abnormal_pct": 1.78,
+            "cum_actual_pct": -9.76,
+            "cum_expected_pct": -3.78,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-27",
+            "actual_pct": 1.17,
+            "expected_pct": 1.21,
+            "abnormal_pct": -0.04,
+            "cum_actual_pct": -8.59,
+            "cum_expected_pct": -2.57,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-28",
+            "actual_pct": -0.82,
+            "expected_pct": 0.08,
+            "abnormal_pct": -0.9,
+            "cum_actual_pct": -9.41,
+            "cum_expected_pct": -2.48,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-29",
+            "actual_pct": 2.19,
+            "expected_pct": 0.98,
+            "abnormal_pct": 1.21,
+            "cum_actual_pct": -7.22,
+            "cum_expected_pct": -1.51,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-30",
+            "actual_pct": -1.24,
+            "expected_pct": -1.85,
+            "abnormal_pct": 0.61,
+            "cum_actual_pct": -8.46,
+            "cum_expected_pct": -3.36,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-02",
+            "actual_pct": 4.82,
+            "expected_pct": 1.12,
+            "abnormal_pct": 3.7,
+            "cum_actual_pct": -3.64,
+            "cum_expected_pct": -2.24,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-03",
+            "actual_pct": -0.23,
+            "expected_pct": -0.77,
+            "abnormal_pct": 0.54,
+            "cum_actual_pct": -3.87,
+            "cum_expected_pct": -3.01,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-04",
+            "actual_pct": 3.87,
+            "expected_pct": 3.01,
+            "abnormal_pct": 0.86,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-05",
+            "actual_pct": 12.06,
+            "expected_pct": -0.82,
+            "abnormal_pct": 12.88,
+            "cum_actual_pct": 12.06,
+            "cum_expected_pct": -0.82,
+            "car_pct": 12.88
+          },
+          {
+            "day": 1,
+            "date": "2026-11-06",
+            "actual_pct": 7.08,
+            "expected_pct": -1.48,
+            "abnormal_pct": 8.57,
+            "cum_actual_pct": 19.15,
+            "cum_expected_pct": -2.31,
+            "car_pct": 21.46
+          }
+        ],
+        "verdict_text": "Rose 21.46% relative to the market-based expectation over 2 trading days (t = 6.85)."
+      },
+      "prediction_match": false
+    },
+    {
+      "company_name": "Ryanair",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Increased disruptions may lead to a loss of customer trust in low-cost carriers.",
+      "ticker": "RYAAY",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-05",
+        "days_after": 1,
+        "beta": 1.5,
+        "raw_return_pct": 0.43,
+        "market_return_pct": -4.04,
+        "expected_return_pct": -6.12,
+        "car_pct": 6.55,
+        "t_stat": 2.46,
+        "is_significant": true,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-22",
+            "actual_pct": -0.79,
+            "expected_pct": -1.84,
+            "abnormal_pct": 1.05,
+            "cum_actual_pct": -9.99,
+            "cum_expected_pct": -0.3,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-23",
+            "actual_pct": -2.12,
+            "expected_pct": -0.81,
+            "abnormal_pct": -1.32,
+            "cum_actual_pct": -12.11,
+            "cum_expected_pct": -1.11,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-26",
+            "actual_pct": 0.89,
+            "expected_pct": 1.02,
+            "abnormal_pct": -0.12,
+            "cum_actual_pct": -11.22,
+            "cum_expected_pct": -0.09,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-27",
+            "actual_pct": 0.55,
+            "expected_pct": 0.87,
+            "abnormal_pct": -0.32,
+            "cum_actual_pct": -10.67,
+            "cum_expected_pct": 0.78,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-28",
+            "actual_pct": -1.84,
+            "expected_pct": 0.39,
+            "abnormal_pct": -2.23,
+            "cum_actual_pct": -12.51,
+            "cum_expected_pct": 1.17,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-29",
+            "actual_pct": 2.06,
+            "expected_pct": -0.48,
+            "abnormal_pct": 2.55,
+            "cum_actual_pct": -10.44,
+            "cum_expected_pct": 0.68,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-30",
+            "actual_pct": 0.62,
+            "expected_pct": -2.76,
+            "abnormal_pct": 3.37,
+            "cum_actual_pct": -9.82,
+            "cum_expected_pct": -2.08,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-02",
+            "actual_pct": 2.92,
+            "expected_pct": -0.79,
+            "abnormal_pct": 3.72,
+            "cum_actual_pct": -6.9,
+            "cum_expected_pct": -2.87,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-03",
+            "actual_pct": -1.25,
+            "expected_pct": 0.52,
+            "abnormal_pct": -1.77,
+            "cum_actual_pct": -8.15,
+            "cum_expected_pct": -2.35,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-04",
+            "actual_pct": 8.15,
+            "expected_pct": 2.35,
+            "abnormal_pct": 5.8,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-05",
+            "actual_pct": -0.88,
+            "expected_pct": -6.57,
+            "abnormal_pct": 5.69,
+            "cum_actual_pct": -0.88,
+            "cum_expected_pct": -6.57,
+            "car_pct": 5.69
+          },
+          {
+            "day": 1,
+            "date": "2026-11-06",
+            "actual_pct": 1.32,
+            "expected_pct": 0.45,
+            "abnormal_pct": 0.87,
+            "cum_actual_pct": 0.43,
+            "cum_expected_pct": -6.12,
+            "car_pct": 6.55
+          }
+        ],
+        "verdict_text": "Rose 6.55% relative to the market-based expectation over 2 trading days (t = 2.46)."
+      },
+      "prediction_match": false
+    },
+    {
+      "company_name": "EasyJet",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Similar to Ryanair, disruptions can negatively impact passenger numbers and revenues.",
+      "ticker": "EZJ.L",
+      "study": {
+        "market_ticker": "^FTSE",
+        "event_day": "2026-11-05",
+        "days_after": 1,
+        "beta": -0.19,
+        "raw_return_pct": -0.61,
+        "market_return_pct": -1.44,
+        "expected_return_pct": 1.6,
+        "car_pct": -2.21,
+        "t_stat": -0.6,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-22",
+            "actual_pct": -0.18,
+            "expected_pct": 0.71,
+            "abnormal_pct": -0.89,
+            "cum_actual_pct": -1.35,
+            "cum_expected_pct": -5.81,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-23",
+            "actual_pct": -0.06,
+            "expected_pct": 0.73,
+            "abnormal_pct": -0.78,
+            "cum_actual_pct": -1.41,
+            "cum_expected_pct": -5.08,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-26",
+            "actual_pct": 0.18,
+            "expected_pct": 0.53,
+            "abnormal_pct": -0.35,
+            "cum_actual_pct": -1.24,
+            "cum_expected_pct": -4.55,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-27",
+            "actual_pct": -0.03,
+            "expected_pct": 0.81,
+            "abnormal_pct": -0.84,
+            "cum_actual_pct": -1.27,
+            "cum_expected_pct": -3.74,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-28",
+            "actual_pct": -0.06,
+            "expected_pct": 0.65,
+            "abnormal_pct": -0.71,
+            "cum_actual_pct": -1.32,
+            "cum_expected_pct": -3.09,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-29",
+            "actual_pct": 0.21,
+            "expected_pct": 0.62,
+            "abnormal_pct": -0.41,
+            "cum_actual_pct": -1.12,
+            "cum_expected_pct": -2.47,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-30",
+            "actual_pct": -0.29,
+            "expected_pct": 0.65,
+            "abnormal_pct": -0.95,
+            "cum_actual_pct": -1.41,
+            "cum_expected_pct": -1.82,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-02",
+            "actual_pct": 0.12,
+            "expected_pct": 0.61,
+            "abnormal_pct": -0.49,
+            "cum_actual_pct": -1.29,
+            "cum_expected_pct": -1.21,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-03",
+            "actual_pct": 0.0,
+            "expected_pct": 0.88,
+            "abnormal_pct": -0.88,
+            "cum_actual_pct": -1.29,
+            "cum_expected_pct": -0.33,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-04",
+            "actual_pct": 1.29,
+            "expected_pct": 0.33,
+            "abnormal_pct": 0.96,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-05",
+            "actual_pct": 0.2,
+            "expected_pct": 0.75,
+            "abnormal_pct": -0.54,
+            "cum_actual_pct": 0.2,
+            "cum_expected_pct": 0.75,
+            "car_pct": -0.55
+          },
+          {
+            "day": 1,
+            "date": "2026-11-06",
+            "actual_pct": -0.81,
+            "expected_pct": 0.85,
+            "abnormal_pct": -1.67,
+            "cum_actual_pct": -0.61,
+            "cum_expected_pct": 1.6,
+            "car_pct": -2.21
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.60)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "early",
+  "generated_at": "2026-11-07T13:21:52Z"
+}

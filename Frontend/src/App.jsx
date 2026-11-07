@@ -23,9 +23,86 @@ function EventCard({ event, alert = false }) { const navigate = useNavigate(); c
 
 function Alerts() { const [alerts, setAlerts] = useState(null); const [error, setError] = useState(''); const refresh = useCallback(() => load(api.alerts, setAlerts, setError), []); useEffect(() => { refresh() }, [refresh]); return <Shell><div className="hero"><p className="eyebrow">YOUR ALERTS</p><h1>News that may move the stocks you follow</h1><p>Start here: the cards below show only events connected to your watchlist.</p></div><Watchlist /><section><div className="section-title"><div><h2>Relevant events</h2><p>Click an event to see what happened and how the price moved.</p></div><button className="secondary" onClick={refresh}>Refresh</button></div>{error && <p className="error">{error}</p>}{alerts === null ? <Loading /> : alerts.length ? <div className="card-list">{alerts.map((event) => <EventCard event={event} alert key={event.event_id} />)}</div> : <Empty text="No current alerts. Add a ticker to your watchlist or check all events." />}</section><GraphPlaceholder /></Shell> }
 
+<<<<<<< Updated upstream
 function Pipeline({ onComplete }) { const [state, setState] = useState(null); const [error, setError] = useState('')
   const fallback = (runId) => { const timer = setInterval(async () => { try { const status = await api.pipelineStatus(runId); setState({ ...status, live: false }); if (status.state !== 'running') { clearInterval(timer); if (status.state === 'done') onComplete() } } catch (e) { clearInterval(timer); setError(e.message) } }, 2000) }
   const run = async () => { setError(''); try { const { run_id } = await api.runPipeline({ event_types: [], days_back: 3 }); setState({ state: 'running', completed: 0, total: 0, last_message: 'Starting scan…', live: true }); try { const source = new EventSource(`/api/pipeline/stream/${run_id}`); source.addEventListener('progress', (event) => { const data = JSON.parse(event.data); setState((old) => ({ ...old, ...data, state: 'running', live: true })) }); source.addEventListener('info', (event) => { const data = JSON.parse(event.data); setState((old) => ({ ...old, last_message: data.message, state: 'running', live: true })) }); source.addEventListener('result', (event) => { const data = JSON.parse(event.data); source.close(); setState((old) => ({ ...old, state: data.success ? 'done' : 'error', last_message: data.success ? 'Scan complete.' : 'Scan failed.' })); if (data.success) onComplete() }); source.addEventListener('error', () => { source.close(); fallback(run_id) }) } catch { fallback(run_id) } } catch (e) { setError(e.message) } }
+=======
+function Pipeline({ onComplete }) {
+  const [state, setState] = useState(null)
+  const [error, setError] = useState('')
+  const active = useRef(null)
+  useEffect(() => () => {
+    active.current?.stop()
+    active.current = null
+  }, [])
+
+  const run = async () => {
+    if (active.current) return
+    let source
+    let timer
+    const session = { stop: () => { source?.close(); clearTimeout(timer) } }
+    active.current = session
+    const isActive = () => active.current === session
+    const finish = (message, failed = false) => {
+      if (!isActive()) return
+      session.stop()
+      active.current = null
+      setState((previous) => ({ ...previous, state: failed ? 'error' : 'done', last_message: message }))
+      if (failed) setError(message)
+      else onComplete()
+    }
+
+    setError('')
+    setState({ state: 'running', completed: 0, total: 0, last_message: 'Starting scan…' })
+    try {
+      const { run_id } = await api.runPipeline({})
+      if (!isActive()) return
+      const poll = async () => {
+        try {
+          const status = await api.pipelineStatus(run_id)
+          if (!isActive()) return
+          setState(status)
+          if (status.state === 'running') timer = setTimeout(poll, 1500)
+          else if (status.state === 'done') finish(status.exit_reason || 'Scan complete.')
+          else finish(status.error_message || 'Scan failed.', true)
+        } catch (error) {
+          finish(error.message, true)
+        }
+      }
+      if (USE_MOCK || typeof EventSource === 'undefined') {
+        timer = setTimeout(poll, 1000)
+        return
+      }
+      try {
+        source = new EventSource(`/api/pipeline/stream/${run_id}`)
+      } catch {
+        void poll()
+        return
+      }
+      source.addEventListener('progress', (event) => {
+        const progress = JSON.parse(event.data)
+        if (isActive()) setState((previous) => ({ ...previous, ...progress }))
+      })
+      source.addEventListener('info', (event) => {
+        const { message } = JSON.parse(event.data)
+        if (isActive()) setState((previous) => ({ ...previous, last_message: message }))
+      })
+      source.addEventListener('done', (event) => {
+        const { exit_reason } = JSON.parse(event.data)
+        finish(exit_reason || 'Scan complete.')
+      })
+      source.addEventListener('error', (event) => {
+        if (!isActive()) return
+        source.close()
+        if (event.data) finish(JSON.parse(event.data).message, true)
+        else void poll()
+      })
+    } catch (error) {
+      finish(error.message, true)
+    }
+  }
+>>>>>>> Stashed changes
   const pct = state?.total ? Math.round((state.completed / state.total) * 100) : 0
   return <div className="pipeline"><button onClick={run} disabled={state?.state === 'running'}>{state?.state === 'running' ? 'Scanning…' : 'Scan latest news'}</button>{state && <div className="progress-wrap"><div className="progress"><span style={{ width: `${pct}%` }} /></div><p>{state.last_message} {state.total ? `(${state.completed}/${state.total})` : ''}</p></div>}{error && <p className="error">{error}</p>}</div> }
 

@@ -30,7 +30,7 @@ Flask 后端和 React 前端通过 `/api/...` 对接。本地开发时，Vite �
 
 ## 扫描任务
 
-- `event_types` 默认包含除 `other` 外的所有事件类型，`days_back` 默认是 3。后端同一时间只运行一个扫描任务。
+- `event_types` 默认包含除 `other` 外的所有事件类型，`days_back` 默认是 30。后端同一时间只运行一个扫描任务。
 - 前端用启动接口返回的 `run_id` 获取进度和结果。进度、结果以及前端处理规则见 [客户端进度协议](DATA_CONTRACT.md#client-stream-frame-protocol--server--frontend-sse-frames)和[状态查询](DATA_CONTRACT.md#polling-fallback--apipipelinestatusrun_id)。
 
 ## HTTP 错误

@@ -3,7 +3,7 @@
     "event_id": "2026-11-06-commerzbank-signals-openness-to-unicredit-deal",
     "event_type": "merger",
     "headline": "Commerzbank signals openness to UniCredit deal",
-    "summary": "Commerzbank has indicated a willingness to engage in a merger with Italy's UniCredit, suggesting potential value creation.",
+    "summary": "Commerzbank has indicated a willingness to consider a merger with Italy's UniCredit, suggesting a potential shift in its previous resistance to the takeover.",
     "event_date": "2026-11-06",
     "source_url": "https://biztoc.com/x/11b11fdcce8d6d5d"
   },
@@ -12,7 +12,7 @@
       "company_name": "Commerzbank",
       "relation": "direct",
       "expected_direction": "up",
-      "reason": "The indication of openness to a merger could boost investor confidence.",
+      "reason": "A merger could create value and improve market position.",
       "ticker": "CBK.DE",
       "study": {
         "market_ticker": "^STOXX50E",
@@ -145,7 +145,7 @@
       "company_name": "Deutsche Bank",
       "relation": "competitor",
       "expected_direction": "down",
-      "reason": "Increased competition from a merged entity may negatively impact Deutsche Bank's market share.",
+      "reason": "Increased competition from a stronger Commerzbank could negatively impact Deutsche Bank.",
       "ticker": "DB",
       "study": {
         "market_ticker": "^GSPC",
@@ -278,7 +278,7 @@
       "company_name": "Intesa Sanpaolo",
       "relation": "competitor",
       "expected_direction": "down",
-      "reason": "A merger could strengthen UniCredit, posing a threat to Intesa Sanpaolo's competitive landscape.",
+      "reason": "A merger could strengthen Commerzbank's position in the market, affecting Intesa's competitiveness.",
       "ticker": "ISP.MI",
       "study": {
         "market_ticker": "^GSPC",
@@ -409,9 +409,9 @@
     },
     {
       "company_name": "UniCredit",
-      "relation": "competitor",
+      "relation": "other",
       "expected_direction": "up",
-      "reason": "A merger could enhance UniCredit's market position and valuation.",
+      "reason": "Potential merger could enhance growth opportunities.",
       "ticker": "UCG.MI",
       "study": {
         "market_ticker": "^GSPC",
@@ -542,5 +542,5 @@
     }
   ],
   "status": "early",
-  "generated_at": "2026-11-07T12:56:35Z"
+  "generated_at": "2026-11-07T13:21:52Z"
 }

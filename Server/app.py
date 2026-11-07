@@ -231,7 +231,7 @@ def create_app(config=None):
     def start_run():
         data = body(optional=True)
         types = data.get('event_types', EVENT_TYPES.copy())
-        days = data.get('days_back', 3)
+        days = data.get('days_back', 30)
         if (not isinstance(types, list) or not types or
                 any(not isinstance(item, str) or item not in EVENT_TYPES + ['other'] for item in types)):
             abort(400, description='event_types must be a non-empty list of valid event types')

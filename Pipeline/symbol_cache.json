@@ -117,5 +117,47 @@
     "as_of": 1794056193
   },
   "jpmorgan chase": "JPM",
-  "hsbc": "HSBC"
+  "hsbc": "HSBC",
+  "digicert": {
+    "symbol": null,
+    "as_of": 1794057707
+  },
+  "globalsign": "3788.T",
+  "sectigo": {
+    "symbol": null,
+    "as_of": 1794057708
+  },
+  "comodo": {
+    "symbol": null,
+    "as_of": 1794057708
+  },
+  "amazon web services": {
+    "symbol": null,
+    "as_of": 1794057708
+  },
+  "wizz air holdings plc": "WIZZ.L",
+  "ryanair": "RYAAY",
+  "easyjet": "EZJ.L",
+  "air franceklm": "AF.PA",
+  "bron ai": {
+    "symbol": null,
+    "as_of": 1794057709
+  },
+  "nike": "NKE",
+  "adidas": "ADS.DE",
+  "under armour": "UAA",
+  "qualcomm": "QCOM",
+  "apple": "AAPL",
+  "samsung": "005930.KS",
+  "symantec": {
+    "symbol": null,
+    "as_of": 1794057833
+  },
+  "opay": "OPAY",
+  "ant group": {
+    "symbol": null,
+    "as_of": 1794057833
+  },
+  "paypal": "PYPL",
+  "square": "PS"
 }

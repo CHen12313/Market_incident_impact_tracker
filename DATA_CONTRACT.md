@@ -488,7 +488,7 @@ class PipelineParams:
     an invalid event_type in that body now fails here as a ValueError
     instead of silently passing through."""
     event_types: list[EventType] = field(default_factory=EventType.searchable)
-    days_back: int = 3
+    days_back: int = 30
 
 @dataclass
 class PipelineContext:
@@ -603,7 +603,7 @@ Job-finding-bot's `generator_params`: no user, quota, CV or `seen_jobs_dict`.
 ```python
 {
     "event_types": ["breach", "recall", "outage"],  # optional; defaults to every event_type except "other"
-    "days_back":   3,                               # optional, default 3; how far back NewsCollector searches
+    "days_back":   30,                              # optional, default 30; how far back NewsCollector searches
 }
 ```
 

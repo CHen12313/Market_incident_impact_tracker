@@ -115,7 +115,7 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(status['completed'], 6)
         self.assertEqual(status['last_message'], 'Found events')
         self.assertEqual(status['event_ids'], ['example'])
-        self.assertEqual(received[0]['days_back'], 3)
+        self.assertEqual(received[0]['days_back'], 30)
         self.assertNotIn('other', received[0]['event_types'])
         url = f'/api/pipeline/stream/{run_id}'
         first = self.client.get(url)

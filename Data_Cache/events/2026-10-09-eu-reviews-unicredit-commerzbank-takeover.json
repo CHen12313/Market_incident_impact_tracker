@@ -1,0 +1,480 @@
+{
+  "event": {
+    "event_id": "2026-10-09-eu-reviews-unicredit-commerzbank-takeover",
+    "event_type": "merger",
+    "headline": "EU opens review of UniCredit’s Commerzbank takeover",
+    "summary": "UniCredit sought EU antitrust approval for its proposed takeover of Commerzbank. Reuters reported that the European Commission set a November 16 deadline for its decision.",
+    "event_date": "2026-10-09",
+    "source_url": "https://www.investing.com/news/stock-market-news/eu-antitrust-regulators-to-decide-on-unicredits-commerzbank-deal-by-november-16-4941062"
+  },
+  "impacts": [
+    {
+      "company_name": "UniCredit",
+      "ticker": "UCG.MI",
+      "relation": "direct",
+      "expected_direction": "unclear",
+      "reason": "UniCredit is the acquiring bank seeking regulatory clearance.",
+      "study": {
+        "market_ticker": "^STOXX50E",
+        "event_day": "2026-10-09",
+        "days_after": 10,
+        "beta": 1.58,
+        "raw_return_pct": -4.27,
+        "market_return_pct": -0.92,
+        "expected_return_pct": -0.07,
+        "car_pct": -4.2,
+        "t_stat": -1.14,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-09-25",
+            "actual_pct": 2.15,
+            "expected_pct": 0.89,
+            "abnormal_pct": 1.27,
+            "cum_actual_pct": 10.58,
+            "cum_expected_pct": 3.29,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-09-28",
+            "actual_pct": 0.39,
+            "expected_pct": 0.09,
+            "abnormal_pct": 0.31,
+            "cum_actual_pct": 10.97,
+            "cum_expected_pct": 3.37,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-09-29",
+            "actual_pct": -0.57,
+            "expected_pct": 0.6,
+            "abnormal_pct": -1.17,
+            "cum_actual_pct": 10.4,
+            "cum_expected_pct": 3.97,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-09-30",
+            "actual_pct": -1.07,
+            "expected_pct": -1.15,
+            "abnormal_pct": 0.08,
+            "cum_actual_pct": 9.33,
+            "cum_expected_pct": 2.82,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-01",
+            "actual_pct": -4.07,
+            "expected_pct": -2.23,
+            "abnormal_pct": -1.84,
+            "cum_actual_pct": 5.26,
+            "cum_expected_pct": 0.59,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-02",
+            "actual_pct": -0.86,
+            "expected_pct": 1.74,
+            "abnormal_pct": -2.59,
+            "cum_actual_pct": 4.41,
+            "cum_expected_pct": 2.33,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-05",
+            "actual_pct": 1.2,
+            "expected_pct": 0.22,
+            "abnormal_pct": 0.99,
+            "cum_actual_pct": 5.61,
+            "cum_expected_pct": 2.54,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-10-06",
+            "actual_pct": 1.64,
+            "expected_pct": 0.89,
+            "abnormal_pct": 0.76,
+            "cum_actual_pct": 7.25,
+            "cum_expected_pct": 3.43,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-10-07",
+            "actual_pct": -4.18,
+            "expected_pct": -2.19,
+            "abnormal_pct": -1.99,
+            "cum_actual_pct": 3.08,
+            "cum_expected_pct": 1.24,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-10-08",
+            "actual_pct": -3.08,
+            "expected_pct": -1.24,
+            "abnormal_pct": -1.83,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-10-09",
+            "actual_pct": 1.06,
+            "expected_pct": 1.33,
+            "abnormal_pct": -0.26,
+            "cum_actual_pct": 1.06,
+            "cum_expected_pct": 1.33,
+            "car_pct": -0.27
+          },
+          {
+            "day": 1,
+            "date": "2026-10-12",
+            "actual_pct": 0.16,
+            "expected_pct": 0.84,
+            "abnormal_pct": -0.68,
+            "cum_actual_pct": 1.22,
+            "cum_expected_pct": 2.16,
+            "car_pct": -0.94
+          },
+          {
+            "day": 2,
+            "date": "2026-10-13",
+            "actual_pct": 0.98,
+            "expected_pct": -0.74,
+            "abnormal_pct": 1.73,
+            "cum_actual_pct": 2.2,
+            "cum_expected_pct": 1.42,
+            "car_pct": 0.78
+          },
+          {
+            "day": 3,
+            "date": "2026-10-14",
+            "actual_pct": -0.29,
+            "expected_pct": 0.72,
+            "abnormal_pct": -1.01,
+            "cum_actual_pct": 1.92,
+            "cum_expected_pct": 2.14,
+            "car_pct": -0.22
+          },
+          {
+            "day": 4,
+            "date": "2026-10-15",
+            "actual_pct": -2.14,
+            "expected_pct": -0.44,
+            "abnormal_pct": -1.7,
+            "cum_actual_pct": -0.22,
+            "cum_expected_pct": 1.7,
+            "car_pct": -1.92
+          },
+          {
+            "day": 5,
+            "date": "2026-10-16",
+            "actual_pct": 1.4,
+            "expected_pct": 1.05,
+            "abnormal_pct": 0.35,
+            "cum_actual_pct": 1.18,
+            "cum_expected_pct": 2.75,
+            "car_pct": -1.57
+          },
+          {
+            "day": 6,
+            "date": "2026-10-19",
+            "actual_pct": -2.15,
+            "expected_pct": -1.39,
+            "abnormal_pct": -0.77,
+            "cum_actual_pct": -0.97,
+            "cum_expected_pct": 1.36,
+            "car_pct": -2.33
+          },
+          {
+            "day": 7,
+            "date": "2026-10-20",
+            "actual_pct": -0.58,
+            "expected_pct": -0.47,
+            "abnormal_pct": -0.11,
+            "cum_actual_pct": -1.55,
+            "cum_expected_pct": 0.89,
+            "car_pct": -2.44
+          },
+          {
+            "day": 8,
+            "date": "2026-10-21",
+            "actual_pct": 1.47,
+            "expected_pct": 2.34,
+            "abnormal_pct": -0.87,
+            "cum_actual_pct": -0.08,
+            "cum_expected_pct": 3.23,
+            "car_pct": -3.31
+          },
+          {
+            "day": 9,
+            "date": "2026-10-22",
+            "actual_pct": -4.73,
+            "expected_pct": -2.94,
+            "abnormal_pct": -1.8,
+            "cum_actual_pct": -4.81,
+            "cum_expected_pct": 0.29,
+            "car_pct": -5.1
+          },
+          {
+            "day": 10,
+            "date": "2026-10-23",
+            "actual_pct": 0.54,
+            "expected_pct": -0.36,
+            "abnormal_pct": 0.91,
+            "cum_actual_pct": -4.27,
+            "cum_expected_pct": -0.07,
+            "car_pct": -4.2
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -1.14)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Commerzbank",
+      "ticker": "CBK.DE",
+      "relation": "direct",
+      "expected_direction": "unclear",
+      "reason": "Commerzbank is the target of UniCredit’s proposed takeover.",
+      "study": {
+        "market_ticker": "^STOXX50E",
+        "event_day": "2026-10-09",
+        "days_after": 10,
+        "beta": 1.27,
+        "raw_return_pct": -3.56,
+        "market_return_pct": -0.92,
+        "expected_return_pct": 0.04,
+        "car_pct": -3.6,
+        "t_stat": -0.77,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-09-25",
+            "actual_pct": 2.73,
+            "expected_pct": 0.72,
+            "abnormal_pct": 2.0,
+            "cum_actual_pct": 11.18,
+            "cum_expected_pct": 2.57,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-09-28",
+            "actual_pct": 0.45,
+            "expected_pct": 0.08,
+            "abnormal_pct": 0.37,
+            "cum_actual_pct": 11.63,
+            "cum_expected_pct": 2.65,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-09-29",
+            "actual_pct": -0.92,
+            "expected_pct": 0.49,
+            "abnormal_pct": -1.41,
+            "cum_actual_pct": 10.71,
+            "cum_expected_pct": 3.14,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-09-30",
+            "actual_pct": -4.0,
+            "expected_pct": -0.92,
+            "abnormal_pct": -3.08,
+            "cum_actual_pct": 6.71,
+            "cum_expected_pct": 2.22,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-01",
+            "actual_pct": -2.26,
+            "expected_pct": -1.79,
+            "abnormal_pct": -0.47,
+            "cum_actual_pct": 4.45,
+            "cum_expected_pct": 0.43,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-02",
+            "actual_pct": -0.63,
+            "expected_pct": 1.41,
+            "abnormal_pct": -2.04,
+            "cum_actual_pct": 3.82,
+            "cum_expected_pct": 1.84,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-10-05",
+            "actual_pct": 0.64,
+            "expected_pct": 0.18,
+            "abnormal_pct": 0.45,
+            "cum_actual_pct": 4.46,
+            "cum_expected_pct": 2.02,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-10-06",
+            "actual_pct": 1.62,
+            "expected_pct": 0.72,
+            "abnormal_pct": 0.9,
+            "cum_actual_pct": 6.08,
+            "cum_expected_pct": 2.74,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-10-07",
+            "actual_pct": -3.7,
+            "expected_pct": -1.75,
+            "abnormal_pct": -1.94,
+            "cum_actual_pct": 2.39,
+            "cum_expected_pct": 0.99,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-10-08",
+            "actual_pct": -2.39,
+            "expected_pct": -0.99,
+            "abnormal_pct": -1.39,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-10-09",
+            "actual_pct": 0.69,
+            "expected_pct": 1.08,
+            "abnormal_pct": -0.39,
+            "cum_actual_pct": 0.69,
+            "cum_expected_pct": 1.08,
+            "car_pct": -0.39
+          },
+          {
+            "day": 1,
+            "date": "2026-10-12",
+            "actual_pct": 0.58,
+            "expected_pct": 0.68,
+            "abnormal_pct": -0.1,
+            "cum_actual_pct": 1.27,
+            "cum_expected_pct": 1.76,
+            "car_pct": -0.49
+          },
+          {
+            "day": 2,
+            "date": "2026-10-13",
+            "actual_pct": 1.31,
+            "expected_pct": -0.59,
+            "abnormal_pct": 1.9,
+            "cum_actual_pct": 2.58,
+            "cum_expected_pct": 1.17,
+            "car_pct": 1.41
+          },
+          {
+            "day": 3,
+            "date": "2026-10-14",
+            "actual_pct": -1.37,
+            "expected_pct": 0.59,
+            "abnormal_pct": -1.96,
+            "cum_actual_pct": 1.21,
+            "cum_expected_pct": 1.76,
+            "car_pct": -0.55
+          },
+          {
+            "day": 4,
+            "date": "2026-10-15",
+            "actual_pct": -1.02,
+            "expected_pct": -0.34,
+            "abnormal_pct": -0.68,
+            "cum_actual_pct": 0.19,
+            "cum_expected_pct": 1.41,
+            "car_pct": -1.22
+          },
+          {
+            "day": 5,
+            "date": "2026-10-16",
+            "actual_pct": 0.48,
+            "expected_pct": 0.85,
+            "abnormal_pct": -0.37,
+            "cum_actual_pct": 0.66,
+            "cum_expected_pct": 2.26,
+            "car_pct": -1.6
+          },
+          {
+            "day": 6,
+            "date": "2026-10-19",
+            "actual_pct": -2.09,
+            "expected_pct": -1.11,
+            "abnormal_pct": -0.98,
+            "cum_actual_pct": -1.42,
+            "cum_expected_pct": 1.16,
+            "car_pct": -2.58
+          },
+          {
+            "day": 7,
+            "date": "2026-10-20",
+            "actual_pct": -1.08,
+            "expected_pct": -0.37,
+            "abnormal_pct": -0.71,
+            "cum_actual_pct": -2.5,
+            "cum_expected_pct": 0.79,
+            "car_pct": -3.29
+          },
+          {
+            "day": 8,
+            "date": "2026-10-21",
+            "actual_pct": 1.64,
+            "expected_pct": 1.89,
+            "abnormal_pct": -0.26,
+            "cum_actual_pct": -0.86,
+            "cum_expected_pct": 2.68,
+            "car_pct": -3.54
+          },
+          {
+            "day": 9,
+            "date": "2026-10-22",
+            "actual_pct": -3.83,
+            "expected_pct": -2.36,
+            "abnormal_pct": -1.48,
+            "cum_actual_pct": -4.7,
+            "cum_expected_pct": 0.32,
+            "car_pct": -5.02
+          },
+          {
+            "day": 10,
+            "date": "2026-10-23",
+            "actual_pct": 1.14,
+            "expected_pct": -0.28,
+            "abnormal_pct": 1.43,
+            "cum_actual_pct": -3.56,
+            "cum_expected_pct": 0.04,
+            "car_pct": -3.6
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.77)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "complete",
+  "generated_at": "2026-11-07T13:30:01Z"
+}
