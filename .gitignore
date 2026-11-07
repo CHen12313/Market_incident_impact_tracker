@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local server environment and user state
+.venv/
+Data_Cache/watchlist.json
+Data_Cache/tracked.json
