@@ -18,12 +18,12 @@ logger = logging.getLogger(__name__)
 
 class EventExtractor(PipelineModule):
     """
-    Reads `ctx.articles` (NewsCollector's buckets), writes `ctx.events`: one
-    `ExtractedEvent` per distinct incident the LLM found newsworthy.
-    `companies[].ticker` is filled in later by TickerResolver. A bucket
-    that yields no event, or an LLM response that fails validation, is
-    dropped (with a `warning` status event) rather than raising — see
-    DATA_CONTRACT.md.
+    Reads `context.articles` (NewsCollector's buckets), writes
+    `context.events`: one `ExtractedEvent` per distinct incident the LLM
+    found newsworthy. `companies[].ticker` is filled in later by
+    TickerResolver. A bucket that yields no event, or an LLM response that
+    fails validation, is dropped (with a `warning` status event) rather
+    than raising — see DATA_CONTRACT.md.
     """
 
     label = "Extracting events"
@@ -42,9 +42,9 @@ class EventExtractor(PipelineModule):
 
     def _build_messages(self, event_type: EventType, articles: list) -> list[dict]:
         article_block = "\n\n".join(
-            f"Title: {a.title}\nDescription: {a.description}\nSource: {a.source}\n"
-            f"Published: {a.published}\nURL: {a.url}"
-            for a in articles
+            f"Title: {article.title}\nDescription: {article.description}\nSource: {article.source}\n"
+            f"Published: {article.published}\nURL: {article.url}"
+            for article in articles
         )
         user_message = event_extractor_user_message.format(
             event_type=event_type,
@@ -65,27 +65,27 @@ class EventExtractor(PipelineModule):
         ).choices[0].message.content
 
         try:
-            raw = json.loads(response)
+            raw_response = json.loads(response)
         except (json.JSONDecodeError, TypeError):
             logger.warning("EventExtractor: non-JSON response for '%s'", event_type)
             return None
 
-        if not isinstance(raw, dict) or not raw.get("event_found"):
+        if not isinstance(raw_response, dict) or not raw_response.get("event_found"):
             return None
 
-        return raw
+        return raw_response
 
     def _slugify(self, text: str, max_words: int = 6) -> str:
         words = re.findall(r"[a-z0-9]+", text.lower())[:max_words]
         return "-".join(words) or "event"
 
-    def _validate(self, event_type: EventType, raw: dict, allowed_urls: set[str]) -> tuple[ExtractedEvent | None, str | None]:
+    def _validate(self, event_type: EventType, raw_response: dict, allowed_urls: set[str]) -> tuple[ExtractedEvent | None, str | None]:
         """Returns (event, None) if valid, or (None, reason) if not."""
-        headline = raw.get("headline")
-        summary = raw.get("summary")
-        event_date = raw.get("event_date")
-        source_url = raw.get("source_url")
-        companies_raw = raw.get("companies")
+        headline = raw_response.get("headline")
+        summary = raw_response.get("summary")
+        event_date = raw_response.get("event_date")
+        source_url = raw_response.get("source_url")
+        raw_companies = raw_response.get("companies")
 
         if not headline or not isinstance(headline, str):
             return None, "missing headline"
@@ -100,20 +100,20 @@ class EventExtractor(PipelineModule):
         if not isinstance(source_url, str) or source_url not in allowed_urls:  # never trust a URL the model didn't copy verbatim
             return None, "source_url not among the provided articles"
 
-        if not isinstance(companies_raw, list) or not companies_raw:
+        if not isinstance(raw_companies, list) or not raw_companies:
             return None, "no companies"
 
         cleaned_companies: list[Company] = []
-        for c in companies_raw:
-            if not isinstance(c, dict):
+        for raw_company in raw_companies:
+            if not isinstance(raw_company, dict):
                 continue
-            company_name = c.get("company_name")
-            reason = c.get("reason")
+            company_name = raw_company.get("company_name")
+            reason = raw_company.get("reason")
             if not all(isinstance(value, str) and value.strip() for value in (company_name, reason)):
                 continue
             try:
-                relation = Relation(c.get("relation"))
-                expected_direction = Direction(c.get("expected_direction"))
+                relation = Relation(raw_company.get("relation"))
+                expected_direction = Direction(raw_company.get("expected_direction"))
             except ValueError:
                 continue
             cleaned_companies.append(Company(
@@ -123,9 +123,9 @@ class EventExtractor(PipelineModule):
                 reason=reason,
             ))
 
-        direct = [c for c in cleaned_companies if c.relation == Relation.DIRECT]
-        knock_on = [c for c in cleaned_companies if c.relation != Relation.DIRECT][:self.max_knock_on_companies]
-        cleaned_companies = direct + knock_on
+        direct_companies = [company for company in cleaned_companies if company.relation == Relation.DIRECT]
+        knock_on_companies = [company for company in cleaned_companies if company.relation != Relation.DIRECT][:self.max_knock_on_companies]
+        cleaned_companies = direct_companies + knock_on_companies
 
         if not cleaned_companies:
             return None, "no valid companies survived validation"
@@ -143,29 +143,29 @@ class EventExtractor(PipelineModule):
         )
         return event, None
 
-    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
-        if ctx.articles is None:
+    async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
+        if context.articles is None:
             raise ValueError("EventExtractor: `articles` is missing")
 
         events: list[ExtractedEvent] = []
-        for bucket in ctx.articles:
+        for bucket in context.articles:
             if not bucket.articles:
                 continue
 
-            raw = await asyncio.to_thread(self._extract_one, bucket.event_type, bucket.articles)
-            if raw is None:
+            raw_response = await asyncio.to_thread(self._extract_one, bucket.event_type, bucket.articles)
+            if raw_response is None:
                 continue
 
-            allowed_urls = {a.url for a in bucket.articles}
-            event, reason = self._validate(bucket.event_type, raw, allowed_urls)
+            allowed_urls = {article.url for article in bucket.articles}
+            event, reason = self._validate(bucket.event_type, raw_response, allowed_urls)
             if event is None:
-                await self.emit_status(ctx, message=f"Dropped invalid '{bucket.event_type}' event: {reason}", tag=InfoTag.WARNING)
+                await self.emit_status(context, message=f"Dropped invalid '{bucket.event_type}' event: {reason}", tag=InfoTag.WARNING)
                 continue
 
             events.append(event)
-            await self.emit_status(ctx, message=f"Found event: {event.event.headline}", tag=InfoTag.SUB_STAGE_SUCCESS)
+            await self.emit_status(context, message=f"Found event: {event.event.headline}", tag=InfoTag.SUB_STAGE_SUCCESS)
 
-        ctx.events = events
-        await self.emit_status(ctx, message=f"Found {len(events)} events", tag=InfoTag.STAGE_SUCCESS)
+        context.events = events
+        await self.emit_status(context, message=f"Found {len(events)} events", tag=InfoTag.STAGE_SUCCESS)
 
         return None, True

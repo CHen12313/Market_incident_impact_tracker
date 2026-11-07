@@ -15,7 +15,7 @@ from Pipeline.pipeline_module import PipelineModule
 logger = logging.getLogger(__name__)
 
 
-def _build_steps(params: dict) -> tuple[List[PipelineModule], dict, dict]:
+def _build_steps(parameters: dict) -> tuple[List[PipelineModule], dict, dict]:
     from Pipeline.modules.analysis import EventStudyRunner, EventWriter, PredictionChecker, TickerResolver
     from Pipeline.modules.event_extractor import EventExtractor
     from Pipeline.modules.news_collector import NewsCollector
@@ -27,14 +27,14 @@ def _build_steps(params: dict) -> tuple[List[PipelineModule], dict, dict]:
     return steps, {}, {step.__class__.__name__: index for index, step in enumerate(steps)}
 
 
-async def execute_pipeline(ctx: PipelineContext, pipeline_steps: List[PipelineModule], loop_instructions: dict[str, dict], step_index_map: dict) -> PipelineContext:
+async def execute_pipeline(context: PipelineContext, pipeline_steps: List[PipelineModule], loop_instructions: dict[str, dict], step_index_map: dict) -> PipelineContext:
     """
     Run `pipeline_steps` in order, backtracking over a declared region when
     its `end` step reports `satisfied=False`. `loop_instructions` maps a
     signal name to {"start", "end", "max_attempts"}, naming the segment
     (by step class name, via `step_index_map`) to re-run.
     """
-    async def _retry_pipeline_segment(instruction: dict, retry_segment: list[PipelineModule], ctx: PipelineContext) -> bool:
+    async def _retry_pipeline_segment(instruction: dict, retry_segment: list[PipelineModule], context: PipelineContext) -> bool:
         """Re-run `retry_segment` up to `instruction['max_attempts']` times,
         stopping as soon as the last step reports satisfied. Returns whether
         it succeeded; the caller doesn't currently act on this."""
@@ -42,19 +42,19 @@ async def execute_pipeline(ctx: PipelineContext, pipeline_steps: List[PipelineMo
         while attempts > 0:
             logger.info("Attempts left: [%s]", attempts)
             for step in retry_segment:
-                signal, satisfied = await step.run(ctx)
+                signal, satisfied = await step.run(context)
             if satisfied:  # we only check the signal of the last step, so this has to be out of the for loop
                 return True
             attempts -= 1
         logger.warning("Retry attempts exhausted - module still not satisfied. Continuing...")
         return False
 
-    await ctx.emit(ProgressEvent(completed=0, total=len(pipeline_steps), stage=None, stage_label=None))
+    await context.emit(ProgressEvent(completed=0, total=len(pipeline_steps), stage=None, stage_label=None))
     cursor = 0
     while cursor < len(pipeline_steps):
         current_step = pipeline_steps[cursor]
-        signal_name, satisfied = await current_step.run(ctx)
-        await ctx.emit(ProgressEvent(
+        signal_name, satisfied = await current_step.run(context)
+        await context.emit(ProgressEvent(
             completed=cursor + 1,
             total=len(pipeline_steps),
             stage=current_step.__class__.__name__,
@@ -62,8 +62,8 @@ async def execute_pipeline(ctx: PipelineContext, pipeline_steps: List[PipelineMo
         ))
 
         if signal_name == "end_pipeline":
-            logger.info("Pipeline exited early. Reason: %s", ctx.exit_reason)
-            return ctx  # early stop is only used when nothing is broken; if something broke, the
+            logger.info("Pipeline exited early. Reason: %s", context.exit_reason)
+            return context  # early stop is only used when nothing is broken; if something broke, the
             # module should have raised instead, so getting here is still a success
         elif signal_name in loop_instructions and not satisfied:
             instruction = loop_instructions[signal_name]  # we checked it exists above, so raw access is fine
@@ -71,42 +71,42 @@ async def execute_pipeline(ctx: PipelineContext, pipeline_steps: List[PipelineMo
             end_index = step_index_map[instruction["end"]]
             retry_segment = pipeline_steps[start_index:end_index + 1]
             logger.warning("Retry triggered. Re-running segment [%s] - [%s]", instruction["start"], instruction["end"])
-            await _retry_pipeline_segment(instruction=instruction, retry_segment=retry_segment, ctx=ctx)
+            await _retry_pipeline_segment(instruction=instruction, retry_segment=retry_segment, context=context)
             logger.info("Finished re-running segment [%s] - [%s]", instruction["start"], instruction["end"])
         cursor += 1
 
-    return ctx
+    return context
 
 
-async def run_pipeline(params: dict) -> tuple[bool, dict]:
+async def run_pipeline(parameters: dict) -> tuple[bool, dict]:
     """
     Run the scan and return the terminal result described by the data
-    contract. `params` and the return value are plain dicts — that's the
-    wire shape Server/app.py and DATA_CONTRACT.md's status-event protocol
-    expect; `PipelineContext` and the typed status events are internal to
-    this module and never cross that boundary.
+    contract. `parameters` and the return value are plain dicts — that's
+    the wire shape Server/app.py and DATA_CONTRACT.md's status-event
+    protocol expect; `PipelineContext` and the typed status events are
+    internal to this module and never cross that boundary.
     """
-    raw_emit = params["emit"]
+    raw_emit = parameters["emit"]
 
     async def emit(event) -> None:
         await raw_emit(dataclasses.asdict(event))
 
     try:
-        event_types = [EventType(t) for t in (params.get("event_types") or ALL_EVENT_TYPES)]
+        event_types = [EventType(t) for t in (parameters.get("event_types") or ALL_EVENT_TYPES)]
     except ValueError as error:
         logger.warning("Pipeline could not complete: %s", error)
         return False, {"error_message": str(error)}
 
-    ctx = PipelineContext(
+    context = PipelineContext(
         event_types=event_types,
-        days_back=params.get("days_back") or DEFAULT_DAYS_BACK,
-        data_cache=Path(params.get("data_cache", DEFAULT_CACHE)),
+        days_back=parameters.get("days_back") or DEFAULT_DAYS_BACK,
+        data_cache=Path(parameters.get("data_cache", DEFAULT_CACHE)),
         emit=emit,
     )
     try:
-        steps, loops, indexes = _build_steps(params)
-        ctx = await execute_pipeline(ctx, steps, loops, indexes)
-        return True, {"event_ids": list(dict.fromkeys(ctx.event_ids)), "exit_reason": ctx.exit_reason}
+        steps, loops, indexes = _build_steps(parameters)
+        context = await execute_pipeline(context, steps, loops, indexes)
+        return True, {"event_ids": list(dict.fromkeys(context.event_ids)), "exit_reason": context.exit_reason}
     except ValueError as error:
         logger.warning("Pipeline could not complete: %s", error)
         return False, {"error_message": str(error)}
@@ -134,7 +134,7 @@ def refresh_event(event_id, *, data_cache=DEFAULT_CACHE):
         return write_event(data_cache, event, impacts)
 
 
-async def stream_pipeline(params: dict):
+async def stream_pipeline(parameters: dict):
     """
     Runs `run_pipeline` in the background and yields its status events as
     they arrive, ending with one {"type": "result", ...} event carrying the
@@ -145,11 +145,11 @@ async def stream_pipeline(params: dict):
 
     async def emit(event):
         await status_queue.put(event)
-    params = dict(params, emit=emit)
+    parameters = dict(parameters, emit=emit)
 
     async def _run():
         try:
-            return await run_pipeline(params)
+            return await run_pipeline(parameters)
         finally:
             await status_queue.put(_SENTINEL)
 

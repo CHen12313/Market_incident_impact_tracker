@@ -24,8 +24,9 @@ logger = logging.getLogger(__name__)
 
 class NewsCollector(PipelineModule):
     """
-    Reads `ctx.event_types` and `ctx.days_back`, writes `ctx.articles`: one
-    `ArticleBucket` per requested event_type. See DATA_CONTRACT.md.
+    Reads `context.event_types` and `context.days_back`, writes
+    `context.articles`: one `ArticleBucket` per requested event_type. See
+    DATA_CONTRACT.md.
     """
 
     label = "Collecting news"
@@ -57,41 +58,41 @@ class NewsCollector(PipelineModule):
         for current_key in self.api_keys:  # main key first, then fallback
             headers = {"x-api-key": current_key}
             for page in range(1, self.max_pages + 1):
-                params = {
+                query_parameters = {
                     "from": start_cutoff.isoformat(),
                     "language": "en",
                     "sortBy": "publishedAt",
                     "pageSize": self.page_size,
                     "page": page,
                 }
-                params["qInTitle" if use_title_filter else "q"] = query
+                query_parameters["qInTitle" if use_title_filter else "q"] = query
 
-                r = requests.get("https://newsapi.org/v2/everything", params=params, headers=headers, timeout=15)
+                response = requests.get("https://newsapi.org/v2/everything", params=query_parameters, headers=headers, timeout=15)
 
-                if r.status_code == 429:
+                if response.status_code == 429:
                     logger.warning("[NewsAPI 429] Rate limit hit")
                     break  # try next API key
 
-                if r.status_code != 200:
-                    logger.warning("[NewsAPI %s] %s", r.status_code, r.json().get("message"))
+                if response.status_code != 200:
+                    logger.warning("[NewsAPI %s] %s", response.status_code, response.json().get("message"))
                     break
 
                 succeeded = True
-                for a in r.json().get("articles", []):
-                    pub_date = a.get("publishedAt", "")[:10]
+                for article in response.json().get("articles", []):
+                    published_date = article.get("publishedAt", "")[:10]
                     try:
-                        pub_date = datetime.strptime(pub_date, "%Y-%m-%d").date()
+                        published_date = datetime.strptime(published_date, "%Y-%m-%d").date()
                     except ValueError:
                         continue
-                    if pub_date < start_cutoff:
+                    if published_date < start_cutoff:
                         continue
 
                     hits.append({
-                        "title": a.get("title", ""),
-                        "description": a.get("description", "") or "",
-                        "source": a.get("source", {}).get("name", "N/A"),
-                        "published": pub_date.isoformat(),
-                        "url": a.get("url", ""),
+                        "title": article.get("title", ""),
+                        "description": article.get("description", "") or "",
+                        "source": article.get("source", {}).get("name", "N/A"),
+                        "published": published_date.isoformat(),
+                        "url": article.get("url", ""),
                     })
 
                 if len(hits) >= self.max_hits_per_type:
@@ -112,30 +113,30 @@ class NewsCollector(PipelineModule):
         buckets = []
         for event_type in event_types:
             query = self._terms_for(event_type)
-            raw = self._fetch(query, start_cutoff, use_title_filter=True) or self._fetch(query, start_cutoff, use_title_filter=False)
-            articles = [Article(**a) for a in raw]
+            raw_articles = self._fetch(query, start_cutoff, use_title_filter=True) or self._fetch(query, start_cutoff, use_title_filter=False)
+            articles = [Article(**raw_article) for raw_article in raw_articles]
             logger.info("Collected %d article(s) for '%s'.", len(articles), event_type)
             buckets.append(ArticleBucket(event_type=event_type, articles=articles))
 
         return buckets
 
-    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
-        if not ctx.event_types:
+    async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
+        if not context.event_types:
             raise ValueError("NewsCollector: `event_types` is missing or empty")
-        if ctx.days_back is None:
+        if context.days_back is None:
             raise ValueError("NewsCollector: `days_back` is missing")
 
-        await self.emit_status(ctx, message=f"Searching news for {', '.join(ctx.event_types)}...", tag=InfoTag.START)
+        await self.emit_status(context, message=f"Searching news for {', '.join(context.event_types)}...", tag=InfoTag.START)
 
-        buckets = await asyncio.to_thread(self._collect, ctx.event_types, ctx.days_back)
+        buckets = await asyncio.to_thread(self._collect, context.event_types, context.days_back)
 
         for bucket in buckets:
             if not bucket.articles:
-                await self.emit_status(ctx, message=f"No articles found for '{bucket.event_type}'", tag=InfoTag.WARNING)
+                await self.emit_status(context, message=f"No articles found for '{bucket.event_type}'", tag=InfoTag.WARNING)
 
-        ctx.articles = buckets
+        context.articles = buckets
 
         total = sum(len(bucket.articles) for bucket in buckets)
-        await self.emit_status(ctx, message=f"Found {total} articles", tag=InfoTag.STAGE_SUCCESS)
+        await self.emit_status(context, message=f"Found {total} articles", tag=InfoTag.STAGE_SUCCESS)
 
         return None, True

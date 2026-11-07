@@ -58,19 +58,19 @@ def run_event_study(ticker, event_date, days_after=10, market_ticker=None, *, ca
     closes = closes.loc[(closes.index >= pd.Timestamp(start)) & (closes.index < pd.Timestamp(end))]
     returns = closes.pct_change(fill_method=None).dropna() * 100
     returns = returns[np.isfinite(returns).all(axis=1)]
-    zero = returns.index.searchsorted(pd.Timestamp(incident))
-    if zero < 120 or zero == len(returns):
+    event_index = returns.index.searchsorted(pd.Timestamp(incident))
+    if event_index < 120 or event_index == len(returns):
         raise ValueError("Insufficient trading history for the event study")
 
-    fit = returns.iloc[zero - 120:zero - 9]
-    if fit["market"].std() <= 0:
+    estimation_window = returns.iloc[event_index - 120:event_index - 9]
+    if estimation_window["market"].std() <= 0:
         raise ValueError("Benchmark returns have no variation")
-    beta, alpha = np.polyfit(fit["market"], fit["actual"], 1)
-    sigma = (fit["actual"] - alpha - beta * fit["market"]).std(ddof=2)
+    beta, alpha = np.polyfit(estimation_window["market"], estimation_window["actual"], 1)
+    sigma = (estimation_window["actual"] - alpha - beta * estimation_window["market"]).std(ddof=2)
     if not np.isfinite(sigma) or sigma <= 1e-10:
         raise ValueError("Insufficient residual variation for the event study")
 
-    window = returns.iloc[zero - 10:zero + days_after + 1].copy()
+    window = returns.iloc[event_index - 10:event_index + days_after + 1].copy()
     window["expected"] = alpha + beta * window["market"]
     cumulative = window[["actual", "expected"]].cumsum()
     cumulative -= cumulative.iloc[9].copy()
@@ -84,13 +84,13 @@ def run_event_study(ticker, event_date, days_after=10, market_ticker=None, *, ca
             car_pct=round(actual - expected, 2) if day >= 0 else None,
         ))
     last = daily[-1]
-    count = last.day + 1
-    car = float(cumulative.iloc[-1]["actual"] - cumulative.iloc[-1]["expected"])
-    t_stat = round(car / (float(sigma) * count ** 0.5), 2)
+    post_event_day_count = last.day + 1
+    cumulative_abnormal_return = float(cumulative.iloc[-1]["actual"] - cumulative.iloc[-1]["expected"])
+    t_statistic = round(cumulative_abnormal_return / (float(sigma) * post_event_day_count ** 0.5), 2)
     return Study(
         market_ticker=market_ticker, event_day=daily[10].date, days_after=last.day,
         beta=round(float(beta), 2), raw_return_pct=last.cum_actual_pct,
         market_return_pct=round(float(window["market"].iloc[10:].sum()), 2),
         expected_return_pct=last.cum_expected_pct, car_pct=last.car_pct,
-        t_stat=t_stat, is_significant=abs(t_stat) >= 2, daily=daily,
+        t_stat=t_statistic, is_significant=abs(t_statistic) >= 2, daily=daily,
     )

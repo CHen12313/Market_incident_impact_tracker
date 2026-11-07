@@ -15,10 +15,10 @@ from Pipeline.pipeline_module import PipelineModule
 class TickerResolver(PipelineModule):
     label = "Resolving tickers"
 
-    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
+    async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
         from Pipeline.additional_info_collector import get_company_symbol
 
-        for record in ctx.events:
+        for record in context.events:
             companies = {}
             for company in record.companies:
                 try:
@@ -27,7 +27,7 @@ class TickerResolver(PipelineModule):
                     ticker = None
                 ticker = ticker.strip().upper() if isinstance(ticker, str) else ""
                 if not re.fullmatch(r"[A-Z0-9^][A-Z0-9.^=\-]{0,31}", ticker):
-                    await self.emit_status(ctx, message=f"No ticker for {company.company_name}", tag=InfoTag.WARNING)
+                    await self.emit_status(context, message=f"No ticker for {company.company_name}", tag=InfoTag.WARNING)
                     continue
                 company.ticker = ticker
                 companies.setdefault(ticker, company)
@@ -64,38 +64,38 @@ def check_predictions(impacts: list[Impact]) -> None:
     for impact in impacts:
         study = impact.study
         direction = impact.expected_direction
-        car, t_stat = study.car_pct, study.t_stat
+        cumulative_abnormal_return, t_statistic = study.car_pct, study.t_stat
         impact.prediction_match = None
         if study.is_significant:
-            moved = "Rose" if car > 0 else "Fell"
+            moved = "Rose" if cumulative_abnormal_return > 0 else "Fell"
             if direction != Direction.UNCLEAR:
-                impact.prediction_match = (car > 0) == (direction == Direction.UP)
+                impact.prediction_match = (cumulative_abnormal_return > 0) == (direction == Direction.UP)
             study.verdict_text = (
-                f"{moved} {abs(car):.2f}% relative to the market-based expectation "
-                f"over {study.days_after + 1} trading days (t = {t_stat:.2f})."
+                f"{moved} {abs(cumulative_abnormal_return):.2f}% relative to the market-based expectation "
+                f"over {study.days_after + 1} trading days (t = {t_statistic:.2f})."
             )
         else:
-            study.verdict_text = f"Moved roughly in line with the market (t = {t_stat:.2f})."
+            study.verdict_text = f"Moved roughly in line with the market (t = {t_statistic:.2f})."
 
 
 class EventStudyRunner(PipelineModule):
     label = "Measuring market impact"
 
-    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
-        for record in ctx.events:
+    async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
+        for record in context.events:
             record.impacts, failures = await asyncio.to_thread(
-                analyse_companies, record.event, record.companies, ctx.data_cache
+                analyse_companies, record.event, record.companies, context.data_cache
             )
             for message in failures:
-                await self.emit_status(ctx, message=message, tag=InfoTag.WARNING)
+                await self.emit_status(context, message=message, tag=InfoTag.WARNING)
         return None, True
 
 
 class PredictionChecker(PipelineModule):
     label = "Checking predictions"
 
-    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
-        for record in ctx.events:
+    async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
+        for record in context.events:
             check_predictions(record.impacts)
         return None, True
 
@@ -103,11 +103,11 @@ class PredictionChecker(PipelineModule):
 class EventWriter(PipelineModule):
     label = "Saving events"
 
-    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
-        for record in ctx.events:
+    async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
+        for record in context.events:
             if record.impacts:
-                write_event(ctx.data_cache, record.event, record.impacts)
-                ctx.event_ids.append(record.event.event_id)
-        if not ctx.event_ids:
-            ctx.exit_reason = "No events with usable market data were found."
+                write_event(context.data_cache, record.event, record.impacts)
+                context.event_ids.append(record.event.event_id)
+        if not context.event_ids:
+            context.exit_reason = "No events with usable market data were found."
         return None, True

@@ -9,10 +9,10 @@ class PipelineModule(ABC):
     Base class for all pipeline modules.
 
     Every module is one stage in the pipeline, run in sequence over one
-    shared `PipelineContext`. `ctx` is the only channel for domain data: a
-    stage reads its inputs from its fields and writes its outputs back into
-    them, in place. `run`'s return value is a separate control channel —
-    see below.
+    shared `PipelineContext`. `context` is the only channel for domain
+    data: a stage reads its inputs from its fields and writes its outputs
+    back into them, in place. `run`'s return value is a separate control
+    channel — see below.
 
     Modules that want to report progress call `self.emit_status(...)` from
     inside `run`; it's a no-op when nothing is listening.
@@ -30,14 +30,14 @@ class PipelineModule(ABC):
     label: str | None = None
 
     @abstractmethod
-    async def run(self, ctx: PipelineContext) -> tuple[str | None, bool]:
+    async def run(self, context: PipelineContext) -> tuple[str | None, bool]:
         """
-        Run this stage: mutate `ctx` in place, then return a control tuple.
+        Run this stage: mutate `context` in place, then return a control tuple.
 
         Returns:
             (signal_name, satisfied): reserved for a future retry/backtrack
             controller — the current `execute_pipeline` doesn't act on
-            either value, and ends a run early only via `ctx.exit_reason`.
+            either value, and ends a run early only via `context.exit_reason`.
 
         Raises:
             ValueError: a required input field is missing or invalid —
@@ -47,7 +47,7 @@ class PipelineModule(ABC):
         """
         ...
 
-    async def emit_status(self, ctx: PipelineContext, message: str, tag: InfoTag) -> None:
-        if ctx.emit is None:
+    async def emit_status(self, context: PipelineContext, message: str, tag: InfoTag) -> None:
+        if context.emit is None:
             return
-        await ctx.emit(InfoEvent(message=message, tag=tag))
+        await context.emit(InfoEvent(message=message, tag=tag))
