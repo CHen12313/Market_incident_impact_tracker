@@ -102,5 +102,20 @@
   "blue origin": {
     "symbol": null,
     "as_of": 1794055356
-  }
+  },
+  "commerzbank": "CBK.DE",
+  "unicredit": "UCG.MI",
+  "deutsche bank": "DB",
+  "intesa sanpaolo": "ISP.MI",
+  "microsoft": "MSFT",
+  "amazon": "AMZN",
+  "google": "GOOG",
+  "nvidia": "NVDA",
+  "danske bank": "DANSKE.CO",
+  "swedbank": {
+    "symbol": null,
+    "as_of": 1794056193
+  },
+  "jpmorgan chase": "JPM",
+  "hsbc": "HSBC"
 }

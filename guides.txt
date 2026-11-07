@@ -1,0 +1,61 @@
+The challenge
+
+Your challenge: take data that exists today and turn it into something a busy person can act on.
+
+What we see every day
+
+Timing matters
+
+The same data means something different in January and in June. Answers go stale quickly, and a late or out-of-date answer can be worse than none.
+
+Data is scattered
+
+It lives across systems, spreadsheets and inboxes. Pulling it together, and trusting what you get, takes more effort than using it.
+
+The users aren’t technical
+
+The people who need the answers are experts in their own field, not developers. Whatever holds the data must be workable without help.
+
+What great looks like
+
+What to build: whatever form it takes, aim for these three qualities. The next slide covers how it is scored.
+
+01
+
+A clear idea
+
+One sentence that says what it is. A well-argued concept with a rough prototype beats a polished build nobody can explain.
+
+02
+
+Honest about its limits
+
+Say what it does well, where it breaks and what you would do with more time. Knowing the gaps counts for more than hiding them.
+
+03
+
+Usable by non-technical people
+
+Someone with no technical background asks a plain-language question and gets a usable answer, with no query language and no training session.
+
+Build whatever you like. Use live data: open Irish data (data.gov.ie, CSO), public calendars and registers, or a dataset you build yourselves. Keep it buildable in nine hours.
+
+How it’s judged
+
+How it is scored: four criteria, weighted equally.
+
+Innovation
+
+A fresh use of data, an unexpected combination of sources, or an insight nobody had before. A dashboard on its own will not score well here.
+
+Impact
+
+Would this matter to someone if it existed? Be clear about who benefits, how, and why it is worth doing. The bigger and more credible the difference, the better.
+
+Technical depth
+
+Sound engineering under the hood: real data, sensible transformations and a design you can explain. We will ask how it works, not just what it does.
+
+Presentation and demo quality
+
+Show the data driving the result live, and tell the story so that anyone in the room can follow it. Clarity beats polish.

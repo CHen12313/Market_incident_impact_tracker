@@ -1,0 +1,546 @@
+{
+  "event": {
+    "event_id": "2026-11-06-protesters-break-into-microsoft-data-center",
+    "event_type": "breach",
+    "headline": "Protesters break into Microsoft data center site in Amsterdam",
+    "summary": "Activists breached the construction site of a Microsoft data center in Amsterdam as part of protests against the rapid expansion of AI infrastructure.",
+    "event_date": "2026-11-06",
+    "source_url": "https://www.channelnewsasia.com/business/activists-breach-microsoft-data-centre-construction-site-protests-spread-in-europe-6531336"
+  },
+  "impacts": [
+    {
+      "company_name": "Microsoft",
+      "relation": "direct",
+      "expected_direction": "down",
+      "reason": "Negative publicity from protests could harm Microsoft's reputation and stock.",
+      "ticker": "MSFT",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 1.37,
+        "raw_return_pct": -0.99,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.62,
+        "car_pct": -1.61,
+        "t_stat": -0.75,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": 0.66,
+            "expected_pct": -0.52,
+            "abnormal_pct": 1.18,
+            "cum_actual_pct": -2.54,
+            "cum_expected_pct": 3.06,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": 1.54,
+            "expected_pct": 1.14,
+            "abnormal_pct": 0.4,
+            "cum_actual_pct": -0.99,
+            "cum_expected_pct": 4.21,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": -0.24,
+            "expected_pct": 1.0,
+            "abnormal_pct": -1.24,
+            "cum_actual_pct": -1.23,
+            "cum_expected_pct": 5.21,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": -0.06,
+            "expected_pct": 0.57,
+            "abnormal_pct": -0.63,
+            "cum_actual_pct": -1.29,
+            "cum_expected_pct": 5.78,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": -0.16,
+            "expected_pct": -0.23,
+            "abnormal_pct": 0.07,
+            "cum_actual_pct": -1.46,
+            "cum_expected_pct": 5.55,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -1.55,
+            "expected_pct": -2.3,
+            "abnormal_pct": 0.75,
+            "cum_actual_pct": -3.01,
+            "cum_expected_pct": 3.25,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": -2.83,
+            "expected_pct": -0.51,
+            "abnormal_pct": -2.32,
+            "cum_actual_pct": -5.84,
+            "cum_expected_pct": 2.74,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 2.74,
+            "expected_pct": 0.69,
+            "abnormal_pct": 2.05,
+            "cum_actual_pct": -3.11,
+            "cum_expected_pct": 3.42,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 6.68,
+            "expected_pct": 2.35,
+            "abnormal_pct": 4.33,
+            "cum_actual_pct": 3.58,
+            "cum_expected_pct": 5.77,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -3.58,
+            "expected_pct": -5.77,
+            "abnormal_pct": 2.2,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": -0.99,
+            "expected_pct": 0.62,
+            "abnormal_pct": -1.61,
+            "cum_actual_pct": -0.99,
+            "cum_expected_pct": 0.62,
+            "car_pct": -1.61
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.75)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Nvidia",
+      "relation": "other",
+      "expected_direction": "unclear",
+      "reason": "Nvidia's involvement in AI may be scrutinized, but the impact on stock is uncertain.",
+      "ticker": "NVDA",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 2.05,
+        "raw_return_pct": 2.78,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.56,
+        "car_pct": 2.22,
+        "t_stat": 1.22,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -0.59,
+            "expected_pct": -1.15,
+            "abnormal_pct": 0.56,
+            "cum_actual_pct": 14.31,
+            "cum_expected_pct": 7.91,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": 2.39,
+            "expected_pct": 1.34,
+            "abnormal_pct": 1.05,
+            "cum_actual_pct": 16.7,
+            "cum_expected_pct": 9.25,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": 0.9,
+            "expected_pct": 1.14,
+            "abnormal_pct": -0.24,
+            "cum_actual_pct": 17.6,
+            "cum_expected_pct": 10.39,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": -1.17,
+            "expected_pct": 0.48,
+            "abnormal_pct": -1.65,
+            "cum_actual_pct": 16.42,
+            "cum_expected_pct": 10.87,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": -0.8,
+            "expected_pct": -0.71,
+            "abnormal_pct": -0.09,
+            "cum_actual_pct": 15.62,
+            "cum_expected_pct": 10.16,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -4.22,
+            "expected_pct": -3.82,
+            "abnormal_pct": -0.41,
+            "cum_actual_pct": 11.4,
+            "cum_expected_pct": 6.34,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": -1.26,
+            "expected_pct": -1.13,
+            "abnormal_pct": -0.13,
+            "cum_actual_pct": 10.14,
+            "cum_expected_pct": 5.21,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 2.29,
+            "expected_pct": 0.66,
+            "abnormal_pct": 1.63,
+            "cum_actual_pct": 12.43,
+            "cum_expected_pct": 5.87,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": -3.17,
+            "expected_pct": 3.16,
+            "abnormal_pct": -6.33,
+            "cum_actual_pct": 9.26,
+            "cum_expected_pct": 9.02,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -9.26,
+            "expected_pct": -9.02,
+            "abnormal_pct": -0.24,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": 2.78,
+            "expected_pct": 0.56,
+            "abnormal_pct": 2.22,
+            "cum_actual_pct": 2.78,
+            "cum_expected_pct": 0.56,
+            "car_pct": 2.22
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 1.22)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Amazon",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "As a major player in cloud services, Amazon may be affected by negative sentiment towards data centers.",
+      "ticker": "AMZN",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 1.6,
+        "raw_return_pct": -0.35,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.43,
+        "car_pct": -0.78,
+        "t_stat": -0.37,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -0.95,
+            "expected_pct": -0.9,
+            "abnormal_pct": -0.05,
+            "cum_actual_pct": -5.17,
+            "cum_expected_pct": 6.21,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": 0.44,
+            "expected_pct": 1.04,
+            "abnormal_pct": -0.6,
+            "cum_actual_pct": -4.73,
+            "cum_expected_pct": 7.25,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": 1.61,
+            "expected_pct": 0.88,
+            "abnormal_pct": 0.73,
+            "cum_actual_pct": -3.12,
+            "cum_expected_pct": 8.12,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": 0.59,
+            "expected_pct": 0.37,
+            "abnormal_pct": 0.23,
+            "cum_actual_pct": -2.53,
+            "cum_expected_pct": 8.49,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": -4.25,
+            "expected_pct": -0.56,
+            "abnormal_pct": -3.69,
+            "cum_actual_pct": -6.78,
+            "cum_expected_pct": 7.93,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -1.41,
+            "expected_pct": -2.97,
+            "abnormal_pct": 1.56,
+            "cum_actual_pct": -8.19,
+            "cum_expected_pct": 4.96,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": 2.2,
+            "expected_pct": -0.89,
+            "abnormal_pct": 3.09,
+            "cum_actual_pct": -5.99,
+            "cum_expected_pct": 4.07,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 2.06,
+            "expected_pct": 0.51,
+            "abnormal_pct": 1.55,
+            "cum_actual_pct": -3.93,
+            "cum_expected_pct": 4.57,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 6.12,
+            "expected_pct": 2.45,
+            "abnormal_pct": 3.67,
+            "cum_actual_pct": 2.19,
+            "cum_expected_pct": 7.02,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -2.19,
+            "expected_pct": -7.02,
+            "abnormal_pct": 4.83,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": -0.35,
+            "expected_pct": 0.43,
+            "abnormal_pct": -0.78,
+            "cum_actual_pct": -0.35,
+            "cum_expected_pct": 0.43,
+            "car_pct": -0.78
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = -0.37)."
+      },
+      "prediction_match": null
+    },
+    {
+      "company_name": "Google",
+      "relation": "competitor",
+      "expected_direction": "down",
+      "reason": "Similar to Microsoft, Google could face backlash regarding its data center expansions.",
+      "ticker": "GOOG",
+      "study": {
+        "market_ticker": "^GSPC",
+        "event_day": "2026-11-06",
+        "days_after": 0,
+        "beta": 1.27,
+        "raw_return_pct": 0.78,
+        "market_return_pct": 0.31,
+        "expected_return_pct": 0.19,
+        "car_pct": 0.59,
+        "t_stat": 0.34,
+        "is_significant": false,
+        "daily": [
+          {
+            "day": -10,
+            "date": "2026-10-23",
+            "actual_pct": -1.08,
+            "expected_pct": -0.87,
+            "abnormal_pct": -0.22,
+            "cum_actual_pct": 10.95,
+            "cum_expected_pct": 6.3,
+            "car_pct": null
+          },
+          {
+            "day": -9,
+            "date": "2026-10-26",
+            "actual_pct": -0.97,
+            "expected_pct": 0.68,
+            "abnormal_pct": -1.65,
+            "cum_actual_pct": 9.98,
+            "cum_expected_pct": 6.98,
+            "car_pct": null
+          },
+          {
+            "day": -8,
+            "date": "2026-10-27",
+            "actual_pct": 0.84,
+            "expected_pct": 0.55,
+            "abnormal_pct": 0.29,
+            "cum_actual_pct": 10.82,
+            "cum_expected_pct": 7.53,
+            "car_pct": null
+          },
+          {
+            "day": -7,
+            "date": "2026-10-28",
+            "actual_pct": 1.6,
+            "expected_pct": 0.14,
+            "abnormal_pct": 1.45,
+            "cum_actual_pct": 12.42,
+            "cum_expected_pct": 7.67,
+            "car_pct": null
+          },
+          {
+            "day": -6,
+            "date": "2026-10-29",
+            "actual_pct": -12.29,
+            "expected_pct": -0.6,
+            "abnormal_pct": -11.7,
+            "cum_actual_pct": 0.12,
+            "cum_expected_pct": 7.08,
+            "car_pct": null
+          },
+          {
+            "day": -5,
+            "date": "2026-10-30",
+            "actual_pct": -1.45,
+            "expected_pct": -2.52,
+            "abnormal_pct": 1.07,
+            "cum_actual_pct": -1.33,
+            "cum_expected_pct": 4.55,
+            "car_pct": null
+          },
+          {
+            "day": -4,
+            "date": "2026-11-02",
+            "actual_pct": -0.06,
+            "expected_pct": -0.86,
+            "abnormal_pct": 0.79,
+            "cum_actual_pct": -1.39,
+            "cum_expected_pct": 3.7,
+            "car_pct": null
+          },
+          {
+            "day": -3,
+            "date": "2026-11-03",
+            "actual_pct": 0.08,
+            "expected_pct": 0.26,
+            "abnormal_pct": -0.17,
+            "cum_actual_pct": -1.31,
+            "cum_expected_pct": 3.95,
+            "car_pct": null
+          },
+          {
+            "day": -2,
+            "date": "2026-11-04",
+            "actual_pct": 3.25,
+            "expected_pct": 1.8,
+            "abnormal_pct": 1.44,
+            "cum_actual_pct": 1.94,
+            "cum_expected_pct": 5.75,
+            "car_pct": null
+          },
+          {
+            "day": -1,
+            "date": "2026-11-05",
+            "actual_pct": -1.94,
+            "expected_pct": -5.75,
+            "abnormal_pct": 3.82,
+            "cum_actual_pct": 0.0,
+            "cum_expected_pct": 0.0,
+            "car_pct": null
+          },
+          {
+            "day": 0,
+            "date": "2026-11-06",
+            "actual_pct": 0.78,
+            "expected_pct": 0.19,
+            "abnormal_pct": 0.59,
+            "cum_actual_pct": 0.78,
+            "cum_expected_pct": 0.19,
+            "car_pct": 0.59
+          }
+        ],
+        "verdict_text": "Moved roughly in line with the market (t = 0.34)."
+      },
+      "prediction_match": null
+    }
+  ],
+  "status": "early",
+  "generated_at": "2026-11-07T12:56:35Z"
+}
